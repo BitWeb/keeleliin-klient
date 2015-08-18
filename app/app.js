@@ -1,30 +1,33 @@
-'use strict';
+define([
+    'angularAMD',
+    'appModule',
+    'MainController',
+    'jquery',
+    'jquery-ui',
+    'bootstrap',
+    'pace',
+    'inspinia',
+    'angular-translate',
+    'jstree',
+    'directives',
+    'sidebarDirectives',
+    'UserService'
 
-var keeleliinControllers = angular.module('keeleliinControllers', []);
+], function (angularAMD, app) {
 
-var app = angular.module('keeleliin', [
-  'ui.router',
-  'keeleliinControllers'
-]);
+    app.run(['$rootScope', '$state', '$stateParams', 'UserService', function ($rootScope, $state, $stateParams, userService) {
+        $rootScope.$state = $state;
+        $rootScope.$stateParams = $stateParams;
+        $rootScope.userService = userService;
 
-app.config(function($stateProvider, $urlRouterProvider) {
+        $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+            if(!userService.isAuthenticated() && toState.name != 'auth'){
+                console.log('Go Auth');
+                $state.transitionTo("auth");
+                event.preventDefault();
+            }
+        });
+    }]);
 
-  $urlRouterProvider.otherwise("/home");
-  $stateProvider
-      .state('home', {
-        url: "/home",
-        templateUrl: "app/components/home/home-view.html",
-        controller: "HomeController"
-      })
-      .state('project', {
-        url: "/project",
-        templateUrl: "app/components/project/project-list-view.html",
-        controller: "ProjectController"
-      });
-
+    return angularAMD.bootstrap(app);
 });
-
-app.run(['$rootScope', '$state', '$stateParams', function ($rootScope,   $state,   $stateParams) {
-    $rootScope.$state = $state;
-    $rootScope.$stateParams = $stateParams;
-}]);
