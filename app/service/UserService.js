@@ -1,23 +1,116 @@
 define(['appModule'], function (app) {
 
-    app.service('UserService', [ '$http','$state',
-        function($http, $state) {
+    app.service('UserService', [ '$http','$state','config','$location','$rootScope',
+        function($http, $state, config, $location, $rootScope) {
+            var self = this;
 
-            var user = {
-              token: null
+            var user = null;
+            var isAuthenticated = false;
 
+            var initSuccess = false;
+
+
+            this.init = function () {
+                var token = self.getToken();
+                if(token){
+                    self.setupHttpHeader( token );
+                }
+                self._requestUserInfo();
+                return true;
             };
 
             this.isAuthenticated = function () {
-                return user.token != null;
+                return isAuthenticated;
             };
 
-            this.changeSate = function(){
+            this.isAuthorized = function( toState ){
 
+                if(!initSuccess){
+                    console.log('Init not ready');
+                    return true;
+                }
 
+                if( toState.name != 'auth' && !isAuthenticated ){
+                    console.log(user);
+                    console.log('Not authorized');
+                    return false;
+                }
+                console.log('Authorized');
+                return true;
+            };
 
+            this.signOut = function () {
+                user = null;
+                self.removeToken();
+                isAuthenticated = false;
+                $rootScope.user = null;
 
+                $http.get(config.API_URL + '/user/logout').
+                    then(function(response) {
+                        $rootScope.$broadcast('notAuthorized', $state);
+                    }, function(response) {
+                        console.error(response);
+                    });
+                return true;
+            };
 
+            this.startAuth = function () {
+                var queryUrl = config.API_URL + '/user/login/' + $location.protocol() + '%3A%2F%2F' + location.host;
+                $http.get(queryUrl).
+                    then(function(response) {
+                        if(response.data.data){
+                            if(response.data.data.authUrl){
+                                self.setToken(response.data.data.token);
+                                window.location.href = response.data.data.authUrl;
+                            } else {
+                                self.updateUserInfo(response.data);
+                            }
+                        } else {
+                            console.error(response);
+                        }
+                    }, function(response) {
+                        console.error(response);
+                    });
+            };
+
+            this._requestUserInfo = function () {
+                console.log('Request user Info');
+                $http.get( config.API_URL + '/user').then(function ( response ) {
+                    self.updateUserInfo(response.data);
+                }, function ( response ) {
+                    self.updateUserInfo(response.data);
+                });
+            };
+
+            this.updateUserInfo = function (userData) {
+
+                if(userData.statusCode != 200){
+                    self.signOut();
+                } else {
+                    isAuthenticated = true;
+                    user = userData.data;
+                    console.log('gotUser');
+                    $rootScope.user = user;
+                    $rootScope.$broadcast('authorized', $state);
+                    initSuccess = true;
+                }
+            };
+
+            this.setToken = function (token) {
+                self.setupHttpHeader(token);
+                return  window.sessionStorage.setItem('token', token);
+            };
+
+            this.getToken = function(){
+                return  window.sessionStorage.getItem('token');
+            };
+
+            this.removeToken = function () {
+                return  window.sessionStorage.removeItem('token');
+            };
+
+            this.setupHttpHeader = function(token) {
+                $http.defaults.headers.common['x-access-token'] = token;
             };
         }
     ]);

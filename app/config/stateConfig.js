@@ -7,7 +7,7 @@ define(['angularAMD'], function (angularAMD) {
     return {
         setStates: function(app, $stateProvider, $urlRouterProvider){
 
-            $urlRouterProvider.otherwise("/home");
+            $urlRouterProvider.otherwise("/auth");
 
             $stateProvider.state(
                 'auth', angularAMD.route({
@@ -27,7 +27,7 @@ define(['angularAMD'], function (angularAMD) {
                 'project', angularAMD.route({
                     url: "/project",
                     templateUrl: "views/project/project-list-view.html",
-                    controller: 'ProjectController'
+                    controller: 'ProjectListController'
             }));
 
 

@@ -1,6 +1,6 @@
 <!-- Main view  -->
 <!-- Wrapper-->
-<div ng-if="userService.isAuthenticated()" id="wrapper">
+<div ng-if="userService" id="wrapper">
     <!-- Navigation -->
     <div ng-include="'views/sidebar/navigation.html'"></div>
     <!-- Page wraper -->
@@ -17,10 +17,10 @@
     </div>
     <!-- End page wrapper-->
     <!-- Right Sidebar -->
-    <div ng-include="'views/tmp_common/right_sidebar.html'"></div>
+    <!--<div ng-include="'views/tmp_common/right_sidebar.html'"></div>-->
 </div>
 
-<div ng-if="!userService.isAuthenticated()" id="authView">
+<div ng-if="!userService" id="authView">
     <div ui-view></div>
 </div>
 <!-- End wrapper-->

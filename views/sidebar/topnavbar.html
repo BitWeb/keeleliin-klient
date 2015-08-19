@@ -8,7 +8,7 @@
                 </div>
             </form>
         </div>
-        <ul class="nav navbar-top-links navbar-right">
+        <ul ng-if="userService.isAuthenticated()" class="nav navbar-top-links navbar-right">
             <li class="dropdown" dropdown>
                 <a class="dropdown-toggle count-info" href dropdown-toggle>
                     <i class="fa fa-bell"></i> <span class="label label-primary">3</span>
@@ -52,7 +52,7 @@
                 </ul>
             </li>
             <li>
-                <a href="#" ng-click="signOut()">
+                <a href="#" ng-click="userService.signOut()">
                     <i class="fa fa-sign-out"></i> Logi välja
                 </a>
             </li>

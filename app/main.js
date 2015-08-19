@@ -23,15 +23,15 @@ require.config({
 
         'directives'        : 'directive/directives',
         'sidebarDirectives' : 'directive/sidebarDirectives',
-
         'stateConfig'       : 'config/stateConfig',
 
         'AuthController'    : 'controller/AuthController',
         'HomeController'    : 'controller/HomeController',
-        'ProjectController' : 'controller/ProjectController',
+        'ProjectListController' : 'controller/ProjectListController',
         'MainController'    : 'controller/MainController',
 
-        'UserService'       : 'service/UserService'
+        'UserService'       : 'service/UserService',
+        'ProjectService'    : 'service/ProjectService'
     },
     shim: {
         'angularAMD'        : ['angular'],
