@@ -21,6 +21,8 @@ require.config({
         'angular-idle'      : 'lib/plugins/angular-idle/angular-idle',
         'jstree'            : 'lib/plugins/jsTree/jstree.min',
 
+        'footable'          : 'lib/plugins/footable/footable.all.min',
+
         'directives'        : 'directive/directives',
         'sidebarDirectives' : 'directive/sidebarDirectives',
         'stateConfig'       : 'config/stateConfig',
@@ -30,10 +32,12 @@ require.config({
         'ProjectListController' : 'controller/ProjectListController',
         'MainController'    : 'controller/MainController',
 
+
         'UserService'       : 'service/UserService',
         'ProjectService'    : 'service/ProjectService'
     },
     shim: {
+        'angular'           : ['jquery'],
         'angularAMD'        : ['angular'],
         'angular-ui-router' : ['angular'],
         'ocLazyLoad'        : ['angular'],
@@ -47,10 +51,7 @@ require.config({
         'jquery-ui'         : ['jquery'],
 
         'directives'        : ['jquery', 'metisMenu', 'slimscroll'],
-        'sidebarDirectives' : ['jquery', 'metisMenu', 'slimscroll'],
-        'MainController'    : ['UserService']
-
-
+        'sidebarDirectives' : ['jquery', 'metisMenu', 'slimscroll']
     },
     deps: ['app']
 });

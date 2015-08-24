@@ -28,7 +28,8 @@ define(['angularAMD'], function (angularAMD) {
                     url: "/project",
                     templateUrl: "views/project/project-list-view.html",
                     controller: 'ProjectListController'
-            }));
+                })
+            );
 
 
 

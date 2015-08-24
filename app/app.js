@@ -12,7 +12,8 @@ define([
     'angular-translate',
     'jstree',
     'directives',
-    'sidebarDirectives'
+    'sidebarDirectives',
+    'ui-bootstrap'
 ], function (angularAMD, app) {
 
     app.constant('config', {
@@ -23,29 +24,33 @@ define([
     app.run(['$rootScope', '$state', '$stateParams', 'UserService', function ($rootScope, $state, $stateParams, userService) {
         $rootScope.$state = $state;
         $rootScope.userService = userService;
-        userService.init();
-
-        $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-            if(!userService.isAuthorized( toState )){
-                console.log('User not authorized. Wanted to go state: ' + toState.name);
-                $state.go('auth');
-                event.preventDefault();
-            }
-        });
 
         $rootScope.$on('notAuthorized', function(event, fromState) {
-            console.error('Not authorized');
+            console.info('Not authorized');
             console.log(fromState);
             $state.go('auth');
             event.preventDefault();
         });
 
         $rootScope.$on('authorized', function(event, fromState) {
-            console.error('Authorized');
+            console.info('Authorized');
             if(fromState.current.name == 'auth'){
                 $state.go('home');
                 event.preventDefault();
             }
+        });
+
+        userService.init(function () {
+
+            $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+                console.info('$stateChangeStart');
+
+                if(!userService.isAuthorized( toState )){
+                    console.log('User not authorized. Wanted to go state: ' + toState.name);
+                    $state.go('auth');
+                    event.preventDefault();
+                }
+            });
         });
     }]);
 

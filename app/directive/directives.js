@@ -59,12 +59,34 @@ function fitHeight(){
     };
 }
 
+
+function footableNgRow(){
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+
+            var parentTable = angular.element(element).closest('table');
+            var isLoaded = parentTable.hasClass('footable-loaded');
+            if (scope.$last && !isLoaded) {
+                //console.log('Creating Footable Something ?!?! ');
+                parentTable.footable();
+            } else if (scope.$last && isLoaded) {
+                //console.log('Updating Footable Something ?!?! ');
+                //console.log(parentTable.data('footable'));
+                parentTable.data('footable').redraw();
+            }
+
+        }
+    }
+}
+
+
 /**
  *
  * Pass all functions into module
  */
 app.directive('dropZone', dropZone)
     .directive('fullScroll', fullScroll)
-    .directive('fitHeight', fitHeight);
-
+    .directive('fitHeight', fitHeight)
+    .directive('footableNgRow', footableNgRow);
 });

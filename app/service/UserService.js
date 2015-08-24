@@ -7,16 +7,12 @@ define(['appModule'], function (app) {
             var user = null;
             var isAuthenticated = false;
 
-            var initSuccess = false;
-
-
-            this.init = function () {
+            this.init = function ( callback ) {
                 var token = self.getToken();
                 if(token){
                     self.setupHttpHeader( token );
                 }
-                self._requestUserInfo();
-                return true;
+                return self._requestUserInfo( callback );
             };
 
             this.isAuthenticated = function () {
@@ -25,17 +21,12 @@ define(['appModule'], function (app) {
 
             this.isAuthorized = function( toState ){
 
-                if(!initSuccess){
-                    console.log('Init not ready');
-                    return true;
-                }
-
                 if( toState.name != 'auth' && !isAuthenticated ){
                     console.log(user);
                     console.log('Not authorized');
                     return false;
                 }
-                console.log('Authorized');
+                console.log('Authorized for state ' + toState.name);
                 return true;
             };
 
@@ -73,12 +64,14 @@ define(['appModule'], function (app) {
                     });
             };
 
-            this._requestUserInfo = function () {
+            this._requestUserInfo = function ( callback ) {
                 console.log('Request user Info');
                 $http.get( config.API_URL + '/user').then(function ( response ) {
                     self.updateUserInfo(response.data);
+                    callback();
                 }, function ( response ) {
                     self.updateUserInfo(response.data);
+                    callback();
                 });
             };
 
@@ -92,7 +85,6 @@ define(['appModule'], function (app) {
                     console.log('gotUser');
                     $rootScope.user = user;
                     $rootScope.$broadcast('authorized', $state);
-                    initSuccess = true;
                 }
             };
 
