@@ -81,6 +81,8 @@ function footableNgRow(){
 }
 
 
+
+
 /**
  *
  * Pass all functions into module

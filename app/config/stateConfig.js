@@ -5,7 +5,7 @@
 define(['angularAMD'], function (angularAMD) {
 
     return {
-        setStates: function(app, $stateProvider, $urlRouterProvider){
+        setStates: function(app, $stateProvider, $urlRouterProvider, $ocLazyLoad){
 
             $urlRouterProvider.otherwise("/auth");
 
@@ -15,7 +15,6 @@ define(['angularAMD'], function (angularAMD) {
                     templateUrl: "views/auth/auth.html",
                     controller: 'AuthController'
                 }));
-
             $stateProvider.state(
                 'home', angularAMD.route({
                     url: "/home",
@@ -26,17 +25,29 @@ define(['angularAMD'], function (angularAMD) {
             $stateProvider.state(
                 'project', angularAMD.route({
                     url: "/project",
-                    templateUrl: "views/project/project-list-view.html",
-                    controller: 'ProjectListController'
+                    templateUrl: "views/project/list-view.html",
+                    controller: 'ProjectListController',
+                    resolve: {
+                        loadPlugin: function ($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                {
+                                    insertBefore: '#loadBefore',
+                                    name: 'localytics.directives',
+                                    files: ['assets/css/plugins/chosen/chosen.css']
+                                }
+                            ]);
+                        }
+                    }
                 })
             );
 
-
-
-
-
-
-
+            $stateProvider.state(
+                'project-item', angularAMD.route({
+                    url: "/project/{id:[0-9]{1,8}}", //
+                    templateUrl: "views/project/view.html",
+                    controller: 'ProjectController'
+                })
+            );
         }
     }
 });

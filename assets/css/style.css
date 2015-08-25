@@ -1009,7 +1009,7 @@ button.dim:active:before {
 }
 .label-success,
 .badge-success {
-  background-color: #1c84c6;
+  background-color: #1ab394;
   color: #FFFFFF;
 }
 .label-warning,
@@ -3913,6 +3913,10 @@ a.close-canvas-menu:hover {
 }
 .p-xl {
   padding: 40px;
+}
+
+.p-r-none {
+    padding-right: 0;
 }
 .m-xxs {
   margin: 2px 4px;
@@ -7599,4 +7603,16 @@ body.skin-3 {
 }
 .project-tree .jstree-clicked .action-buttons {
   display: inline-block;
+}
+
+.checkbox-inline input[type=checkbox] {
+    margin-top: 2px;
+}
+
+.radio-inline input[type=radio] {
+    margin-top: 0;
+}
+
+.chosen-container {
+    width: 100% !important;
 }

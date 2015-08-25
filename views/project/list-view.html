@@ -18,23 +18,12 @@
         <div class="row">
             <div class="col-sm-4">
                 <div class="form-group">
-                    <label class="control-label" for="product_name">Nimi</label>
-                    <input type="text" id="product_name" name="product_name" value="" placeholder="Projekti nimi" class="form-control">
-                </div>
-            </div>
-            <div class="col-sm-2">
-                <div class="form-group">
-                    <label class="control-label" for="settings">Sätted</label>
-                    <select name="status" id="settings" class="form-control">
-                        <option value="3">Privaatne</option>
-                        <option value="2">Avatud</option>
-                        <option value="1">Jagatud</option>
-                        <option value="0">Avalik</option>
-                    </select>
+                    <label class="control-label" for="filter">Nimi</label>
+                    <input type="text" id="filter" name="filter" value="" placeholder="Projekti nimi" class="form-control">
                 </div>
             </div>
             <div class="col-sm-2 pull-right">
-                <button type="button" class="m-t-md btn btn-primary btn-sm pull-right"><i class="fa fa-plus"></i> Lisa uus projekt</button>
+                <button ng-click="addProject()" type="button" class="m-t-md btn btn-primary btn-sm pull-right"><i class="fa fa-plus"></i> Lisa uus projekt</button>
             </div>
         </div>
     </div>
@@ -44,7 +33,7 @@
             <div class="ibox">
                 <div class="ibox-content">
                     <div class="project-list">
-                        <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="15">
+                        <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="15" data-filter="#filter">
                             <thead>
                             <tr>
                                 <th data-toggle="true">Nimi</th>
@@ -66,23 +55,21 @@
                                     {{project.description}}
                                 </td>
                                 <td class="footable-visible">
-                                    Privaatne
+                                    {{project.accessStatus | translate}}
                                 </td>
                                 <td class="project-people">
-                                    <a ng-repeat="projectUser in project.projectUsers" href="" class="pull-left">
-                                        <img alt="{{projectUser.name}}" class="img-circle" src="{{projectUser.displaypicture}}" title="{{projectUser.name}}">
-                                    </a>
+                                    <span ng-if="project.accessStatus == 'shared'">
+                                        <a ng-repeat="projectUser in project.projectUsers" href="" class="pull-left">
+                                            <img alt="{{projectUser.name}}" class="img-circle" ng-src="{{projectUser.displaypicture}}" title="{{projectUser.name}}">
+                                        </a>
+                                    </span>
                                 </td>
                                 <td class="text-right" footable-ng-row>
-
-
-
-
                                     <a ng-click="removeProject(project)" class="btn btn-white btn-xs"><i class="fa fa-trash"></i> Kustuta </a>
-                                    <a ui-sref="app.project_detail_view" class="btn btn-primary btn-xs" href="/app/project_detail_view"><i class="fa fa-folder"></i> Vaata </a>
+                                    <a ui-sref="project-item({id: project.id})" class="btn btn-primary btn-xs" href="/app/project_detail_view"><i class="fa fa-folder"></i> Vaata </a>
+
                                 </td>
                             </tr>
-
                             </tbody>
                             <tfoot>
                             <tr>

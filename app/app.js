@@ -17,7 +17,8 @@ define([
 ], function (angularAMD, app) {
 
     app.constant('config', {
-            API_URL : 'http://dev.bitweb.ee:3000/api/v1'
+            //API_URL : 'http://dev.bitweb.ee:3000/api/v1',
+            API_URL : 'http://localhost:8000/api/v1'
         }
     );
 

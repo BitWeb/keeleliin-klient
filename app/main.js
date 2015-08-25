@@ -17,11 +17,16 @@ require.config({
         'inspinia'          : 'lib/inspinia',
         'ocLazyLoad'        : 'lib/bower_components/oclazyload/dist/ocLazyLoad.min',
         'angular-translate' : 'lib/bower_components/angular-translate/angular-translate.min',
+        'etTranslations'   : 'i18n/et-translations',
         'ui-bootstrap'      : 'lib/bootstrap/ui-bootstrap-tpls-0.12.0.min',
         'angular-idle'      : 'lib/plugins/angular-idle/angular-idle',
         'jstree'            : 'lib/plugins/jsTree/jstree.min',
 
         'footable'          : 'lib/plugins/footable/footable.all.min',
+        'chosen-jquery'     : 'lib/plugins/chosen/chosen.jquery',
+        'chosen'            : 'lib/plugins/chosen/chosen',
+
+
 
         'directives'        : 'directive/directives',
         'sidebarDirectives' : 'directive/sidebarDirectives',
@@ -30,6 +35,7 @@ require.config({
         'AuthController'    : 'controller/AuthController',
         'HomeController'    : 'controller/HomeController',
         'ProjectListController' : 'controller/ProjectListController',
+        'ProjectController' : 'controller/ProjectController',
         'MainController'    : 'controller/MainController',
 
 
@@ -51,7 +57,9 @@ require.config({
         'jquery-ui'         : ['jquery'],
 
         'directives'        : ['jquery', 'metisMenu', 'slimscroll'],
-        'sidebarDirectives' : ['jquery', 'metisMenu', 'slimscroll']
+        'sidebarDirectives' : ['jquery', 'metisMenu', 'slimscroll'],
+
+        'chosen'            : ['angular', 'chosen-jquery']
     },
     deps: ['app']
 });

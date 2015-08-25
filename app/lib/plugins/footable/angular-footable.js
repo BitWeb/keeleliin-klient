@@ -49,8 +49,6 @@
                         extractSpecOpts(tableOpts, attrs)
                     );
 
-                    console.log(tableOpts);
-
                     var tableObj = element.footable(tableOpts);
 
                     bindEventHandler(tableObj, scope, attrs);

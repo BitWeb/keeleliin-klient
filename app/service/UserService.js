@@ -104,6 +104,16 @@ define(['appModule'], function (app) {
             this.setupHttpHeader = function(token) {
                 $http.defaults.headers.common['x-access-token'] = token;
             };
+
+            this.getUsersList = function (callback) {
+                console.log('Request user Info');
+                $http.get( config.API_URL + '/user/list').then(function ( response ) {
+                    callback(null, response.data.data);
+                }, function ( response ) {
+                    callback(response);
+                });
+            }
+
         }
     ]);
 });
