@@ -4,7 +4,7 @@
         <h2>Projektid</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="index.html">Avaleht</a>
+                <a ui-sref="home">Avaleht</a>
             </li>
             <li class="active">
                 <strong>Projektid</strong>
@@ -65,9 +65,8 @@
                                     </span>
                                 </td>
                                 <td class="text-right" footable-ng-row>
-                                    <a ng-click="removeProject(project)" class="btn btn-white btn-xs"><i class="fa fa-trash"></i> Kustuta </a>
+                                    <a ng-if="project.canDelete" ng-click="removeProject(project)" class="btn btn-white btn-xs"><i class="fa fa-trash"></i> Kustuta </a>
                                     <a ui-sref="project-item({id: project.id})" class="btn btn-primary btn-xs" href="/app/project_detail_view"><i class="fa fa-folder"></i> Vaata </a>
-
                                 </td>
                             </tr>
                             </tbody>
@@ -84,5 +83,4 @@
             </div>
         </div>
     </div>
-
 </div>
