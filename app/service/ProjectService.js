@@ -1,7 +1,7 @@
 define(['angularAMD'], function (angularAMD) {
 
-    angularAMD.service('ProjectService', [ '$http', 'config',
-        function( $http, config ) {
+    angularAMD.service('ProjectService', [ '$http', 'config', '$modal',
+        function( $http, config, $modal ) {
             var self = this;
 
             this.getList = function ( callback ) {
@@ -34,8 +34,31 @@ define(['angularAMD'], function (angularAMD) {
                 );
             };
 
+            this.openCreateModal = function ($scope) {
+                return $modal.open({
+                    templateUrl: '../../views/project/add.html',
+                    scope: $scope,
+                    controller: 'ProjectCreateController'
+                });
+            };
+
+            this.openDeleteModal = function ($scope, project) {
+
+                return $modal.open({
+                    templateUrl: '../../views/project/confirm-delete.html',
+                    scope: $scope,
+                    controller: 'ProjectDeleteController',
+                    resolve: {
+                        project: function(){
+                            return project;
+                        }
+                    }
+                });
+            };
+
+
             this.addProject = function (project, callback) {
-                //todo
+                //todo refactor UI
                 var usersMap = [];
                 for(i in project.users){
                     usersMap.push({
@@ -59,7 +82,34 @@ define(['angularAMD'], function (angularAMD) {
                         callback(data);
                     }
                 );
-            }
+            };
+
+            this.getProject = function (id, callback) {
+
+                $http.get(config.API_URL + '/project/' + id).then(
+                    function(data) {
+                        console.log(data);
+                        callback(null, data.data.data);
+                    },
+                    function(data) {
+                        callback(data);
+                    }
+                );
+            };
+
+            this.getProjectWorkflows = function (id, callback) {
+
+                $http.get(config.API_URL + '/project/' + id + '/workflows').then(
+                    function(data) {
+                        console.log(data);
+                        callback(null, data.data.data);
+                    },
+                    function(data) {
+                        callback(data);
+                    }
+                );
+            };
+
 
         }
     ]);

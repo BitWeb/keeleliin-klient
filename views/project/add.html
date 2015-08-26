@@ -25,9 +25,6 @@
                         <input type="radio" ng-model="project.accessStatus" name="accessStatus" value="private"> Privaatne
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" ng-model="project.accessStatus" name="accessStatus" value="public"> Avalik
-                    </label>
-                    <label class="radio-inline">
                         <input type="radio" ng-model="project.accessStatus" name="accessStatus" value="shared"> Jagatud
                     </label>
                 </div>
@@ -49,6 +46,6 @@
     </div>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-white btn-sm" ng-click="addCancel()">Katkesta</button>
+    <button type="button" class="btn btn-white btn-sm" ng-click="$dismiss()">Katkesta</button>
     <input type="submit" class="btn btn-primary btn-sm" ng-click="addOk(project, projectForm)" value="Loo projekt" />
 </div>

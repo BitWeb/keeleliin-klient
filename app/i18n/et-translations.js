@@ -5,8 +5,15 @@ define([], function () {
 
     return {
         'private'   : 'Privaatne',
-        'public'    : 'Avalik',
-        'shared'    : 'Jagatud'
+        'shared'    : 'Jagatud',
+
+        'INIT'      : 'Lisatud',
+        'RUNNING'   : 'Töös',
+        'FINISHED'  : 'Valmis',
+        'CANCELLED' : 'Katkestatud',
+        'ERROR'     : 'Viga'
+
+
     };
 
 });

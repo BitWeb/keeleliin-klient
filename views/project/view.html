@@ -4,13 +4,13 @@
         <h2>Esimene projekt</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="index.html">Avaleht</a>
+                <a ui-sref="home">Avaleht</a>
             </li>
             <li>
-                <a ui-sref="commerce.projects_list">Projektid</a>
+                <a ui-sref="project">Projektid</a>
             </li>
             <li class="active">
-                <strong>Esimene projekt </strong>
+                <strong>{{project.name}}</strong>
             </li>
         </ol>
     </div>
@@ -21,13 +21,13 @@
             <a class="btn btn-block btn-primary m-b-sm" ui-sref="forms.project_file_manager"><i class="fa fa-edit"></i> Muuda projekti resursse</a>
             <input id="search-file" class="input-sm form-control" placeholder="Otsi faili">
             <div class="m-t-sm m-b-md">
-                <label class="m-r-sm">NÃ¤ita:</label>
+                <label class="m-r-sm">Näita:</label>
                 <div data-toggle="buttons" class="btn-group">
-                    <label class="btn btn-sm btn-white active"> <input type="radio" id="option1" name="options"> KÃµiki faile </label>
+                    <label class="btn btn-sm btn-white active"> <input type="radio" id="option1" name="options"> Kõiki faile </label>
                     <label class="btn btn-sm btn-white"> <input type="radio" id="option2" name="options"> Sisendfaile </label>
                     <label class="btn btn-sm btn-white"> <input type="radio" id="option3" name="options"> Tulemeid </label>
                 </div>
-                <a href="#" class="btn btn-sm btn-link pull-right"><i class="fa fa-download"></i> Lae kÃµik tulemi failid alla</a>
+                <a href="#" class="btn btn-sm btn-link pull-right"><i class="fa fa-download"></i> Lae kõik tulemi failid alla</a>
             </div>
             <div class="project-tree m-t-md">
                 <ul>
@@ -57,7 +57,7 @@
                     </li>
                 </ul>
                 <ul>
-                    <li class="jstree-open">SÃµnede analÃ¼Ã¼s
+                    <li class="jstree-open">Sõnede analüüs
                         <ul>
                             <li class="jstree-open">ilmateated
                                 <ul>
@@ -77,19 +77,25 @@
                         <div class="col-lg-5">
                             <dl class="dl-horizontal">
                                 <dt>Lisaja:</dt>
-                                <dd>Mari Maasikas</dd>
+                                <dd>{{project.user.name}}</dd>
                                 <dt>Viimati muudetud:</dt>
-                                <dd>12.07.2015 12:15:57</dd>
+                                <dd>{{project.updatedAt | date : 'dd.MM.yyyy H:mm:ss'}}</dd>
                                 <dt>Loodud:</dt>
-                                <dd> 10.07.2015 23:36:57</dd>
+                                <dd>{{project.createdAt | date : 'dd.MM.yyyy H:mm:ss'}}</dd>
                             </dl>
                         </div>
                         <div class="col-lg-7" id="cluster_info">
                             <dl class="dl-horizontal">
-                                <dt>NÃ¤htav:</dt>
-                                <dd class="project-people">
-                                    <a href=""><img alt="image" class="img-circle" src="img/a3.jpg"></a>
-                                    <a href=""><img alt="image" class="img-circle" src="img/a1.jpg"></a>
+                                <dt>Nähtav:</dt>
+                                <dd ng-if="project.accessStatus == 'shared'" class="project-people">
+                                    <a ng-repeat="projectUser in project.projectUsers" href="">
+                                        <img alt="{{projectUser.name}}" class="img-circle" ng-src="{{projectUser.displaypicture}}" title="{{projectUser.name}}">
+                                    </a>
+                                </dd>
+                                <dd ng-if="project.accessStatus == 'private'" class="project-people">
+                                    <a href="">
+                                        <img alt="{{project.user.name}}" class="img-circle" ng-src="{{project.user.displaypicture}}" title="{{project.user.name}}">
+                                    </a>
                                 </dd>
                             </dl>
                         </div>
@@ -99,8 +105,7 @@
                             <dl class="dl-horizontal m-n">
                                 <dt>Kirjeldus:</dt>
                                 <dd>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris pharetra, risus at sollicitudin consequat, nisl nisi elementum leo, finibus viverra purus velit quis orci. Praesent sollicitudin rhoncus lectus eu fringilla. Mauris lectus felis, elementum a varius eu, volutpat sit amet lacus.</p>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris pharetra, risus at sollicitudin consequat, nisl nisi elementum leo, finibus viverra purus velit quis orci. Praesent sollicitudin rhoncus lectus eu fringilla. Mauris lectus felis, elementum a varius eu, volutpat sit amet lacus.</p>
+                                    {{project.description}}
                                 </dd>
                             </dl>
                         </div>
@@ -109,77 +114,61 @@
                 <div class="ibox-content">
                     <div class="row">
                         <div class="col-sm-12">
-                            <h3>TÃ¶Ã¶vood</h3>
+                            <h3>Töövood</h3>
                         </div>
                     </div>
                     <div class="project-list">
                         <table class="table table-hover">
                             <tbody>
-                            <tr>
-                                <td class="project-status">
-                                    <span class="label label-primary">TÃ¶Ã¶s</span>
-                                </td>
-                                <td class="project-title">
-                                    <a ui-sref="commerce.project_flow_detail">SÃµnede tÃµlkimine</a>
-                                    <br/>
-                                    <small>Lisatud 14.07.2015</small>
-                                </td>
-                                <td>
-                                    Alustatud
-                                    <br/>
-                                    <small> 15.07.2015 12:23</small>
-                                </td>
-                                <td>
-                                    LÃµpetatud
-                                </td>
-                                <td class="project-completion">
-                                    <small>Progress: 48%</small>
-                                    <div class="progress progress-mini">
-                                        <div style="width: 48%;" class="progress-bar"></div>
-                                    </div>
-                                </td>
-                                <td class="project-actions">
-                                    <a href="" class="btn btn-white btn-xs"><i class="fa fa-pencil"></i> Muuda </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="project-status">
-                                    <span class="label label-danger">Viga</span>
-                                </td>
-                                <td class="project-title">
-                                    <a ui-sref="commerce.project_flow_detail">SÃµnede tÃµlkimine</a>
-                                    <br/>
-                                    <small>Lisatud 14.07.2015</small>
-                                </td>
-                                <td>
-                                    Alustatud
-                                    <br/>
-                                    <small> 14.07.2015 14:34</small>
-                                </td>
-                                <td>
-                                    LÃµpetatud
-                                    <br/>
-                                    <small> 14.07.2015 14:40</small>
-                                </td>
-                                <td class="project-completion">
-                                    <small>Progress: 2%</small>
-                                    <div class="progress progress-mini">
-                                        <div style="width: 2%;" class="progress-bar"></div>
-                                    </div>
-                                </td>
-                                <td class="project-actions">
-                                    <a href="" class="btn btn-white btn-xs"><i class="fa fa-pencil"></i> Muuda </a>
-                                </td>
-                            </tr>
+                                <tr ng-repeat="workflow in workflows">
+                                    <td class="project-status">
+                                        <span ng-class="{
+                                                'label label-default': workflow.status == 'INIT',
+                                                'label label-primary': workflow.status == 'RUNNING',
+                                                'label label-success': workflow.status == 'FINISHED',
+                                                'label label-warning': workflow.status == 'CANCELLED',
+                                                'label label-danger': workflow.status == 'ERROR'
+                                            }">
+                                            {{workflow.status | translate}}
+                                        </span>
+                                    </td>
+                                    <td class="project-title">
+                                        <a ui-sref="commerce.project_flow_detail">{{workflow.name}}</a>
+                                        <br/>
+                                        <small>Lisatud {{workflow.datetimeCreated | date : 'dd.MM.yyyy'}}</small>
+                                    </td>
+                                    <td>
+                                        Alustatud
+                                        <br/>
+                                        <small> {{workflow.datetimeStart | date : 'dd.MM.yyyy H:mm'}}</small>
+                                    </td>
+                                    <td>
+                                        Lõpetatud
+                                        <br/>
+                                        <small> {{workflow.datetimeEnd | date : 'dd.MM.yyyy H:mm'}}</small>
+                                    </td>
+                                    <td class="project-completion">
+
+                                        <small>Progress: {{workflow.progress}}%</small>
+                                        <div class="progress progress-mini">
+                                            <div ng-style="{width: workflow.progress + '%'}" class="progress-bar"></div>
+                                        </div>
+
+                                    </td>
+                                    <td class="project-actions">
+                                        <a ui-sref="workflow({id: workflow.id})" class="btn btn-white btn-xs"><i class="fa fa-pencil"></i> Muuda </a>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
-                <div class="ibox-footer text-right" ng-controller="modalDemoCtrl">
-                    <a ui-sref="commerce.projects_list" class="btn btn-sm btn-link pull-left"><i class="fa fa-caret-left"></i> Tagasi projektide nimekirja</a>
-                    <a class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Muuda projekti sÃ¤tteid</a>
-                    <a ng-click="open()" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Defineeri uus tÃ¶Ã¶voog</a>
-                    <a ng-click="open6()" class="btn btn-info btn-sm"><i class="fa fa-plus"></i> Lisa uus tÃ¶Ã¶voog</a>
+                <div class="ibox-footer text-right">
+                    <a ui-sref="project" class="btn btn-sm btn-link pull-left"><i class="fa fa-caret-left"></i> Tagasi projektide nimekirja</a>
+
+                    <a class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Muuda projekti sätteid</a>
+                    <a ng-click="defineWorkflow()" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Defineeri uus töövoog</a>
+                    <a ng-click="open6()" class="btn btn-info btn-sm"><i class="fa fa-plus"></i> Lisa uus töövoog</a>
                 </div>
             </div>
         </div>
