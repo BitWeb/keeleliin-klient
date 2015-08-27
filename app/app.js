@@ -1,8 +1,8 @@
 define([
     'angularAMD',
     'appModule',
+    'config/global',
     'UserService',
-
     'MainController',
     'jquery',
     'jquery-ui',
@@ -10,15 +10,13 @@ define([
     'pace',
     'inspinia',
     'angular-translate',
-    'jstree',
     'directives',
     'sidebarDirectives',
     'ui-bootstrap'
-], function (angularAMD, app) {
+], function (angularAMD, app, globalConf) {
 
     app.constant('config', {
-            //API_URL : 'http://dev.bitweb.ee:3000/api/v1',
-            API_URL : 'http://localhost:8000/api/v1'
+            API_URL : globalConf.API_URL
         }
     );
 

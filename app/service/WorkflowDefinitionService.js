@@ -1,10 +1,42 @@
 define(['angularAMD'], function (angularAMD) {
 
-    angularAMD.service('ProjectService', [ '$http', 'config', '$modal',
+    angularAMD.service('WorkflowDefinitionService', [ '$http', 'config', '$modal',
         function( $http, config, $modal ) {
             var self = this;
 
-            this.getList = function ( callback ) {
+            this.openAddDefinitionModal = function ($scope, project) {
+                return $modal.open({
+                    templateUrl: '../../views/workflow/add_definition_modal.html',
+                    scope: $scope,
+                    controller: 'AddDefinitionModalController',
+                    resolve: {
+                        project: function(){
+                            return project;
+                        }
+                    }
+                });
+            };
+
+            this.addDefinition = function (definition, project, callback) {
+
+                $http.post(config.API_URL + '/workflow-definition/projectId/' + project.id, definition).then(
+                    function(data, status) {
+                        console.log(data.data);
+                        callback(null, data.data.data);
+                    },
+                    function(data, status) {
+                        if(!data){
+                            return callback(status);
+                        }
+                        console.log(data);
+                        callback(data);
+                    }
+                );
+            };
+
+
+
+        /*    this.getList = function ( callback ) {
 
                 $http.get(config.API_URL + '/project').then(
                     function(data) {
@@ -57,32 +89,7 @@ define(['angularAMD'], function (angularAMD) {
             };
 
 
-            this.addProject = function (project, callback) {
-                //todo refactor UI
-                var usersMap = [];
-                for(i in project.users){
-                    usersMap.push({
-                        userId: project.users[i],
-                        role: 'editor'
-                    });
-                }
 
-                project.users = usersMap;
-
-                $http.post(config.API_URL + '/project', project).then(
-                    function(data, status) {
-                        console.log(data.data);
-                        callback(null, data.data.data);
-                    },
-                    function(data, status) {
-                        if(!data){
-                            return callback(status);
-                        }
-                        console.log(data);
-                        callback(data);
-                    }
-                );
-            };
 
             this.getProject = function (id, callback) {
 
@@ -109,7 +116,7 @@ define(['angularAMD'], function (angularAMD) {
                     }
                 );
             };
-
+*/
 
         }
     ]);

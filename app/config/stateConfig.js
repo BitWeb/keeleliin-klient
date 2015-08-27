@@ -25,7 +25,7 @@ define(['angularAMD'], function (angularAMD) {
             $stateProvider.state(
                 'project', angularAMD.route({
                     url: "/project",
-                    templateUrl: "views/project/list-view.html",
+                    templateUrl: "views/project/list_view.html",
                     controller: 'ProjectListController',
                     resolve: {
                         loadPlugin: function ($ocLazyLoad) {
@@ -46,6 +46,14 @@ define(['angularAMD'], function (angularAMD) {
                     url: "/project/{id:[0-9]{1,8}}", //
                     templateUrl: "views/project/view.html",
                     controller: 'ProjectController'
+                })
+            );
+
+            $stateProvider.state(
+                'workflow-definition-edit', angularAMD.route({
+                    url: "/workflow-definition/{id:[0-9]{1,8}}", //
+                    templateUrl: "views/workflow/definition_edit.html",
+                    controller: 'WorkflowDefinitionEditController'
                 })
             );
         }

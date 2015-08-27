@@ -21,12 +21,11 @@ require.config({
         'ui-bootstrap'      : 'lib/bootstrap/ui-bootstrap-tpls-0.12.0.min',
         'angular-idle'      : 'lib/plugins/angular-idle/angular-idle',
         'jstree'            : 'lib/plugins/jsTree/jstree.min',
+        'ng-jstree'         : 'lib/plugins/jsTree/ngJsTree',
 
         'footable'          : 'lib/plugins/footable/footable.all.min',
         'chosen-jquery'     : 'lib/plugins/chosen/chosen.jquery',
         'chosen'            : 'lib/plugins/chosen/chosen',
-
-
 
         'directives'        : 'directive/directives',
         'sidebarDirectives' : 'directive/sidebarDirectives',
@@ -37,10 +36,13 @@ require.config({
         'ProjectListController' : 'controller/ProjectListController',
         'ProjectController' : 'controller/ProjectController',
         'MainController'    : 'controller/MainController',
-
+        'WorkflowAddDefinitionModalController': 'controller/workflow/AddDefinitionModalController',
+        'WorkflowDefinitionEditController' : 'controller/workflow/DefinitionEditController',
 
         'UserService'       : 'service/UserService',
-        'ProjectService'    : 'service/ProjectService'
+        'ProjectService'    : 'service/ProjectService',
+        'WorkflowDefinitionService': 'service/WorkflowDefinitionService',
+        'ResourceService'   : 'service/ResourceService'
     },
     shim: {
         'angular'           : ['jquery'],
@@ -58,6 +60,7 @@ require.config({
 
         'directives'        : ['jquery', 'metisMenu', 'slimscroll'],
         'sidebarDirectives' : ['jquery', 'metisMenu', 'slimscroll'],
+        'ng-jstree'         : ['angular', 'jstree', 'jquery'],
 
         'chosen'            : ['angular', 'chosen-jquery']
     },

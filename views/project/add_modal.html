@@ -9,12 +9,12 @@
         <p>Lisa projektile nimetus, kirjeldus ja määra privaatsussätted.</p>
         <form name="projectForm" role="form" novalidate>
             <div ng-class="{'has-error': projectForm.name.$invalid && projectForm.submitted,  'form-group': true}">
-                <label class="control-label">Nimetus</label>
+                <label class="control-label">Nimetus*</label>
                 <input name="name" type="text" ng-model="project.name" placeholder="Projekti nimetus" class="form-control" required>
                 <i ng-show="projectForm.name.$error.required && projectForm.submitted">Väli on nõutud</i>
             </div>
             <div ng-class="{'has-error': projectForm.description.$invalid && projectForm.submitted,  'form-group': true}">
-                <label class="control-label">Kirjeldus</label>
+                <label class="control-label">Kirjeldus*</label>
                 <textarea name="description" ng-model="project.description" placeholder="Projekti kirjeldus" class="form-control" required></textarea>
                 <i ng-show="projectForm.description.$error.required && projectForm.submitted">Väli on nõutud</i>
             </div>

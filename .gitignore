@@ -6,3 +6,4 @@ tmp
 .DS_Store
 .idea
 keeleliin-klient.iml
+app/config/global.js

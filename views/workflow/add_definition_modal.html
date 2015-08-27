@@ -5,23 +5,25 @@
 <div class="modal-body">
     <div class="row">
         <p>Lisa töövoole nimetus, kirjeldus ja eesmärk.</p>
-        <form role="form">
-            <div class="form-group">
-                <label>Nimetus</label>
-                <input type="text" placeholder="Töövoo nimetus" class="form-control">
+        <form role="form" name="form" novalidate>
+
+            <div ng-class="{'has-error': form.name.$invalid && form.submitted,  'form-group': true}">
+                <label class="control-label">Nimetus *</label>
+                <input type="text" name="name" ng-model="definition.name" placeholder="Töövoo nimetus" class="form-control" required="required">
+                <i ng-show="form.name.$error.required && form.submitted">Väli on nõutud</i>
             </div>
-            <div class="form-group">
-                <label>Kirjeldus</label>
-                <textarea placeholder="Töövoo kirjeldus" class="form-control"></textarea>
+            <div ng-class="{'has-error': form.description.$invalid && form.submitted,  'form-group': true}">
+                <label class="control-label">Kirjeldus</label>
+                <textarea name="description" ng-model="definition.description" placeholder="Töövoo kirjeldus" class="form-control"></textarea>
             </div>
-            <div class="form-group">
-                <label>Eesmärk</label>
-                <textarea placeholder="Töövoo eesmärk" class="form-control"></textarea>
+            <div ng-class="{'has-error': form.purpose.$invalid && form.submitted,  'form-group': true}">
+                <label class="control-label">Eesmärk</label>
+                <textarea name="purpose" ng-model="definition.purpose" placeholder="Töövoo eesmärk" class="form-control"></textarea>
             </div>
         </form>
     </div>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-white btn-sm" ng-click="$cancel()">Katkesta</button>
-    <button type="button"  ui-sref="app.project_new_flow" class="btn btn-primary btn-sm" ng-click="save()">Salvesta</button>
+    <button type="button" class="btn btn-white btn-sm" ng-click="$dismiss()">Katkesta</button>
+    <button type="button" class="btn btn-primary btn-sm" ng-click="save( form )">Salvesta</button>
 </div>
