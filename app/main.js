@@ -20,7 +20,7 @@ require.config({
         'etTranslations'   : 'i18n/et-translations',
         'ui-bootstrap'      : 'lib/bootstrap/ui-bootstrap-tpls-0.12.0.min',
         'angular-idle'      : 'lib/plugins/angular-idle/angular-idle',
-        'jstree'            : 'lib/plugins/jsTree/jstree.min',
+        'jstree'            : 'lib/plugins/jsTree/jstree',
         'ng-jstree'         : 'lib/plugins/jsTree/ngJsTree',
 
         'footable'          : 'lib/plugins/footable/footable.all.min',

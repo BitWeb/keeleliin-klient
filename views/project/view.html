@@ -23,34 +23,22 @@
             <div class="m-t-sm m-b-md">
                 <label class="m-r-sm">Näita:</label>
                 <div data-toggle="buttons" class="btn-group">
-                    <label class="btn btn-sm btn-white active"> <input type="radio" id="option1" name="options"> Kõiki faile </label>
-                    <label class="btn btn-sm btn-white"> <input type="radio" id="option2" name="options"> Sisendfaile </label>
-                    <label class="btn btn-sm btn-white"> <input type="radio" id="option3" name="options"> Tulemeid </label>
+                    <label ng-click="filterFiles()" class="btn btn-sm btn-white active">
+                        <input type="radio" id="option1" name="options"> Kõiki faile </label>
+                    <label ng-click="filterFiles('input')" class="btn btn-sm btn-white">
+                        <input type="radio" id="option2" name="options"> Sisendfaile </label>
+                    <label ng-click="filterFiles('output')" class="btn btn-sm btn-white">
+                        <input type="radio" id="option3" name="options"> Tulemeid </label>
                 </div>
-                <a href="#" class="btn btn-sm btn-link pull-right"><i class="fa fa-download"></i> Lae kõik tulemi failid alla</a>
+                <a ng-click="logSelected()" href="#" class="btn btn-sm btn-link pull-right"><i class="fa fa-download"></i> Lae kõik tulemi failid alla</a>
             </div>
-
 
             <div js-tree="treeConfig"
                  ng-model="resources"
-                 should-apply="ignoreModelChanges()"
+
                  tree="treeInstance"
                  tree-events="ready:readyCB;create_node:createNodeCB">
-
             </div>
-
-
-            <!--<div class="project-tree m-t-md">
-                <ul>
-                    <li ng-repeat="workflow in resources" class="jstree-close">{{workflow.name || ('Töövoog ' + workflow.id)}}
-                        <ul>
-                            <li ng-repeat="resource in workflow.resources" data-jstree='{"type":"text"}'>
-                                {{resource.name}}
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>-->
 
         </div>
         <div class="col-md-8">

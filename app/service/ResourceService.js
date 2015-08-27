@@ -17,17 +17,30 @@ define(['angularAMD'], function (angularAMD) {
                 );
             };
 
-            this.getJsTreeMapByWorkflow = function (list) {
+            this.getJsTreeMapByWorkflow = function (list, type) {
                 var map = {};
 
                 for(i in list){
                     var item = list[i];
-                    var topId = item.workflowId + 10000000;// + '_' + item.id
 
+                    if(type && item.contextType != type){
+                        continue;
+                    }
+
+                    if(!item.workflowId){
+                        map[item.id] = {
+                            id      : item.id,
+                            text    : item.name,
+                            type    : "text"
+                        };
+                        continue;
+                    }
+
+                    var topId = item.workflowId + 10000000;
                     var workflow = map[topId];
                     if(!workflow){
                         workflow = {
-                            id: item.workflowId,
+                            id: topId,
                             text: item.workflowName ? item.workflowName : ('Töövoog ' + item.workflowId),
                             children: []
                         };
@@ -46,13 +59,7 @@ define(['angularAMD'], function (angularAMD) {
                     workflows.push(map[i]);
                 }
 
-                var root = {
-                    id: 0,
-                    text: 'Ressursid',
-                    children: workflows
-                };
-
-                return [root];
+                return workflows;
             };
 
 
