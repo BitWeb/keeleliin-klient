@@ -4,7 +4,7 @@
             <li class="nav-header">
 
                 <div ng-if="user" class="dropdown profile-element" dropdown>
-                    <img alt="image" class="img-circle" src="assets/img/profile.jpg"/>
+                    <img alt="image" class="img-circle" ng-src="{{user.displaypicture && user.displaypicture || assets/img/profile.jpg }}" style="width:70px; height: 70px;" />
                     <a class="dropdown-toggle" dropdown-toggle href>
                             <span class="clear">
                                 <span class="block m-t-xs text-xs block">{{user.name}} <b class="caret"></b></span>
@@ -13,7 +13,7 @@
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
                         <!--<li><a ui-sref="profile">Minu konto</a></li>
                         <li class="divider"></li>-->
-                        <li><a ng-click="userService.signOut()" href="">Logi välja</a></li>
+                        <li><a ng-if="user" ng-click="userService.signOut()" href="">Logi välja</a></li>
                     </ul>
                 </div>
 

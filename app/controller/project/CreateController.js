@@ -15,11 +15,6 @@ define(["angularAMD"], function (angularAMD) {
 
         $scope.usersList = [];
 
-        $scope.addCancel = function () {
-            console.log($scope);
-            //modalInstance.dismiss('cancel');
-        };
-
         $scope.addOk = function (project, projectForm) {
             projectForm.submitted = true;
 
