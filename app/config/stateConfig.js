@@ -15,6 +15,7 @@ define(['angularAMD'], function (angularAMD) {
                     templateUrl: "views/auth/auth.html",
                     controller: 'AuthController'
                 }));
+
             $stateProvider.state(
                 'home', angularAMD.route({
                     url: "/home",
@@ -56,6 +57,18 @@ define(['angularAMD'], function (angularAMD) {
                     controller: 'WorkflowDefinitionEditController'
                 })
             );
+
+            $stateProvider.state('users', angularAMD.route({
+                url: '/users',
+                templateUrl: 'views/user/list.html',
+                controller: 'UserListController'
+            }));
+
+            $stateProvider.state('user', angularAMD.route({
+                url: '/user/{id:[0-9]{1,8}}',
+                templateUrl: 'views/user/edit.html',
+                controller: 'UserController'
+            }));
         }
     }
 });

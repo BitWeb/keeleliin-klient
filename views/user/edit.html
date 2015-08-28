@@ -1,0 +1,59 @@
+<div class="row wrapper border-bottom white-bg page-heading ng-scope">
+    <div class="col-lg-10">
+        <h2>Kasutajate haldus</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a ui-sref="home">Avaleht</a>
+            </li>
+            <li>
+                <a ui-sref="users">Kasutajate haldus</a>
+            </li>
+            <li class="active">
+                <strong>{{user.name}}</strong>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInUp ng-scope">
+    <div class="ibox">
+        <div class="ibox-content">
+
+            <div ng-show="message" class="alert alert-success">{{message}}</div>
+
+            <form class="form-horizontal" id="userForm" name="userForm">
+                <fieldset>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Kasutaja nimi:</label>
+                        <div class="col-sm-5">
+                            <input ng-model="user.name" class="form-control" name="name" placeholder="Nimi" disabled="disabled" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">E-mail:</label>
+                        <div class="col-sm-5">
+                            <input ng-model="user.email" class="form-control" name="email" placeholder="E-mail" disabled="disabled" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Roll:</label>
+                        <div class="col-sm-5">
+                            <select class="form-control" ng-model="user.role" name="role" required="required">
+                                <option ng-repeat="role in roles" value="{{role}}">{{role | translate}}</option>
+                            </select>
+                            <div ng-show="form.$submitted || form.uEmail.$touched">
+                                <span ng-show="userForm.role.$error.required">Role is required.</span>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+
+        <div class="ibox-footer text-right ng-scope">
+            <a ui-sref="users" class="btn btn-sm btn-link pull-left"><i class="fa fa-caret-left"></i> Tagasi kasutajate nimekirja</a>
+            <a class="btn btn-white btn-sm" ng-click="reset(userForm)">Katkesta</a>
+            <a class="btn btn-primary btn-sm" ng-click="update(user)" ng-disabled="userForm.$invalid"><i class="fa fa-save"></i> Salvesta</a>
+        </div>
+    </div>
+</div>

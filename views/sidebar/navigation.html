@@ -29,6 +29,11 @@
                     <span class="pull-right label label-primary"></span>
                 </a>
             </li>
+            <li ng-class="{active : $state.include('users')}">
+                <a ui-sref="users">
+                    <i class="fa fa-users"></i> <span class="nav-label">Kasutajate haldus</span>
+                </a>
+            </li>
         </ul>
     </div>
 </nav>

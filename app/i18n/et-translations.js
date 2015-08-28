@@ -11,7 +11,10 @@ define([], function () {
         'RUNNING'   : 'Töös',
         'FINISHED'  : 'Valmis',
         'CANCELLED' : 'Katkestatud',
-        'ERROR'     : 'Viga'
+        'ERROR'     : 'Viga',
+
+        'regular'   : 'Tavakasutaja',
+        'admin'     : 'Administraator'
 
 
     };

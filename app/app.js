@@ -15,10 +15,7 @@ define([
     'ui-bootstrap'
 ], function (angularAMD, app, globalConf) {
 
-    app.constant('config', {
-            API_URL : globalConf.API_URL
-        }
-    );
+    app.constant('config', globalConf);
 
     app.run(['$rootScope', '$state', '$stateParams', 'UserService', function ($rootScope, $state, $stateParams, userService) {
         $rootScope.$state = $state;

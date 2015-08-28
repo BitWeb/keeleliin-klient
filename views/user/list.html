@@ -1,0 +1,81 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Kasutajate haldus</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a ui-sref="home">Avaleht</a>
+            </li>
+            <li class="active">
+                <strong>Kasutajate haldus</strong>
+            </li>
+        </ol>
+    </div>
+</div>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div ng-show="errorMessage" class="alert alert-error">{{errorMessage}}</div>
+
+    <div class="ibox-content m-b-sm border-bottom">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="control-label">Nimi</label>
+                    <input ng-model="name" class="form-control" type="text" ng-change="searchUsers()" placeholder="Kasutaja nimi" />
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="control-label">Roll</label>
+                    <select ng-model="role" class="form-control" ng-change="searchUsers()" name="role">
+                        <option value="">- Roll -</option>
+                        <option ng-repeat="role in roles" value="{{role}}">{{role | translate}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ibox-content m-b-sm border-bottom">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nimi</th>
+                        <th>Lisamise kuupäev</th>
+                        <th>Muutmise kuupäev</th>
+                        <th>Roll</th>
+                        <th>Staatus</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr dir-paginate="user in users | filter: searchFilter | itemsPerPage: perPage" total-items="totalCount" current-page="pagination.current" boundary-links="true">
+                        <td>{{user.id}}</td>
+                        <td><a ui-sref="user({id: user.id})">{{user.name}}</a></td>
+                        <td>{{user.created_at | date : 'dd.MM.yyyy'}}</td>
+                        <td>{{user.updated_at | date : 'dd.MM.yyyy'}}</td>
+                        <td>{{user.role | translate}}</td>
+                        <td>
+                            <div ng-if="user.is_active">
+                                Aktiivne
+                            </div>
+                            <div ng-if="!user.is_active">
+                                <span class="label label-warning">Peatatud</span>
+                            </div>
+                        </td>
+                        <td class="text-right">
+                            <div class="btn-group">
+                                <button ng_show="!user.is_active" class="btn btn-success btn-xs" ng-click="enableDisableUser(user)"><i class="fa fa-check"></i> Aktiveeri</button>
+                                <button ng-show="user.is_active" class="btn-white btn btn-xs" ng-click="enableDisableUser(user)"> <i class="fa fa-ban"></i> Peata</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="text-right">
+                <dir-pagination-controls on-page-change="changePage(newPageNumber)" template-url="views/templates/pagination.html"></dir-pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>

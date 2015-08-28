@@ -105,15 +105,52 @@ define(['appModule'], function (app) {
                 $http.defaults.headers.common['x-access-token'] = token;
             };
 
-            this.getUsersList = function (callback) {
-                console.log('Request user Info');
-                $http.get( config.API_URL + '/user/list').then(function ( response ) {
+            this.getUser = function(id, callback) {
+                $http.get(config.API_URL + '/user/details/' + id).then(function(response) {
                     callback(null, response.data.data);
-                }, function ( response ) {
+                }, function(response) {
+                    callback(response);
+                });
+            };
+
+            this.getUsersList = function (pagination, callback) {
+                console.log('Request user Info');
+                pagination = pagination  || {};
+                var url = config.API_URL + '/user/list?',
+                    isParamAdded = false;
+
+                if (pagination.page && pagination.perPage) {
+                    url += 'page=' + pagination.page + '&perPage=' + pagination.perPage;
+                    isParamAdded = true;
+                }
+
+                if (pagination.name) {
+                    url += (isParamAdded ? '&' : '') + 'name=' + pagination.name;
+                    isParamAdded = true;
+                }
+
+                if (pagination.role) {
+                    url += (isParamAdded ? '&' : '') + 'role=' + pagination.role;
+                }
+
+                $http.get(url).then(function (response) {
+                    callback(null, response.data.data);
+                }, function (response) {
+                    callback(response);
+                });
+            };
+
+            this.updateUser = function(user, callback) {
+                var userData = {
+                    role: user.role,
+                    isActive: user.is_active
+                };
+                $http.put(config.API_URL + '/user/details/' + user.id, userData).then(function(response) {
+                    callback(response.errors, response.data);
+                }, function(response) {
                     callback(response);
                 });
             }
-
         }
     ]);
 });
