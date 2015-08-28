@@ -1,14 +1,14 @@
 define(['angularAMD'], function (angularAMD) {
 
-    angularAMD.service('ResourceService', [ '$http', 'config', '$modal',
-        function( $http, config, $modal ) {
+    angularAMD.service('ResourceService', [ '$log', '$http', 'config', '$modal','UserService',
+        function( $log, $http, config, $modal, userService ) {
             var self = this;
 
             this.getResourcesList = function (params, callback) {
 
                 $http.get(config.API_URL + '/resource', {params: params}).then(
                     function(data) {
-                        console.log(data);
+                        $log.log(data);
                         callback(null, data.data.data);
                     },
                     function(data) {
@@ -17,8 +17,9 @@ define(['angularAMD'], function (angularAMD) {
                 );
             };
 
-            this.getJsTreeMapByWorkflow = function (list, type) {
+            this.getJsTreeMapByWorkflow = function (list, type, keyword) {
                 var map = {};
+                var treeMap = {};
 
                 for(i in list){
                     var item = list[i];
@@ -27,31 +28,46 @@ define(['angularAMD'], function (angularAMD) {
                         continue;
                     }
 
+                    if(keyword){
+                        var name = item.name;
+                        if(name.indexOf(keyword) == -1){
+                            continue;
+                        }
+                    }
+
+                    var fileId = i;
+                    var workflowId = item.workflowId + 10000000;
+
                     if(!item.workflowId){
-                        map[item.id] = {
-                            id      : item.id,
+                        treeMap[fileId] = item.id;
+                        map[fileId] = {
+                            id      : fileId,
                             text    : item.name,
                             type    : "text"
                         };
                         continue;
                     }
 
-                    var topId = item.workflowId + 10000000;
-                    var workflow = map[topId];
+                    var workflow = map[workflowId];
                     if(!workflow){
                         workflow = {
-                            id: topId,
+                            id: workflowId,
                             text: item.workflowName ? item.workflowName : ('Töövoog ' + item.workflowId),
-                            children: []
+                            children: [],
+                            state: {
+                                opened:false
+                            }
                         };
+                        map[workflowId] = workflow
                     }
+
+                    treeMap[fileId] = item.id;
                     var child = {
-                        id      : item.id,
+                        id      : fileId,
                         text    : item.name,
                         type    : "text"
                     };
                     workflow.children.push( child );
-                    map[topId] = workflow
                 }
 
                 var workflows = [];
@@ -59,46 +75,19 @@ define(['angularAMD'], function (angularAMD) {
                     workflows.push(map[i]);
                 }
 
-                return workflows;
+                return {
+                    resources: workflows,
+                    resourcesMap: treeMap
+                };
             };
 
-
-
-
-
-/*            this.openAddDefinitionModal = function ($scope, project) {
-                return $modal.open({
-                    templateUrl: '../../views/workflow/add_definition_modal.html',
-                    scope: $scope,
-                    controller: 'AddDefinitionModalController',
-                    resolve: {
-                        project: function(){
-                            return project;
-                        }
-                    }
-                });
-            };*/
-
-            /*this.addDefinition = function (definition, project, callback) {
-
-                $http.post(config.API_URL + '/workflow-definition/projectId/' + project.id, definition).then(
-                    function(data, status) {
-                        console.log(data.data);
-                        callback(null, data.data.data);
-                    },
-                    function(data, status) {
-                        if(!data){
-                            return callback(status);
-                        }
-                        console.log(data);
-                        callback(data);
-                    }
-                );
+            this.downloadResourceById = function (id) {
+                var anchor = angular.element('<a/>');
+                anchor.attr({
+                    href: config.API_URL + '/resource/download/' +id + '?token=' + userService.getToken(),
+                    target: '_blank'
+                })[0].click();
             };
-*/
-
-
-
         }
     ]);
 });

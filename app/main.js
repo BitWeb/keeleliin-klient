@@ -21,6 +21,7 @@ require.config({
         'ui-bootstrap'      : 'lib/bootstrap/ui-bootstrap-tpls-0.12.0.min',
         'angular-idle'      : 'lib/plugins/angular-idle/angular-idle',
         'jstree'            : 'lib/plugins/jsTree/jstree',
+        'jstree-plugins'    : 'lib/keeleliin/jstree_plugins',
         'ng-jstree'         : 'lib/plugins/jsTree/ngJsTree',
 
         'footable'          : 'lib/plugins/footable/footable.all.min',
@@ -38,6 +39,7 @@ require.config({
         'MainController'    : 'controller/MainController',
         'WorkflowAddDefinitionModalController': 'controller/workflow/AddDefinitionModalController',
         'WorkflowDefinitionEditController' : 'controller/workflow/DefinitionEditController',
+        'ResourceTreeController' : 'controller/resource/TreeController',
 
         'UserService'       : 'service/UserService',
         'ProjectService'    : 'service/ProjectService',
@@ -60,8 +62,8 @@ require.config({
 
         'directives'        : ['jquery', 'metisMenu', 'slimscroll'],
         'sidebarDirectives' : ['jquery', 'metisMenu', 'slimscroll'],
-        'ng-jstree'         : ['angular', 'jstree', 'jquery'],
-
+        'jstree-plugins'    : ['jstree', 'jquery'],
+        'ng-jstree'         : ['angular', 'jstree', 'jstree-plugins', 'jquery'],
         'chosen'            : ['angular', 'chosen-jquery']
     },
     deps: ['app']
