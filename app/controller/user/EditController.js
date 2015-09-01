@@ -1,5 +1,5 @@
 define(['angularAMD'], function(angularAMD) {
-    angularAMD.controller('UserController', ['$scope', '$stateParams', 'UserService', 'config', function($scope, $stateParams, userService, config) {
+    angularAMD.controller('UserEditController', ['$scope', '$stateParams', 'UserService', 'config', function($scope, $stateParams, userService, config) {
         $scope.message = null;
         $scope.user = null;
         $scope.roles = config.user.roles;

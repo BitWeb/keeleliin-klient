@@ -24,8 +24,8 @@ define(['angularAMD'], function (angularAMD) {
                 }));
 
             $stateProvider.state(
-                'project', angularAMD.route({
-                    url: "/project",
+                'projects', angularAMD.route({
+                    url: "/projects",
                     templateUrl: "views/project/list_view.html",
                     controller: 'ProjectListController',
                     resolve: {
@@ -78,7 +78,7 @@ define(['angularAMD'], function (angularAMD) {
             $stateProvider.state('user', angularAMD.route({
                 url: '/user/{id:[0-9]{1,8}}',
                 templateUrl: 'views/user/edit.html',
-                controller: 'UserController'
+                controller: 'UserEditController'
             }));
 
             $stateProvider.state(
@@ -88,6 +88,13 @@ define(['angularAMD'], function (angularAMD) {
                     controller: 'WorkflowViewController'
                 })
             );
+
+            $stateProvider.state('services', angularAMD.route({
+                url: '/services',
+                templateUrl: 'views/service/list.html',
+                controller: 'ServiceListController'
+            }));
+
 
 
 

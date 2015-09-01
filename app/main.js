@@ -33,26 +33,26 @@ require.config({
         'sidebarDirectives' : 'directive/sidebarDirectives',
         'stateConfig'       : 'config/stateConfig',
 
-        'AuthController'    : 'controller/AuthController',
-        'HomeController'    : 'controller/HomeController',
+        'AuthController'        : 'controller/AuthController',
+        'HomeController'        : 'controller/HomeController',
         'ProjectListController' : 'controller/ProjectListController',
         'ProjectViewController' : 'controller/project/ViewController',
-        'MainController'    : 'controller/MainController',
+        'MainController'        : 'controller/MainController',
         'WorkflowAddDefinitionModalController': 'controller/workflow/AddDefinitionModalController',
         'WorkflowDefinitionEditController' : 'controller/workflow/DefinitionEditController',
-        'WorkflowViewController' : 'controller/workflow/ViewController',
+        'WorkflowViewController'    : 'controller/workflow/ViewController',
+        'ServiceListController'     : 'controller/service/ListController',
 
+        'ResourceTreeController'    : 'controller/resource/TreeController',
 
-        'ResourceTreeController' : 'controller/resource/TreeController',
-
-        'UserController'    : 'controller/UserController',
-        'UserListController': 'controller/UserListController',
-        'UserService'       : 'service/UserService',
-        'ProjectService'    : 'service/ProjectService',
-        'WorkflowService'   : 'service/WorkflowService',
-
-        'WorkflowDefinitionService': 'service/WorkflowDefinitionService',
-        'ResourceService'   : 'service/ResourceService'
+        'UserEditController'        : 'controller/user/EditController',
+        'UserListController'        : 'controller/user/ListController',
+        'UserService'               : 'service/UserService',
+        'ProjectService'            : 'service/ProjectService',
+        'WorkflowService'           : 'service/WorkflowService',
+        'WorkflowDefinitionService' : 'service/WorkflowDefinitionService',
+        'ResourceService'           : 'service/ResourceService',
+        'ServiceService'            : 'service/ServiceService'
     },
     shim: {
         'angular'           : ['jquery'],
