@@ -1,62 +1,97 @@
 define([
     'angularAMD',
     'ServiceService',
+    'ResourceService',
     'chosen',
     'icheck'
 ], function(angularAMD) {
 
-    angularAMD.controller('ServiceEditController', ['$scope', '$stateParams', 'ServiceService',
-        function( $scope, $stateParams, serviceService ) {
+    angularAMD.controller('ServiceEditController', ['$scope', '$stateParams', 'ServiceService', 'ResourceService',
+        function( $scope, $stateParams, serviceService, resourceService ) {
 
-            var service = {
-                "id": 1,
-                "name": "Lausestaja",
-                "description": null,
-                "url": "http://dev.bitweb.ee:3001/api/v1/",
-                "sid": "lau",
-                "isSynchronous": false,
-                "isActive": true,
-                "serviceParams": [
-                    {
-                        "id": 1,
-                        "type": "text",
-                        "key": "isAsync",
-                        "value": "1",
-                        "isEditable": false,
-                        "description": null,
-                        "paramOptions": []
+            $scope.service = {
+                serviceParams: []
+            };
+
+            resourceService.getResourceTypes(function (err, types) {
+                if(err){
+                    return alert('Err');//todo
+                }
+                $scope.resourceTypes = types;
+
+                serviceService.getService( $stateParams.id, function (err, data) {
+                    if(err){
+                        return alert('Err');
                     }
-                ],
-                "serviceInputTypes": [
-                    {
-                        "id": 1,
-                        "key": "content",
-                        "doParallel": false,
-                        "sizeLimit": 0,
-                        "sizeUnit": "byte",
-                        "isList": false,
-                        "resourceTypeId": 1
-                    }
-                ],
-                "serviceOutputTypes": [
-                    {
-                        "id": 1,
-                        "key": "output",
-                        "resourceTypeId": 1
-                    }
-                ]
+                    console.log(data);
+                    $scope.service = data;
+                });
+            });
+
+            $scope.addServiceParam = function () {
+                $scope.service.serviceParams.push({
+                    'type': 'text',
+                    'key': '',
+                    'value': '',
+                    'isEditable': true,
+                    'description': '',
+                    'paramOptions': []
+                });
+            };
+
+            $scope.removeServiceParam = function(index){
+                $scope.service.serviceParams.splice(index, 1);
+            };
+
+            $scope.addParamOption = function(serviceParam){
+                serviceParam.paramOptions.push({
+                    value: '',
+                    label: ''
+                });
+            };
+
+            $scope.removeParamOption = function(serviceParam, optionIndex){
+                serviceParam.paramOptions.splice(optionIndex, 1);
             };
 
 
-
-
-
-            serviceService.getService( $stateParams.id, function (err, data) {
-                if(err){
-                    return alert('Err');
+            var getResourceTypeById = function (id) {
+                for(i in $scope.resourceTypes){
+                    if($scope.resourceTypes[i].id == id){
+                       return $scope.resourceTypes[i];
+                    }
                 }
-                console.log(data);
-                $scope.service = data;
-            });
+            };
+
+            $scope.inputResourceTypeUpdated = function( inputType ){
+                var resourceType = getResourceTypeById( inputType.resourceTypeId );
+                if(resourceType && resourceType.splitType != 'NONE'){
+                    inputType.doParallel = true;
+                }
+            };
+
+            $scope.canDoParallel = function( inputType ){
+                var resourceType = getResourceTypeById( inputType.resourceTypeId );
+                if(resourceType && resourceType.splitType == 'NONE'){
+                    return false;
+                }
+                return true;
+            };
+
+            $scope.saveService = function (form) {
+                form.submitted = true;
+
+                if(!form.$valid){
+                    return;
+                }
+
+                serviceService.updateService( $scope.service, function (err, data) {
+                    if(err){
+                        return alert('Err');
+                    }
+                    console.log(data);
+
+                });
+            }
         }]);
 });

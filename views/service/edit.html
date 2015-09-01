@@ -16,14 +16,16 @@
     </div>
 </div>
 <div class="row">
-    <div class="wrapper wrapper-content animated fadeInUp">
+    <form name="serviceForm" role="form" novalidate>
+        <div class="wrapper wrapper-content animated fadeInUp">
         <div class="ibox">
             <div class="ibox-content">
                 <fieldset class="form-horizontal">
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Nimetus:</label>
+                    <div ng-class="{'has-error': serviceForm.name.$invalid && serviceForm.submitted,  'form-group': true}">
+                        <label class="col-sm-2 control-label">Nimetus*:</label>
                         <div class="col-sm-10">
-                            <input name="name" ng-model="service.name" type="text" class="form-control" placeholder="Teenuse nimetus">
+                            <input name="name" ng-model="service.name" type="text" class="form-control" placeholder="Teenuse nimetus" required>
+                            <i ng-show="serviceForm.name.$error.required && serviceForm.submitted">Väli on nõutud</i>
                         </div>
                     </div>
                     <div class="form-group">
@@ -32,16 +34,18 @@
                             <textarea name="description" ng-model="service.description" class="form-control" placeholder="Teenuse kirjeldus"></textarea>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Teenuse URL:</label>
+                    <div ng-class="{'has-error': serviceForm.url.$invalid && serviceForm.submitted,  'form-group': true}">
+                        <label class="col-sm-2 control-label">Teenuse URL*:</label>
                         <div class="col-sm-10">
-                            <input name="url" ng-model="service.url" type="text" class="form-control" placeholder="Teenuse URL">
+                            <input name="url" ng-model="service.url" type="text" class="form-control" placeholder="Teenuse URL" required>
+                            <i ng-show="serviceForm.url.$error.required && serviceForm.submitted">Väli on nõutud</i>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Lühinimi:</label>
+                    <div ng-class="{'has-error': serviceForm.sid.$invalid && serviceForm.submitted,  'form-group': true}">
+                        <label class="col-sm-2 control-label">Lühinimi*:</label>
                         <div class="col-sm-4">
-                            <input name="sid" ng-model="service.sid" type="text" class="form-control" placeholder="Lühinimi">
+                            <input name="sid" ng-model="service.sid" type="text" class="form-control" placeholder="Lühinimi" required>
+                            <i ng-show="serviceForm.sid.$error.required && serviceForm.submitted">Väli on nõutud</i>
                         </div>
                     </div>
                     <div class="form-group">
@@ -58,7 +62,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">Eelnevad teenused:</label>
+                        <label class="col-sm-2 control-label">Eelnevad teenused TODO:</label>
                         <div class="col-sm-10">
                             <select multiple chosen class="chosen-select m-t-md form-control" style="width:100%;" tabindex="4" data-placeholder="Määra võimalikud teenused">
                                 <option value="Teenus 1">Teenus 1</option>
@@ -71,8 +75,8 @@
 
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Parameetrid :</label>
-                        <div class="col-sm-10">
-                            <button class="btn btn-white"><i class="fa fa-plus"></i> Lisa parameeter</button>
+                        <div class="col-sm-8">
+                            <button ng-click="addServiceParam()" class="btn btn-white"><i class="fa fa-plus"></i> Lisa parameeter</button>
                             <div class="table-responsive m-t-sm">
                                 <table class="table table-bordered table-stripped">
                                     <thead>
@@ -81,7 +85,7 @@
                                             Tüüp
                                         </th>
                                         <th>
-                                            Nimi
+                                            Kirjeldus
                                         </th>
                                         <th>
                                             Võti
@@ -94,72 +98,167 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
+
+                                    <tr ng-repeat="serviceParam in service.serviceParams">
                                         <td>
-                                            <select class="form-control input-sm">
-                                                <option selected="selected">Tekst</option>
-                                                <option>Valik</option>
+                                            <select name="type" ng-model="serviceParam.type" class="form-control input-sm">
+                                                <option value="select">Valik</option>
+                                                <option value="text">Tekst</option>
                                             </select>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control input-sm" placeholder="Nimi">
+                                            <input name="description" ng-model="serviceParam.description" type="text" class="form-control input-sm" placeholder="Kirjeldus">
                                         </td>
                                         <td>
-                                            <input type="text" placeholder="Võti" class="form-control">
+                                            <input name="key" ng-model="serviceParam.key" type="text" class="form-control" placeholder="Võti">
                                         </td>
                                         <td>
-                                            <input type="text" placeholder="Väärtus" class="form-control">
+                                            <div ng-if="serviceParam.type == 'text'">
+                                                <input name="value" ng-model="serviceParam.value" type="text" class="form-control" placeholder="Väärtus">
+                                            </div>
+                                            <div ng-if="serviceParam.type == 'select'">
+
+                                                <div class="row m-b-sm">
+                                                    <div class="col-md-10 p-r-none">
+                                                        <input name="value" ng-model="serviceParam.value" type="text" class="form-control" placeholder="Väärtus">
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <a ng-click="addParamOption(serviceParam)" href="" class="btn btn-white btn-sm" title="Lisa valik">
+                                                            <i class="fa fa-plus"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div ng-repeat="(optionIndex, option) in serviceParam.paramOptions" class="row m-b-sm">
+                                                    <div class="col-md-5 p-r-none">
+                                                        <input ng-model="option.value" type="text" placeholder="Väärtus" class="form-control">
+                                                    </div>
+                                                    <div class="col-md-5 p-r-none">
+                                                        <input ng-model="option.label" type="text" placeholder="Nimetus" class="form-control">
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <a ng-click="removeParamOption(serviceParam, optionIndex)" href="" class="btn btn-white btn-sm" title="Kustuta valik"><i class="fa fa-trash"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </td>
-                                        <td class="text-center"><input icheck type="checkbox" ng-model="main.checkOne"></td>
+                                        <td class="text-center">
+                                            <input name="isEditable" ng-model="serviceParam.isEditable" icheck type="checkbox" />
+                                        </td>
                                         <td>
-                                            <button class="btn btn-white btn-sm"><i class="fa fa-trash"></i> </button>
+                                            <button ng-click="removeServiceParam($index)" class="btn btn-white btn-sm" title="Kustuta parameeter">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
                                         </td>
                                     </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Sisendressursid*:</label>
+                        <div class="col-sm-8">
+                            <button ng-click="addServiceInputType()" class="btn btn-white"><i class="fa fa-plus"></i> Lisa sisendi tüüp</button>
+                            <div class="table-responsive m-t-sm">
+                                <table class="table table-bordered table-stripped">
+                                    <thead>
+                                        <tr>
+                                            <th width="100px">
+                                                Võti
+                                            </th>
+                                            <th>
+                                                Ressursi tüüp
+                                            </th>
+                                            <th width="30"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="inputType in service.serviceInputTypes">
+                                            <td>
+                                                <input name="key" ng-model="inputType.key" type="text" class="form-control" placeholder="Võti">
+                                            </td>
+                                            <td>
+                                                <div class=" m-b-sm ">
+                                                    <select
+                                                            name="type"
+                                                            ng-model="inputType.resourceTypeId"
+                                                            class="form-control input-sm"
+                                                            ng-options="resourceType.id as resourceType.name for resourceType in resourceTypes"
+                                                            ng-change="inputResourceTypeUpdated( inputType )"
+                                                            >
+                                                    </select>
+                                                </div>
+
+
+                                                <div ng-if="canDoParallel(inputType)" class="row m-b-sm">
+                                                    <div class="col-md-12 m-b-sm">
+                                                        <input name="isParallel" ng-model="inputType.isParallel" icheck type="checkbox" /> Tee paraleelseks
+                                                    </div>
+                                                    <div ng-if="inputType.isParallel">
+                                                        <div class="col-md-6 p-r-none">
+                                                            <input ng-model="inputType.sizeLimit" type="text" placeholder="Suuruse piir" class="form-control input-sm" >
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <select ng-model="inputType.sizeUnit" class="form-control input-sm">
+                                                                <option value="byte">Baiti</option>
+                                                                <option value="line">Rida</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <button ng-click="removeServiceInputType($index)" class="btn btn-white btn-sm" title="Kustuta sisendi tüüp">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Väljundressursid*:</label>
+                        <div class="col-sm-8">
+                            <button ng-click="addServiceOutputType()" class="btn btn-white"><i class="fa fa-plus"></i> Lisa väljundi tüüp</button>
+                            <div class="table-responsive m-t-sm">
+                                <table class="table table-bordered table-stripped">
+                                    <thead>
                                     <tr>
+                                        <th width="100px">
+                                            Võti
+                                        </th>
+                                        <th>
+                                            Ressursi tüüp
+                                        </th>
+                                        <th width="30"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="outputType in service.serviceOutputTypes">
                                         <td>
-                                            <select class="form-control input-sm">
-                                                <option>Tekst</option>
-                                                <option selected="selected">Valik</option>
-                                            </select>
+                                            <input name="key" ng-model="outputType.key" type="text" class="form-control" placeholder="Võti">
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control input-sm" placeholder="Nimi">
-                                        </td>
-                                        <td>
-                                            <input type="text" placeholder="Võti" class="form-control">
-                                        </td>
-                                        <td>
-                                            <div class="row m-b-sm">
-                                                <div class="col-md-5 p-r-none">
-                                                    <input type="text" placeholder="Võti" class="form-control">
-                                                </div>
-                                                <div class="col-md-5 p-r-none">
-                                                    <input type="text" placeholder="Väärtus" class="form-control">
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <a href="#" class="btn btn-white btn-sm"><i class="fa fa-plus"></i></a>
-                                                </div>
-                                            </div>
-                                            <div class="row m-b-sm">
-                                                <div class="col-md-5 p-r-none">
-                                                    <input type="text" placeholder="Võti" class="form-control">
-                                                </div>
-                                                <div class="col-md-5 p-r-none">
-                                                    <input type="text" placeholder="Väärtus" class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="row m-b-sm">
-                                                <div class="col-md-5 p-r-none">
-                                                    <input type="text" placeholder="Võti" class="form-control">
-                                                </div>
-                                                <div class="col-md-5 p-r-none">
-                                                    <input type="text" placeholder="Väärtus" class="form-control">
-                                                </div>
+                                            <div class=" m-b-sm ">
+                                                <select
+                                                        name="type"
+                                                        ng-model="outputType.resourceTypeId"
+                                                        class="form-control input-sm"
+                                                        ng-options="resourceType.id as resourceType.name for resourceType in resourceTypes"
+
+                                                        >
+                                                </select>
                                             </div>
                                         </td>
-                                        <td class="text-center"><input icheck type="checkbox" ng-model="main.checkTwo"></td>
                                         <td>
-                                            <button class="btn btn-white btn-sm"><i class="fa fa-trash"></i> </button>
+                                            <button ng-click="removeServiceOutputType($index)" class="btn btn-white btn-sm" title="Kustuta väljundi tüüp">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -167,15 +266,18 @@
                             </div>
                         </div>
                     </div>
+
+
+
                 </fieldset>
             </div>
 
             <div class="ibox-footer text-right ng-scope">
                 <a ui-sref="services" class="btn btn-sm btn-link pull-left"><i class="fa fa-caret-left"></i> Tagasi teenuste nimekirja</a>
-                <a class="btn btn-danger btn-sm m-r-lg"><i class="fa fa-trash"></i> Kustuta teenus</a>
-                <a class="btn btn-white btn-sm"> Katkesta</a>
-                <a class="btn btn-primary btn-sm"><i class="fa fa-save"></i> Salvesta</a>
+                <a ng-if="service.id" class="btn btn-danger btn-sm m-r-lg"><i class="fa fa-trash"></i> Kustuta teenus</a>
+                <a ng-click="saveService(serviceForm)" class="btn btn-primary btn-sm"><i class="fa fa-save"></i> Salvesta</a>
             </div>
         </div>
     </div>
+    </form>
 </div>

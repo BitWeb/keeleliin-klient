@@ -88,6 +88,19 @@ define(['angularAMD'], function (angularAMD) {
                     target: '_blank'
                 })[0].click();
             };
+
+            this.getResourceTypes = function (callback) {
+
+                $http.get(config.API_URL + '/resource/types').then(
+                    function(data) {
+                        $log.log(data);
+                        callback(null, data.data.data);
+                    },
+                    function(data) {
+                        callback(data);
+                    }
+                );
+            }
         }
     ]);
 });

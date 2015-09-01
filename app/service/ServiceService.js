@@ -38,6 +38,28 @@ define(['angularAMD'], function (angularAMD) {
                     }
                 );
             };
+
+            this.saveService = function (service, callback) {
+                $http.post(config.API_URL + '/service').then(
+                    function(data) {
+                        callback(null, data.data.data);
+                    },
+                    function(data) {
+                        callback(data);
+                    }
+                );
+            };
+
+            this.updateService = function (service, callback) {
+                $http.put(config.API_URL + '/service/' + service.id ).then(
+                    function(data) {
+                        callback(null, data.data.data);
+                    },
+                    function(data) {
+                        callback(data);
+                    }
+                );
+            }
         }
     ]);
 });

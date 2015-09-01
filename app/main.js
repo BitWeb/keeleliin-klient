@@ -75,7 +75,7 @@ require.config({
         'sidebarDirectives' : ['jquery', 'metisMenu', 'slimscroll'],
         'jstree-plugins'    : ['jstree', 'jquery'],
         'ng-jstree'         : ['angular', 'jstree', 'jstree-plugins', 'jquery'],
-        'icheck'            : [],
+        'icheck'            : ['angular','jquery'],
         'chosen'            : ['angular', 'chosen-jquery']
     },
     deps: ['app']
