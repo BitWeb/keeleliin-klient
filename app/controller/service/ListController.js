@@ -1,6 +1,7 @@
 define([
     'angularAMD',
-    'ServiceService'
+    'ServiceService',
+    'footable'
     ], function(angularAMD) {
 
     angularAMD.controller('ServiceListController', ['$scope', '$stateParams', 'ServiceService',

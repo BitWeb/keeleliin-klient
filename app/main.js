@@ -35,7 +35,7 @@ require.config({
 
         'AuthController'        : 'controller/AuthController',
         'HomeController'        : 'controller/HomeController',
-        'ProjectListController' : 'controller/ProjectListController',
+        'ProjectListController' : 'controller/project/ListController',
         'ProjectViewController' : 'controller/project/ViewController',
         'MainController'        : 'controller/MainController',
         'WorkflowAddDefinitionModalController': 'controller/workflow/AddDefinitionModalController',
