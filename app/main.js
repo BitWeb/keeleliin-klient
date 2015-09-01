@@ -24,7 +24,7 @@ require.config({
         'jstree'            : 'lib/plugins/jsTree/jstree',
         'jstree-plugins'    : 'lib/keeleliin/jstree_plugins',
         'ng-jstree'         : 'lib/plugins/jsTree/ngJsTree',
-
+        'icheck'            : 'lib/plugins/iCheck/icheck.min',
         'footable'          : 'lib/plugins/footable/footable.all.min',
         'chosen-jquery'     : 'lib/plugins/chosen/chosen.jquery',
         'chosen'            : 'lib/plugins/chosen/chosen',
@@ -42,6 +42,8 @@ require.config({
         'WorkflowDefinitionEditController' : 'controller/workflow/DefinitionEditController',
         'WorkflowViewController'    : 'controller/workflow/ViewController',
         'ServiceListController'     : 'controller/service/ListController',
+        'ServiceEditController'     : 'controller/service/EditController',
+        'ServiceAddController'     : 'controller/service/AddController',
 
         'ResourceTreeController'    : 'controller/resource/TreeController',
 
@@ -73,6 +75,7 @@ require.config({
         'sidebarDirectives' : ['jquery', 'metisMenu', 'slimscroll'],
         'jstree-plugins'    : ['jstree', 'jquery'],
         'ng-jstree'         : ['angular', 'jstree', 'jstree-plugins', 'jquery'],
+        'icheck'            : [],
         'chosen'            : ['angular', 'chosen-jquery']
     },
     deps: ['app']

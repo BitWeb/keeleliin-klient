@@ -95,10 +95,45 @@ define(['angularAMD'], function (angularAMD) {
                 controller: 'ServiceListController'
             }));
 
+            $stateProvider.state('service', angularAMD.route({
+                url: '/service/{id:[0-9]{1,8}}',
+                templateUrl: 'views/service/edit.html',
+                controller: 'ServiceEditController',
+                resolve: {
+                    loadPlugin: function ($ocLazyLoad) {
+                        return $ocLazyLoad.load([
+                            {
+                                files: ['assets/css/plugins/iCheck/custom.css']
+                            },
+                            {
+                                insertBefore: '#loadBefore',
+                                name: 'localytics.directives',
+                                files: ['assets/css/plugins/chosen/chosen.css']
+                            }
+                        ]);
+                    }
+                }
+            }));
 
-
-
-
+            $stateProvider.state('service-insert', angularAMD.route({
+                url: '/service',
+                templateUrl: 'views/service/edit.html',
+                controller: 'ServiceAddController',
+                resolve: {
+                    loadPlugin: function ($ocLazyLoad) {
+                        return $ocLazyLoad.load([
+                            {
+                                files: ['assets/css/plugins/iCheck/custom.css']
+                            },
+                            {
+                                insertBefore: '#loadBefore',
+                                name: 'localytics.directives',
+                                files: ['assets/css/plugins/chosen/chosen.css']
+                            }
+                        ]);
+                    }
+                }
+            }));
         }
     }
 });

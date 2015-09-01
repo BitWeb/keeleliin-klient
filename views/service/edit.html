@@ -1,0 +1,181 @@
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>{{service.name || 'Uus teenus'}}</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a ui-sref="home">Avaleht</a>
+            </li>
+            <li>
+                <a ui-sref="services">Teenuste haldus</a>
+            </li>
+            <li class="active">
+                <strong>{{service.name || 'Uus teenus'}} </strong>
+            </li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="wrapper wrapper-content animated fadeInUp">
+        <div class="ibox">
+            <div class="ibox-content">
+                <fieldset class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Nimetus:</label>
+                        <div class="col-sm-10">
+                            <input name="name" ng-model="service.name" type="text" class="form-control" placeholder="Teenuse nimetus">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Kirjeldus:</label>
+                        <div class="col-sm-10">
+                            <textarea name="description" ng-model="service.description" class="form-control" placeholder="Teenuse kirjeldus"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Teenuse URL:</label>
+                        <div class="col-sm-10">
+                            <input name="url" ng-model="service.url" type="text" class="form-control" placeholder="Teenuse URL">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Lühinimi:</label>
+                        <div class="col-sm-4">
+                            <input name="sid" ng-model="service.sid" type="text" class="form-control" placeholder="Lühinimi">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Paralleelne:</label>
+                        <div class="col-sm-4">
+                            <input icheck type="checkbox" name="isParallel" ng-model="service.isParallel" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Aktiveeritud:</label>
+                        <div class="col-sm-4">
+                            <input icheck type="checkbox" name="isActive" ng-model="service.isActive"  >
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Eelnevad teenused:</label>
+                        <div class="col-sm-10">
+                            <select multiple chosen class="chosen-select m-t-md form-control" style="width:100%;" tabindex="4" data-placeholder="Määra võimalikud teenused">
+                                <option value="Teenus 1">Teenus 1</option>
+                                <option value="Teenus 3">Teenus 3</option>
+                                <option value="Teenus 5">Teenus 5</option>
+                                <option value="Teenus 8">Teenus 8</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Parameetrid :</label>
+                        <div class="col-sm-10">
+                            <button class="btn btn-white"><i class="fa fa-plus"></i> Lisa parameeter</button>
+                            <div class="table-responsive m-t-sm">
+                                <table class="table table-bordered table-stripped">
+                                    <thead>
+                                    <tr>
+                                        <th width="100px">
+                                            Tüüp
+                                        </th>
+                                        <th>
+                                            Nimi
+                                        </th>
+                                        <th>
+                                            Võti
+                                        </th>
+                                        <th>Väärtus</th>
+                                        <th width="60">
+                                            Muudetav
+                                        </th>
+                                        <th width="30"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>
+                                            <select class="form-control input-sm">
+                                                <option selected="selected">Tekst</option>
+                                                <option>Valik</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control input-sm" placeholder="Nimi">
+                                        </td>
+                                        <td>
+                                            <input type="text" placeholder="Võti" class="form-control">
+                                        </td>
+                                        <td>
+                                            <input type="text" placeholder="Väärtus" class="form-control">
+                                        </td>
+                                        <td class="text-center"><input icheck type="checkbox" ng-model="main.checkOne"></td>
+                                        <td>
+                                            <button class="btn btn-white btn-sm"><i class="fa fa-trash"></i> </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <select class="form-control input-sm">
+                                                <option>Tekst</option>
+                                                <option selected="selected">Valik</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control input-sm" placeholder="Nimi">
+                                        </td>
+                                        <td>
+                                            <input type="text" placeholder="Võti" class="form-control">
+                                        </td>
+                                        <td>
+                                            <div class="row m-b-sm">
+                                                <div class="col-md-5 p-r-none">
+                                                    <input type="text" placeholder="Võti" class="form-control">
+                                                </div>
+                                                <div class="col-md-5 p-r-none">
+                                                    <input type="text" placeholder="Väärtus" class="form-control">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <a href="#" class="btn btn-white btn-sm"><i class="fa fa-plus"></i></a>
+                                                </div>
+                                            </div>
+                                            <div class="row m-b-sm">
+                                                <div class="col-md-5 p-r-none">
+                                                    <input type="text" placeholder="Võti" class="form-control">
+                                                </div>
+                                                <div class="col-md-5 p-r-none">
+                                                    <input type="text" placeholder="Väärtus" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row m-b-sm">
+                                                <div class="col-md-5 p-r-none">
+                                                    <input type="text" placeholder="Võti" class="form-control">
+                                                </div>
+                                                <div class="col-md-5 p-r-none">
+                                                    <input type="text" placeholder="Väärtus" class="form-control">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-center"><input icheck type="checkbox" ng-model="main.checkTwo"></td>
+                                        <td>
+                                            <button class="btn btn-white btn-sm"><i class="fa fa-trash"></i> </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="ibox-footer text-right ng-scope">
+                <a ui-sref="services" class="btn btn-sm btn-link pull-left"><i class="fa fa-caret-left"></i> Tagasi teenuste nimekirja</a>
+                <a class="btn btn-danger btn-sm m-r-lg"><i class="fa fa-trash"></i> Kustuta teenus</a>
+                <a class="btn btn-white btn-sm"> Katkesta</a>
+                <a class="btn btn-primary btn-sm"><i class="fa fa-save"></i> Salvesta</a>
+            </div>
+        </div>
+    </div>
+</div>

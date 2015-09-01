@@ -31,7 +31,7 @@ define(['angularAMD'], function (angularAMD) {
 
                 $http.get(config.API_URL + '/service/' + serviceId ).then(
                     function(data) {
-                        callback(null, data.data);
+                        callback(null, data.data.data);
                     },
                     function(data) {
                         callback(data);

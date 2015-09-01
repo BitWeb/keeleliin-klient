@@ -12,7 +12,8 @@ define([
     'angular-translate',
     'directives',
     'sidebarDirectives',
-    'ui-bootstrap'
+    'ui-bootstrap',
+    'icheck'
 ], function (angularAMD, app, globalConf) {
 
     app.constant('config', globalConf);
