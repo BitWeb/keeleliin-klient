@@ -3,16 +3,16 @@ define([
     'ng-jstree',
     'ProjectService',
     'footable',
+    'chosen',
     'WorkflowAddDefinitionModalController',
     'WorkflowDefinitionService',
-    'ResourceTreeController'
+    'ResourceTreeController',
+    'controller/project/UpdateController'
 ], function (angularAMD) {
 
-    angularAMD.controller('ProjectController', [ '$scope', '$state', '$stateParams', 'ProjectService','$modal','WorkflowDefinitionService','ResourceService','$log', '$timeout',
+    angularAMD.controller('ProjectViewController', [ '$scope', '$state', '$stateParams', 'ProjectService','$modal','WorkflowDefinitionService','ResourceService','$log',
         function($scope, $state, $stateParams, projectService, $modal, workflowDefinitionService, resourceService, $log ) {
-            console.log('ProjectController');
-
-            $log.debug('HOLA');
+            $log.log('ProjectController');
 
             $scope.projectId = $stateParams.id;
 
@@ -36,5 +36,8 @@ define([
                 workflowDefinitionService.openAddDefinitionModal($scope, $scope.project);
             };
 
+            $scope.openUpdateModal = function () {
+                projectService.openUpdateModal($scope);
+            };
         }]);
 });

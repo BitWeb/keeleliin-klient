@@ -134,6 +134,7 @@ define(['appModule'], function (app) {
                 }
 
                 $http.get(url).then(function (response) {
+
                     callback(null, response.data.data);
                 }, function (response) {
                     callback(response);

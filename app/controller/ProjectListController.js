@@ -1,4 +1,11 @@
-define(['angularAMD','ProjectService', 'footable', 'chosen', 'controller/project/CreateController', 'controller/project/DeleteController'], function (angularAMD) {
+define([
+    'angularAMD',
+    'ProjectService',
+    'footable',
+    'chosen',
+    'controller/project/CreateController',
+    'controller/project/DeleteController'],
+    function (angularAMD) {
 
 angularAMD.controller('ProjectListController', [ '$scope', '$state', '$stateParams', 'ProjectService','UserService',
     function($scope, $state, $stateParams, projectService, userService) {
@@ -13,8 +20,6 @@ angularAMD.controller('ProjectListController', [ '$scope', '$state', '$statePara
             console.log(data);
             $scope.projects = data.rows;
         });
-
-
 
         $scope.openCreateModal = function () {
             projectService.openCreateModal($scope);

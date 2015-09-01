@@ -80,9 +80,6 @@ function footableNgRow(){
     }
 }
 
-
-
-
 /**
  *
  * Pass all functions into module
@@ -91,4 +88,42 @@ app.directive('dropZone', dropZone)
     .directive('fullScroll', fullScroll)
     .directive('fitHeight', fitHeight)
     .directive('footableNgRow', footableNgRow);
+
+
+
+    app.directive('klStatus', ['$filter', function ($filter) {
+
+        var statusClassMap = {
+            INIT        : 'label-default',
+            RUNNING     : 'label-primary',
+            FINISHED    : 'label-success',
+            CANCELLED   : 'label-warning',
+            ERROR       : 'label-danger'
+        };
+
+
+        return {
+            restrict: 'A',
+            scope: {},
+            link: function(scope, element, attrs) {
+
+                element.addClass('label');
+                element.addClass(statusClassMap[attrs.klStatus]);
+                element.text( $filter('translate')(attrs.klStatus) );
+
+            },
+
+            controller: ['$scope','$element', '$attrs', function($scope, $element, $attrs ) {
+
+                $attrs.$observe('klStatus', function(klStatus){
+                    $element.removeClass('label-*');
+                    $element.addClass(statusClassMap[klStatus]);
+                    $element.text( $filter('translate')(klStatus) );
+                });
+
+            }]
+        };
+    }]);
+
+
 });

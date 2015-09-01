@@ -46,7 +46,18 @@ define(['angularAMD'], function (angularAMD) {
                 'project-item', angularAMD.route({
                     url: "/project/{id:[0-9]{1,8}}", //
                     templateUrl: "views/project/view.html",
-                    controller: 'ProjectController'
+                    controller: 'ProjectViewController',
+                    resolve: {
+                        loadPlugin: function ($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                {
+                                    insertBefore: '#loadBefore',
+                                    name: 'localytics.directives',
+                                    files: ['assets/css/plugins/chosen/chosen.css']
+                                }
+                            ]);
+                        }
+                    }
                 })
             );
 
@@ -69,6 +80,18 @@ define(['angularAMD'], function (angularAMD) {
                 templateUrl: 'views/user/edit.html',
                 controller: 'UserController'
             }));
+
+            $stateProvider.state(
+                'workflow-view', angularAMD.route({
+                    url: "/workflow-view/{id:[0-9]{1,8}}", //
+                    templateUrl: "views/workflow/view.html",
+                    controller: 'WorkflowViewController'
+                })
+            );
+
+
+
+
         }
     }
 });

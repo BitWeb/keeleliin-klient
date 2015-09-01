@@ -1,31 +1,33 @@
 <div class="modal-header">
-    <h4 ng-if="project.id" class="modal-title">
-        Uus projekt
+    <h4 class="modal-title">
+        {{updateProject.name}} sätted
     </h4>
 </div>
 <div class="modal-body">
     <div class="row">
+
         <div ng-show="projectForm.$invalid && projectForm.submitted" class="alert alert-danger" role="alert">Vormi valideerimisel tekkisid vead!</div>
+
         <p>Lisa projektile nimetus, kirjeldus ja määra privaatsussätted.</p>
         <form name="projectForm" role="form" novalidate>
             <div ng-class="{'has-error': projectForm.name.$invalid && projectForm.submitted,  'form-group': true}">
                 <label class="control-label">Nimetus*</label>
-                <input name="name" type="text" ng-model="project.name" placeholder="Projekti nimetus" class="form-control" required>
+                <input name="name" type="text" ng-model="updateProject.name" placeholder="Projekti nimetus" class="form-control" required>
                 <i ng-show="projectForm.name.$error.required && projectForm.submitted">Väli on nõutud</i>
             </div>
             <div ng-class="{'has-error': projectForm.description.$invalid && projectForm.submitted,  'form-group': true}">
                 <label class="control-label">Kirjeldus*</label>
-                <textarea name="description" ng-model="project.description" placeholder="Projekti kirjeldus" class="form-control" required></textarea>
+                <textarea name="description" ng-model="updateProject.description" placeholder="Projekti kirjeldus" class="form-control" required></textarea>
                 <i ng-show="projectForm.description.$error.required && projectForm.submitted">Väli on nõutud</i>
             </div>
             <div class="form-group clearfix">
                 <label>Privaatsussätted</label>
                 <div class="col-sm-12">
                     <label class="radio-inline">
-                        <input type="radio" ng-model="project.accessStatus" name="accessStatus" value="private"> Privaatne
+                        <input type="radio" ng-model="updateProject.accessStatus" name="accessStatus" value="private"> Privaatne
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" ng-model="project.accessStatus" name="accessStatus" value="shared"> Jagatud
+                        <input type="radio" ng-model="updateProject.accessStatus" name="accessStatus" value="shared"> Jagatud
                     </label>
                 </div>
             </div>
@@ -44,17 +46,17 @@
 
                 <table class="table table-striped">
                     <thead>
-                        <tr>
-                            <th>
-                                Nimi
-                            </th>
-                            <th>
-                                Roll
-                            </th>
-                        </tr>
+                    <tr>
+                        <th>
+                            Nimi
+                        </th>
+                        <th>
+                            Roll
+                        </th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="user in project.users">
+                        <tr ng-repeat="user in updateProject.users">
                             <td>
                                 {{ getUserName( user.userId )}}
                             </td>
@@ -69,6 +71,6 @@
     </div>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-white btn-sm" ng-click="$dismiss()">Katkesta</button>
-    <input type="submit" class="btn btn-primary btn-sm" ng-click="saveOk(project, projectForm)" value="Loo projekt" />
+    <button type="button" class="btn btn-white btn-sm" ng-click="$dismiss()">Loobu</button>
+    <input type="submit" class="btn btn-primary btn-sm" ng-click="saveOk( projectForm )" value="Salvesta" />
 </div>

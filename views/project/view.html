@@ -73,18 +73,10 @@
                             <tbody>
                                 <tr ng-repeat="workflow in workflows">
                                     <td class="project-status">
-                                        <span ng-class="{
-                                                'label label-default': workflow.status == 'INIT',
-                                                'label label-primary': workflow.status == 'RUNNING',
-                                                'label label-success': workflow.status == 'FINISHED',
-                                                'label label-warning': workflow.status == 'CANCELLED',
-                                                'label label-danger': workflow.status == 'ERROR'
-                                            }">
-                                            {{workflow.status | translate}}
-                                        </span>
+                                        <span kl-status="{{workflow.status}}" />
                                     </td>
                                     <td class="project-title">
-                                        <a ui-sref="commerce.project_flow_detail">{{workflow.name}}</a>
+                                        <a ui-sref="workflow-view({id:workflow.id})">{{workflow.name || ('Töövoog ' + workflow.id)}}</a>
                                         <br/>
                                         <small>Lisatud {{workflow.datetimeCreated | date : 'dd.MM.yyyy'}}</small>
                                     </td>
@@ -117,7 +109,7 @@
                 <div class="ibox-footer text-right">
                     <a ui-sref="project" class="btn btn-sm btn-link pull-left"><i class="fa fa-caret-left"></i> Tagasi projektide nimekirja</a>
 
-                    <a class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Muuda projekti sätteid</a>
+                    <a ng-click="openUpdateModal()" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Muuda projekti sätteid</a>
                     <a ng-click="openDefineWorkflowModal()" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Defineeri uus töövoog</a>
                     <a ng-click="open6()" class="btn btn-info btn-sm"><i class="fa fa-plus"></i> Lisa uus töövoog</a>
                 </div>

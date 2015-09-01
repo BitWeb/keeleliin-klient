@@ -14,8 +14,10 @@ define([], function () {
         'ERROR'     : 'Viga',
 
         'regular'   : 'Tavakasutaja',
-        'admin'     : 'Administraator'
+        'admin'     : 'Administraator',
 
+        'editor'    : 'Muutmine',
+        'viewer'    : 'Vaatamine'
 
     };
 

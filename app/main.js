@@ -36,16 +36,21 @@ require.config({
         'AuthController'    : 'controller/AuthController',
         'HomeController'    : 'controller/HomeController',
         'ProjectListController' : 'controller/ProjectListController',
-        'ProjectController' : 'controller/ProjectController',
+        'ProjectViewController' : 'controller/project/ViewController',
         'MainController'    : 'controller/MainController',
         'WorkflowAddDefinitionModalController': 'controller/workflow/AddDefinitionModalController',
         'WorkflowDefinitionEditController' : 'controller/workflow/DefinitionEditController',
+        'WorkflowViewController' : 'controller/workflow/ViewController',
+
+
         'ResourceTreeController' : 'controller/resource/TreeController',
 
         'UserController'    : 'controller/UserController',
         'UserListController': 'controller/UserListController',
         'UserService'       : 'service/UserService',
         'ProjectService'    : 'service/ProjectService',
+        'WorkflowService'   : 'service/WorkflowService',
+
         'WorkflowDefinitionService': 'service/WorkflowDefinitionService',
         'ResourceService'   : 'service/ResourceService'
     },
