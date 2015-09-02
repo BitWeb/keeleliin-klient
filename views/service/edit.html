@@ -65,14 +65,20 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Eelnevad teenused TODO:</label>
+                    <div class="form-group" ng-show="servicesList">
+                        <label class="col-sm-2 control-label">Eelnevad teenused:</label>
                         <div class="col-sm-10">
-                            <select multiple chosen class="chosen-select m-t-md form-control" style="width:100%;" tabindex="4" data-placeholder="Määra võimalikud teenused">
-                                <option value="Teenus 1">Teenus 1</option>
-                                <option value="Teenus 3">Teenus 3</option>
-                                <option value="Teenus 5">Teenus 5</option>
-                                <option value="Teenus 8">Teenus 8</option>
+                            <select
+                                    multiple
+                                    chosen
+                                    ng-model="service.parentServices"
+                                    name="previousServices"
+                                    class="chosen-select m-t-md form-control"
+                                    style="width:100%;"
+                                    tabindex="4"
+                                    data-placeholder="Määra võimalikud teenused"
+                                    ng-options="item.id as item.name for item in servicesList"
+                                    >
                             </select>
                         </div>
                     </div>
@@ -82,9 +88,6 @@
                         <div class="col-sm-8">
                             <button ng-click="addServiceParam()" class="btn btn-white"><i class="fa fa-plus"></i> Lisa parameeter</button>
                             <div class="table-responsive m-t-sm">
-
-
-
                                 <table class="table table-bordered table-stripped">
                                     <thead>
                                     <tr>
@@ -201,9 +204,9 @@
                                                 </div>
                                                 <div ng-if="canDoParallel(inputType)" class="row m-b-sm">
                                                     <div class="col-md-12 m-b-sm">
-                                                        <input name="isParallel" ng-model="inputType.isParallel" icheck type="checkbox" /> Tee paraleelseks
+                                                        <input name="doParallel" ng-model="inputType.doParallel" icheck type="checkbox" /> Tee paraleelseks
                                                     </div>
-                                                    <div ng-if="inputType.isParallel">
+                                                    <div ng-if="inputType.doParallel">
                                                         <div class="col-md-6 p-r-none" ng-class="{ 'has-error' : inputTypeForm.sizeLimit.$invalid && serviceForm.submitted }">
                                                             <input name="sizeLimit" ng-model="inputType.sizeLimit" type="text" placeholder="Suuruse piir" class="form-control input-sm" required>
                                                         </div>

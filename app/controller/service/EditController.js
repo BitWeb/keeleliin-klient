@@ -6,8 +6,8 @@ define([
     'icheck'
 ], function(angularAMD) {
 
-    angularAMD.controller('ServiceEditController', ['$scope', '$stateParams', 'ServiceService', 'ResourceService',
-        function( $scope, $stateParams, serviceService, resourceService ) {
+    angularAMD.controller('ServiceEditController', ['$scope', '$stateParams', 'ServiceService', 'ResourceService','$log',
+        function( $scope, $stateParams, serviceService, resourceService, $log ) {
 
             $scope.errorMessage = null;
             $scope.successMessage = null;
@@ -27,6 +27,14 @@ define([
                     $scope.service = data;
                 });
             };
+
+            serviceService.getServicesSelectList( function (err, data) {
+                if(err){
+                    return alert('Err');
+                }
+                console.log(data);
+                $scope.servicesList = data;
+            });
 
             resourceService.getResourceTypes(function (err, types) {
                 if(err){
@@ -111,21 +119,23 @@ define([
 
             $scope.saveService = function (form) {
                 form.submitted = true;
-
-                console.log(form);
-
                 if(!form.$valid){
+                    $log.info(form);
+                    $log.info($scope.service);
                     $scope.errorMessage = 'Vormi valideerimisel tekkis vigu';
                     return;
                 }
 
                 var saveCallback = function (err, data) {
-                    if(err){
+                    if(err || !data){
+                        $log.debug('Err', err);
+
                         $scope.errorMessage = 'Salvestamisel tekkis viga';
                         return;
                     }
                     $scope.service = data;
                     $scope.errorMessage = null;
+                    form.submitted = false;
                     $scope.successMessage = 'Salvestatud';
                 };
 

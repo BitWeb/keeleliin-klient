@@ -1,7 +1,7 @@
 define(['angularAMD'], function (angularAMD) {
 
-    angularAMD.service('ServiceService', [ '$http', 'config',
-        function( $http, config ) {
+    angularAMD.service('ServiceService', [ '$http', 'config','$log',
+        function( $http, config, $log ) {
             var self = this;
 
             this.getServicesList = function (callback) {
@@ -40,7 +40,7 @@ define(['angularAMD'], function (angularAMD) {
             };
 
             this.saveService = function (service, callback) {
-                $http.post(config.API_URL + '/service').then(
+                $http.post(config.API_URL + '/service', service).then(
                     function(data) {
                         callback(null, data.data.data);
                     },
@@ -51,14 +51,26 @@ define(['angularAMD'], function (angularAMD) {
             };
 
             this.updateService = function (service, callback) {
-                $http.put(config.API_URL + '/service/' + service.id ).then(
+                $http.put(config.API_URL + '/service/' + service.id, service ).then(
                     function(data) {
-                        callback(null, data.data.data);
+                        $log.debug('Update response: ', data);
+                        callback(data.data.errors, data.data.data);
                     },
                     function(data) {
                         callback(data);
                     }
                 );
+            };
+
+            this.getServicesSelectList = function (callback) {
+                self.getServicesList(function (err, data) {
+                    if(err){
+                        return callback(err);
+                    }
+                    callback(null, data.filter(function (item) {
+                        return item.isActive == true;
+                    }));
+                });
             }
         }
     ]);
