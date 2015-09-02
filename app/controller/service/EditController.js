@@ -9,8 +9,23 @@ define([
     angularAMD.controller('ServiceEditController', ['$scope', '$stateParams', 'ServiceService', 'ResourceService',
         function( $scope, $stateParams, serviceService, resourceService ) {
 
+            $scope.errorMessage = null;
+            $scope.successMessage = null;
+
             $scope.service = {
-                serviceParams: []
+                serviceParams: [],
+                serviceInputTypes: [],
+                serviceOutputTypes: []
+            };
+
+            var loadServiceFromServer = function () {
+                serviceService.getService( $stateParams.id, function (err, data) {
+                    if(err){
+                        return alert('Err');
+                    }
+                    console.log(data);
+                    $scope.service = data;
+                });
             };
 
             resourceService.getResourceTypes(function (err, types) {
@@ -19,15 +34,12 @@ define([
                 }
                 $scope.resourceTypes = types;
 
-                serviceService.getService( $stateParams.id, function (err, data) {
-                    if(err){
-                        return alert('Err');
-                    }
-                    console.log(data);
-                    $scope.service = data;
-                });
+                if( $stateParams.id ){
+                    loadServiceFromServer();
+                }
             });
 
+            //Service param rows
             $scope.addServiceParam = function () {
                 $scope.service.serviceParams.push({
                     'type': 'text',
@@ -54,6 +66,15 @@ define([
                 serviceParam.paramOptions.splice(optionIndex, 1);
             };
 
+            // input resources
+
+            $scope.addServiceInputType = function () {
+                $scope.service.serviceInputTypes.push({});
+            };
+
+            $scope.removeServiceInputType = function (index) {
+                $scope.service.serviceInputTypes.splice(index, 1);
+            };
 
             var getResourceTypeById = function (id) {
                 for(i in $scope.resourceTypes){
@@ -78,20 +99,41 @@ define([
                 return true;
             };
 
+            // output resources
+
+            $scope.addServiceOutputType = function () {
+                $scope.service.serviceOutputTypes.push({});
+            };
+
+            $scope.removeServiceOutputType = function (index) {
+                $scope.service.serviceOutputTypes.splice(index, 1);
+            };
+
             $scope.saveService = function (form) {
                 form.submitted = true;
 
+                console.log(form);
+
                 if(!form.$valid){
+                    $scope.errorMessage = 'Vormi valideerimisel tekkis vigu';
                     return;
                 }
 
-                serviceService.updateService( $scope.service, function (err, data) {
+                var saveCallback = function (err, data) {
                     if(err){
-                        return alert('Err');
+                        $scope.errorMessage = 'Salvestamisel tekkis viga';
+                        return;
                     }
-                    console.log(data);
+                    $scope.service = data;
+                    $scope.errorMessage = null;
+                    $scope.successMessage = 'Salvestatud';
+                };
 
-                });
+                if($scope.service.id){
+                    serviceService.updateService( $scope.service, saveCallback);
+                } else {
+                    serviceService.saveService( $scope.service, saveCallback);
+                }
             }
         }]);
 });

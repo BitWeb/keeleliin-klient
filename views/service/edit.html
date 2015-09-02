@@ -20,8 +20,12 @@
         <div class="wrapper wrapper-content animated fadeInUp">
         <div class="ibox">
             <div class="ibox-content">
+
+                <div ng-show="errorMessage" class="alert alert-danger">{{errorMessage}}</div>
+                <div ng-show="successMessage" class="alert alert-success">{{successMessage}}</div>
+
                 <fieldset class="form-horizontal">
-                    <div ng-class="{'has-error': serviceForm.name.$invalid && serviceForm.submitted,  'form-group': true}">
+                    <div class="form-group" ng-class="{'has-error': serviceForm.name.$invalid && serviceForm.submitted }">
                         <label class="col-sm-2 control-label">Nimetus*:</label>
                         <div class="col-sm-10">
                             <input name="name" ng-model="service.name" type="text" class="form-control" placeholder="Teenuse nimetus" required>
@@ -34,14 +38,14 @@
                             <textarea name="description" ng-model="service.description" class="form-control" placeholder="Teenuse kirjeldus"></textarea>
                         </div>
                     </div>
-                    <div ng-class="{'has-error': serviceForm.url.$invalid && serviceForm.submitted,  'form-group': true}">
+                    <div class="form-group" ng-class="{'has-error': serviceForm.url.$invalid && serviceForm.submitted }">
                         <label class="col-sm-2 control-label">Teenuse URL*:</label>
                         <div class="col-sm-10">
                             <input name="url" ng-model="service.url" type="text" class="form-control" placeholder="Teenuse URL" required>
                             <i ng-show="serviceForm.url.$error.required && serviceForm.submitted">Väli on nõutud</i>
                         </div>
                     </div>
-                    <div ng-class="{'has-error': serviceForm.sid.$invalid && serviceForm.submitted,  'form-group': true}">
+                    <div class="form-group" ng-class="{'has-error': serviceForm.sid.$invalid && serviceForm.submitted }">
                         <label class="col-sm-2 control-label">Lühinimi*:</label>
                         <div class="col-sm-4">
                             <input name="sid" ng-model="service.sid" type="text" class="form-control" placeholder="Lühinimi" required>
@@ -49,9 +53,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">Paralleelne:</label>
+                        <label class="col-sm-2 control-label">Sünkroonne:</label>
                         <div class="col-sm-4">
-                            <input icheck type="checkbox" name="isParallel" ng-model="service.isParallel" />
+                            <input icheck type="checkbox" name="isSynchronous" ng-model="service.isSynchronous" />
                         </div>
                     </div>
                     <div class="form-group">
@@ -78,6 +82,9 @@
                         <div class="col-sm-8">
                             <button ng-click="addServiceParam()" class="btn btn-white"><i class="fa fa-plus"></i> Lisa parameeter</button>
                             <div class="table-responsive m-t-sm">
+
+
+
                                 <table class="table table-bordered table-stripped">
                                     <thead>
                                     <tr>
@@ -99,9 +106,9 @@
                                     </thead>
                                     <tbody>
 
-                                    <tr ng-repeat="serviceParam in service.serviceParams">
-                                        <td>
-                                            <select name="type" ng-model="serviceParam.type" class="form-control input-sm">
+                                    <tr ng-repeat="serviceParam in service.serviceParams" ng-form name="parameterForm">
+                                        <td ng-class="{ 'has-error' : parameterForm.type.$invalid && serviceForm.submitted }">
+                                            <select name="type" ng-model="serviceParam.type" class="form-control input-sm" required>
                                                 <option value="select">Valik</option>
                                                 <option value="text">Tekst</option>
                                             </select>
@@ -109,8 +116,8 @@
                                         <td>
                                             <input name="description" ng-model="serviceParam.description" type="text" class="form-control input-sm" placeholder="Kirjeldus">
                                         </td>
-                                        <td>
-                                            <input name="key" ng-model="serviceParam.key" type="text" class="form-control" placeholder="Võti">
+                                        <td ng-class="{ 'has-error' : parameterForm.key.$invalid && serviceForm.submitted }">
+                                            <input name="key" ng-model="serviceParam.key" type="text" class="form-control" placeholder="Võti" required>
                                         </td>
                                         <td>
                                             <div ng-if="serviceParam.type == 'text'">
@@ -128,12 +135,12 @@
                                                         </a>
                                                     </div>
                                                 </div>
-                                                <div ng-repeat="(optionIndex, option) in serviceParam.paramOptions" class="row m-b-sm">
-                                                    <div class="col-md-5 p-r-none">
-                                                        <input ng-model="option.value" type="text" placeholder="Väärtus" class="form-control">
+                                                <div ng-repeat="(optionIndex, option) in serviceParam.paramOptions" class="row m-b-sm" ng-form name="optionForm">
+                                                    <div class="col-md-5 p-r-none" ng-class="{ 'has-error' : optionForm.value.$invalid && serviceForm.submitted }">
+                                                        <input name="value" ng-model="option.value" type="text" placeholder="Väärtus" class="form-control" required>
                                                     </div>
-                                                    <div class="col-md-5 p-r-none">
-                                                        <input ng-model="option.label" type="text" placeholder="Nimetus" class="form-control">
+                                                    <div class="col-md-5 p-r-none" ng-class="{ 'has-error' : optionForm.label.$invalid && serviceForm.submitted }">
+                                                        <input name="label" ng-model="option.label" type="text" placeholder="Nimetus" class="form-control" required>
                                                     </div>
                                                     <div class="col-md-2">
                                                         <a ng-click="removeParamOption(serviceParam, optionIndex)" href="" class="btn btn-white btn-sm" title="Kustuta valik"><i class="fa fa-trash"></i></a>
@@ -157,7 +164,8 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group" ng-class="{'has-error': serviceForm.inputTypesLength.$invalid && serviceForm.submitted }">
+                        <input ng-show="false" name="inputTypesLength" ng-model="service.serviceInputTypes.length" type="number" min=1  />
                         <label class="col-sm-2 control-label">Sisendressursid*:</label>
                         <div class="col-sm-8">
                             <button ng-click="addServiceInputType()" class="btn btn-white"><i class="fa fa-plus"></i> Lisa sisendi tüüp</button>
@@ -175,33 +183,32 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="inputType in service.serviceInputTypes">
-                                            <td>
-                                                <input name="key" ng-model="inputType.key" type="text" class="form-control" placeholder="Võti">
+                                        <tr ng-repeat="inputType in service.serviceInputTypes" ng-form name="inputTypeForm">
+                                            <td ng-class="{ 'has-error' : inputTypeForm.key.$invalid && serviceForm.submitted }">
+                                                <input name="key" ng-model="inputType.key" type="text" class="form-control" placeholder="Võti" required>
                                             </td>
                                             <td>
-                                                <div class=" m-b-sm ">
+                                                <div class=" m-b-sm " ng-class="{ 'has-error' : inputTypeForm.type.$invalid && serviceForm.submitted }">
                                                     <select
                                                             name="type"
                                                             ng-model="inputType.resourceTypeId"
                                                             class="form-control input-sm"
                                                             ng-options="resourceType.id as resourceType.name for resourceType in resourceTypes"
                                                             ng-change="inputResourceTypeUpdated( inputType )"
+                                                            required
                                                             >
                                                     </select>
                                                 </div>
-
-
                                                 <div ng-if="canDoParallel(inputType)" class="row m-b-sm">
                                                     <div class="col-md-12 m-b-sm">
                                                         <input name="isParallel" ng-model="inputType.isParallel" icheck type="checkbox" /> Tee paraleelseks
                                                     </div>
                                                     <div ng-if="inputType.isParallel">
-                                                        <div class="col-md-6 p-r-none">
-                                                            <input ng-model="inputType.sizeLimit" type="text" placeholder="Suuruse piir" class="form-control input-sm" >
+                                                        <div class="col-md-6 p-r-none" ng-class="{ 'has-error' : inputTypeForm.sizeLimit.$invalid && serviceForm.submitted }">
+                                                            <input name="sizeLimit" ng-model="inputType.sizeLimit" type="text" placeholder="Suuruse piir" class="form-control input-sm" required>
                                                         </div>
-                                                        <div class="col-md-6">
-                                                            <select ng-model="inputType.sizeUnit" class="form-control input-sm">
+                                                        <div class="col-md-6" ng-class="{ 'has-error' : inputTypeForm.sizeUnit.$invalid && serviceForm.submitted }">
+                                                            <select name="sizeUnit" ng-model="inputType.sizeUnit" class="form-control input-sm" required>
                                                                 <option value="byte">Baiti</option>
                                                                 <option value="line">Rida</option>
                                                             </select>
@@ -221,7 +228,8 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group" ng-class="{'has-error': serviceForm.serviceOutputTypes.$invalid && serviceForm.submitted }">
+                        <input ng-show="false" name="serviceOutputTypes" ng-model="service.serviceOutputTypes.length" type="number" min=1  />
                         <label class="col-sm-2 control-label">Väljundressursid*:</label>
                         <div class="col-sm-8">
                             <button ng-click="addServiceOutputType()" class="btn btn-white"><i class="fa fa-plus"></i> Lisa väljundi tüüp</button>
@@ -239,19 +247,18 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-repeat="outputType in service.serviceOutputTypes">
-                                        <td>
-                                            <input name="key" ng-model="outputType.key" type="text" class="form-control" placeholder="Võti">
+                                    <tr ng-repeat="outputType in service.serviceOutputTypes" ng-form name="outputTypeForm">
+                                        <td ng-class="{ 'has-error' : outputTypeForm.key.$invalid && serviceForm.submitted }">
+                                            <input name="key" ng-model="outputType.key" type="text" class="form-control" placeholder="Võti" required />
                                         </td>
                                         <td>
-                                            <div class=" m-b-sm ">
+                                            <div class=" m-b-sm " ng-class="{ 'has-error' : outputTypeForm.type.$invalid && serviceForm.submitted }">
                                                 <select
                                                         name="type"
                                                         ng-model="outputType.resourceTypeId"
                                                         class="form-control input-sm"
                                                         ng-options="resourceType.id as resourceType.name for resourceType in resourceTypes"
-
-                                                        >
+                                                        required >
                                                 </select>
                                             </div>
                                         </td>

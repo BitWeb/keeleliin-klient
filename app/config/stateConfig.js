@@ -118,7 +118,7 @@ define(['angularAMD'], function (angularAMD) {
             $stateProvider.state('service-insert', angularAMD.route({
                 url: '/service',
                 templateUrl: 'views/service/edit.html',
-                controller: 'ServiceAddController',
+                controller: 'ServiceEditController',
                 resolve: {
                     loadPlugin: function ($ocLazyLoad) {
                         return $ocLazyLoad.load([

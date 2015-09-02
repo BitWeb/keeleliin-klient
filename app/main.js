@@ -43,7 +43,6 @@ require.config({
         'WorkflowViewController'    : 'controller/workflow/ViewController',
         'ServiceListController'     : 'controller/service/ListController',
         'ServiceEditController'     : 'controller/service/EditController',
-        'ServiceAddController'     : 'controller/service/AddController',
 
         'ResourceTreeController'    : 'controller/resource/TreeController',
 
