@@ -1,4 +1,3 @@
-
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
         <h2>{{service.name || 'Uus teenus'}}</h2>
@@ -208,7 +207,8 @@
                                                     </div>
                                                     <div ng-if="inputType.doParallel">
                                                         <div class="col-md-6 p-r-none" ng-class="{ 'has-error' : inputTypeForm.sizeLimit.$invalid && serviceForm.submitted }">
-                                                            <input name="sizeLimit" ng-model="inputType.sizeLimit" type="text" placeholder="Suuruse piir" class="form-control input-sm" required>
+                                                            <input name="sizeLimit" ng-model="inputType.sizeLimit" type="text" ngPattern pattern="[0-9]" placeholder="Suuruse piir" class="form-control input-sm" required>
+                                                            <i ng-if="inputTypeForm.sizeLimit.$error.pattern && serviceForm.submitted">Tegemist ei ole numbrilise väärtusega</i>
                                                         </div>
                                                         <div class="col-md-6" ng-class="{ 'has-error' : inputTypeForm.sizeUnit.$invalid && serviceForm.submitted }">
                                                             <select name="sizeUnit" ng-model="inputType.sizeUnit" class="form-control input-sm" required>
@@ -276,12 +276,8 @@
                             </div>
                         </div>
                     </div>
-
-
-
                 </fieldset>
             </div>
-
             <div class="ibox-footer text-right ng-scope">
                 <a ui-sref="services" class="btn btn-sm btn-link pull-left"><i class="fa fa-caret-left"></i> Tagasi teenuste nimekirja</a>
                 <a ng-if="service.id" class="btn btn-danger btn-sm m-r-lg"><i class="fa fa-trash"></i> Kustuta teenus</a>
