@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <h4 class="modal-title">
+        Ressursi kustutamine
+    </h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div ng-show="resourceForm.$invalid && resourceForm.submitted" class="alert alert-danger" role="alert">Vormi valideerimisel tekkisid vead!</div>
+
+        <form name="resourceForm" role="form" novalidate>
+
+            <div class="form-group">
+                <label class="control-label">Nimi: </label>
+                <span>
+                    {{resource.name}}
+                </span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Loodud: </label>
+                <span>
+                    {{resource.createdAt | date : 'dd.MM.yyyy H:mm'}}
+                </span>
+            </div>
+
+        </form>
+    </div>
+</div>
+<div class="modal-footer">
+    <a ng-click="download()" href="" class="btn btn-sm btn-link pull-left"><i class="fa fa-download"></i> Lae alla</a>
+    <button type="button" class="btn btn-white btn-sm" ng-click="$dismiss()">Katkesta</button>
+    <button type="button" class="btn btn-primary btn-sm" ng-click="deleteResource(resourceForm)" >Kustuta</button>
+</div>

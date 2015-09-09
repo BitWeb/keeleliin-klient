@@ -17,8 +17,11 @@ define([], function () {
         'admin'     : 'Administraator',
 
         'editor'    : 'Muutmine',
-        'viewer'    : 'Vaatamine'
+        'viewer'    : 'Vaatamine',
+
+        'NONE'      : 'Puudub',
+        'LINE'      : 'Rida',
+        'BYTE'      : 'Bait'
 
     };
-
 });

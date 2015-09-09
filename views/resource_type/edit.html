@@ -1,0 +1,57 @@
+<div class="row wrapper border-bottom white-bg page-heading ng-scope">
+    <div class="col-lg-10">
+        <h2>Ressursi tüüpide haldus</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a ui-sref="home">Avaleht</a>
+            </li>
+            <li>
+                <a ui-sref="users">Ressursi tüüpide haldus</a>
+            </li>
+            <li class="active">
+                <strong>{{resourceType.name}}</strong>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInUp ng-scope">
+    <div class="ibox">
+        <div class="ibox-content">
+
+            <div ng-show="message" class="alert alert-success">{{message}}</div>
+
+            <form class="form-horizontal" id="form" name="form">
+                <fieldset>
+                    <div class="form-group" ng-class="{ 'has-error' : form.name.$invalid && form.submitted }">
+                        <label class="col-sm-2 control-label">Nimi:</label>
+                        <div class="col-sm-5">
+                            <input ng-model="resourceType.name" class="form-control" name="name" placeholder="Nimi" type="text" required>
+                            <i ng-show="form.name.$error.required && form.submitted">Väli on nõutud</i>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error' : form.value.$invalid && form.submitted }">
+                        <label class="col-sm-2 control-label">Kood:</label>
+                        <div class="col-sm-5">
+                            <input ng-model="resourceType.value" class="form-control" name="value" placeholder="Kood" type="text" required>
+                            <i ng-show="form.value.$error.required && form.submitted">Väli on nõutud</i>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error' : form.splitType.$invalid && form.submitted }">
+                        <label class="col-sm-2 control-label">Tükelduse tüüp:</label>
+                        <div class="col-sm-5">
+                            <select class="form-control" ng-model="resourceType.splitType" name="splitType">
+                                <option ng-repeat="splitType in splitTypes" value="{{splitType}}">{{splitType | translate}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+
+        <div class="ibox-footer text-right ng-scope">
+            <a ui-sref="resource-types" class="btn btn-sm btn-link pull-left"><i class="fa fa-caret-left"></i> Tagasi ressursi tüüpide nimekirja</a>
+            <a class="btn btn-primary btn-sm" ng-click="saveResourceType(form)" ><i class="fa fa-save"></i> Salvesta</a>
+        </div>
+    </div>
+</div>

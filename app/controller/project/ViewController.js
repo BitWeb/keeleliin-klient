@@ -6,7 +6,7 @@ define([
     'chosen',
     'WorkflowAddDefinitionModalController',
     'WorkflowDefinitionService',
-    'ResourceTreeController',
+    'filetree',
     'controller/project/UpdateController'
 ], function (angularAMD) {
 
@@ -15,6 +15,7 @@ define([
             $log.log('ProjectController');
 
             $scope.projectId = $stateParams.id;
+
 
             projectService.getProject($scope.projectId, function (err, project) {
                 if(err){

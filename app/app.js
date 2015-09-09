@@ -14,6 +14,7 @@ define([
     'sidebarDirectives',
     'ui-bootstrap',
     'icheck'
+
 ], function (angularAMD, app, globalConf) {
 
     app.constant('config', globalConf);
@@ -40,7 +41,7 @@ define([
         userService.init(function () {
 
             $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-                console.info('$stateChangeStart');
+                console.info('$stateChangeStart', toState);
 
                 if(!userService.isAuthorized( toState )){
                     console.log('User not authorized. Wanted to go state: ' + toState.name);

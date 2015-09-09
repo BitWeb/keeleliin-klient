@@ -10,6 +10,9 @@ define([], function () {
         },
         project: {
             userRoles: ['editor', 'viewer']
+        },
+        resource_type: {
+            split_types: ['NONE', 'LINE', 'BYTE']
         }
     };
 

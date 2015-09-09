@@ -57,7 +57,7 @@
                                 <td class="text-right" footable-ng-row>
                                     <a ng-if="service.isActive" ng-click="toggleStatus(service)" class="btn btn-white btn-xs"><i class="fa fa-ban"></i> Deaktiveeri </a>
                                     <a ng-if="!service.isActive" ng-click="toggleStatus(service)" class="btn btn-white btn-xs"><i class="fa fa-check"></i> Aktiveeri </a>
-                                    <a ui-sref="service({id: service.id})" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Vaata </a>
+                                    <a ui-sref="service-edit({id: service.id})" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Vaata </a>
                                 </td>
                             </tr>
                             </tbody>

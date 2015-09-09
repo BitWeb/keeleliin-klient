@@ -19,7 +19,7 @@
     <div class="wrapper wrapper-content animated fadeInUp">
         <div class="col-md-4">
             <a class="btn btn-block btn-primary m-b-sm" ui-sref="forms.project_file_manager"><i class="fa fa-edit"></i> Muuda projekti resursse</a>
-            <div ng-include="'views/resource/tree.html'"></div>
+            <div filetree></div>
         </div>
         <div class="col-md-8">
             <div class="ibox">
@@ -67,6 +67,9 @@
                         <div class="col-sm-12">
                             <h3>Töövood</h3>
                         </div>
+                        <div ng-if="workflows.length == 0" class="col-sm-12">
+                            <em>Projektile ei ole lisatud ühtegi töövoogu. </em>
+                        </div>
                     </div>
                     <div class="project-list">
                         <table class="table table-hover">
@@ -76,7 +79,7 @@
                                         <span kl-status="{{workflow.status}}" />
                                     </td>
                                     <td class="project-title">
-                                        <a ui-sref="workflow-view({id:workflow.id})">{{workflow.name || ('Töövoog ' + workflow.id)}}</a>
+                                        <strong>{{workflow.name || ('Töövoog ' + workflow.id)}}</strong>
                                         <br/>
                                         <small>Lisatud {{workflow.datetimeCreated | date : 'dd.MM.yyyy'}}</small>
                                     </td>
@@ -99,7 +102,8 @@
 
                                     </td>
                                     <td class="project-actions">
-                                        <a ui-sref="workflow({id: workflow.id})" class="btn btn-white btn-xs"><i class="fa fa-pencil"></i> Muuda </a>
+                                        <a ng-show="workflow.status == 'INIT'" ui-sref="workflow-definition-edit({id: workflow.id})" class="btn btn-white btn-xs"><i class="fa fa-pencil"></i> Muuda </a>
+                                        <a ng-show="workflow.status != 'INIT'" ui-sref="workflow-view({id: workflow.id})" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Vaata </a>
                                     </td>
                                 </tr>
                             </tbody>

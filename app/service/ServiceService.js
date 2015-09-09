@@ -71,7 +71,20 @@ define(['angularAMD'], function (angularAMD) {
                         return item.isActive == true;
                     }));
                 });
+            };
+
+            this.getDefineServices = function ( callback ) {
+                $http.get(config.API_URL + '/service/detailed').then(
+                    function(data) {
+                        callback(null, data.data.data);
+                    },
+                    function(data) {
+                        callback(data);
+                    }
+                );
             }
+
+
         }
     ]);
 });

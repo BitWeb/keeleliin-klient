@@ -21,20 +21,28 @@
                     KL
                 </div>
             </li>
+
             <li ng-class="{active: $state.includes('home')}">
-                <a ui-sref="home"><i class="fa da-desktop"></i> <span class="nav-label">Töölaud</span></a>
+                <a ui-sref="home">
+                    <i class="fa da-desktop"></i> <span class="nav-label">Töölaud</span>
+                </a>
             </li>
-            <li ng-class="{active: $state.includes('projects')}">
+            <li ng-class="{active: $state.includes('projectState')}">
                 <a ui-sref="projects"><i class="fa fa-th-large"></i> <span class="nav-label">Projektid</span>
                     <span class="pull-right label label-primary"></span>
                 </a>
             </li>
-            <li ng-class="{active : $state.include('services')}">
+            <li ng-class="{active : $state.includes('serviceState')}">
                 <a ui-sref="services">
                     <i class="fa fa-wrench"></i> <span class="nav-label">Teenuste haldus</span>
                 </a>
             </li>
-            <li ng-class="{active : $state.include('users')}">
+            <li ng-class="{active : $state.includes('resourceTypeState')}">
+                <a ui-sref="resource-types">
+                    <i class="fa fa-wrench"></i> <span class="nav-label">Ressursi tüüpide haldus</span>
+                </a>
+            </li>
+            <li ng-class="{active : $state.includes('usersState')}">
                 <a ui-sref="users">
                     <i class="fa fa-users"></i> <span class="nav-label">Kasutajate haldus</span>
                 </a>

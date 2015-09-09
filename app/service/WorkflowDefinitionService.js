@@ -17,9 +17,9 @@ define(['angularAMD'], function (angularAMD) {
                 });
             };
 
-            this.addDefinition = function (definition, project, callback) {
+            this.defineNewWorkflow = function (definition, callback) {
 
-                $http.post(config.API_URL + '/workflow-definition/projectId/' + project.id, definition).then(
+                $http.post(config.API_URL + '/workflow/define', definition).then(
                     function(data, status) {
                         console.log(data.data);
                         callback(null, data.data.data);
@@ -34,27 +34,12 @@ define(['angularAMD'], function (angularAMD) {
                 );
             };
 
+            this.getWorkflowsDefinition = function (workflowId, callback) {
 
-
-        /*    this.getList = function ( callback ) {
-
-                $http.get(config.API_URL + '/project').then(
-                    function(data) {
-                        console.log(data);
-                        callback(null, data.data.data);
-                    },
-                    function(data) {
-                        callback(data);
-                    }
-                );
-            };
-
-            this.deleteProject = function(project, callback){
-
-                $http.delete(config.API_URL + '/project/' + project.id).then(
+                $http.get(config.API_URL + '/workflow/'+ workflowId +'/definition' ).then(
                     function(data, status) {
                         console.log(data.data);
-                        callback(null, true);
+                        callback(null, data.data);
                     },
                     function(data, status) {
                         if(!data){
@@ -66,57 +51,52 @@ define(['angularAMD'], function (angularAMD) {
                 );
             };
 
-            this.openCreateModal = function ($scope) {
-                return $modal.open({
-                    templateUrl: '../../views/project/add_modal.html',
-                    scope: $scope,
-                    controller: 'ProjectCreateController'
-                });
-            };
+            this.updateDefinitionServices = function( workflow, selectedServices, callback){
 
-            this.openDeleteModal = function ($scope, project) {
-
-                return $modal.open({
-                    templateUrl: '../../views/project/confirm_delete_modal.html',
-                    scope: $scope,
-                    controller: 'ProjectDeleteController',
-                    resolve: {
-                        project: function(){
-                            return project;
+                $http.put(config.API_URL + '/workflow/'+ workflow.id +'/definition/services', selectedServices ).then(
+                    function(data, status) {
+                        console.log(data.data);
+                        callback(null, data.data);
+                    },
+                    function(data, status) {
+                        if(!data){
+                            return callback(status);
                         }
+                        console.log(data);
+                        callback(data);
                     }
+                );
+            };
+
+            this.getServiceFromList = function (id, list) {
+                for(i in list){
+                    if(list[i].id == id){
+                        return list[i];
+                    }
+                }
+            };
+
+            this.getAvailableFollowingServices = function (selectedServices, servicesList) {
+                var availableServices = [];
+
+                if(selectedServices.length == 0){
+                    availableServices = servicesList.slice();
+                    return availableServices;
+                }
+                for(i in selectedServices){
+                    var service = self.getServiceFromList(selectedServices[i].serviceId, servicesList);
+                    for(j in service.childServices){
+                        var followingService = self.getServiceFromList( service.childServices[j], servicesList );
+                        availableServices.push( followingService );
+                    }
+                }
+
+                return availableServices.filter(function(value, index, self) {
+                    return self.indexOf(value) === index;
                 });
             };
 
 
-
-
-            this.getProject = function (id, callback) {
-
-                $http.get(config.API_URL + '/project/' + id).then(
-                    function(data) {
-                        console.log(data);
-                        callback(null, data.data.data);
-                    },
-                    function(data) {
-                        callback(data);
-                    }
-                );
-            };
-
-            this.getProjectWorkflows = function (id, callback) {
-
-                $http.get(config.API_URL + '/project/' + id + '/workflows').then(
-                    function(data) {
-                        console.log(data);
-                        callback(null, data.data.data);
-                    },
-                    function(data) {
-                        callback(data);
-                    }
-                );
-            };
-*/
 
         }
     ]);

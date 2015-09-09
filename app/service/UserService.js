@@ -106,7 +106,7 @@ define(['appModule'], function (app) {
             };
 
             this.getUser = function(id, callback) {
-                $http.get(config.API_URL + '/user/details/' + id).then(function(response) {
+                $http.get(config.API_URL + '/user/' + id + '/details').then(function(response) {
                     callback(null, response.data.data);
                 }, function(response) {
                     callback(response);
@@ -114,6 +114,10 @@ define(['appModule'], function (app) {
             };
 
             this.getUsersList = function (pagination, callback) {
+
+                console.log($http.defaults.headers.common);
+
+
                 console.log('Request user Info');
                 pagination = pagination  || {};
                 var url = config.API_URL + '/user/list?',
@@ -146,7 +150,7 @@ define(['appModule'], function (app) {
                     role: user.role,
                     isActive: user.is_active
                 };
-                $http.put(config.API_URL + '/user/details/' + user.id, userData).then(function(response) {
+                $http.put(config.API_URL + '/user/' + user.id + '/details', userData).then(function(response) {
                     callback(response.errors, response.data);
                 }, function(response) {
                     callback(response);

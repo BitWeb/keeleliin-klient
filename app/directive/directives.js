@@ -1,34 +1,6 @@
 define(['appModule', 'slimscroll', 'jquery'], function (app) {
 
 /**
- * dropZone - Directive for Drag and drop zone file upload plugin
- */
-function dropZone() {
-    return function(scope, element, attrs) {
-        element.dropzone({
-            url: "/upload",
-            maxFilesize: 100,
-            paramName: "uploadfile",
-            maxThumbnailFilesize: 5,
-            init: function() {
-                scope.files.push({file: 'added'});
-                this.on('success', function(file, json) {
-                });
-                this.on('addedfile', function(file) {
-                    scope.$apply(function(){
-                        alert(file);
-                        scope.files.push({file: 'added'});
-                    });
-                });
-                this.on('drop', function(file) {
-                    alert('file');
-                });
-            }
-        });
-    }
-}
-
-/**
  * fullScroll - Directive for slimScroll with 100%
  */
 function fullScroll($timeout){
@@ -94,7 +66,7 @@ function icheck($timeout) {
 
                 $scope.$watch($attrs['ngModel'], function(newValue){
                     $(element).iCheck('update');
-                })
+                });
 
                 return $(element).iCheck({
                     checkboxClass: 'icheckbox_square-green',
@@ -117,20 +89,14 @@ function icheck($timeout) {
     };
 }
 
-
-
     /**
  *
  * Pass all functions into module
  */
-app.directive('dropZone', dropZone)
-    .directive('fullScroll', fullScroll)
+app.directive('fullScroll', fullScroll)
     .directive('fitHeight', fitHeight)
     .directive('footableNgRow', footableNgRow)
-    .directive('icheck', icheck)
-    ;
-
-
+    .directive('icheck', icheck);
 
     app.directive('klStatus', ['$filter', function ($filter) {
 
@@ -165,6 +131,4 @@ app.directive('dropZone', dropZone)
             }]
         };
     }]);
-
-
 });

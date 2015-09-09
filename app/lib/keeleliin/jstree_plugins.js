@@ -27,9 +27,9 @@ $.jstree.plugins.actionmenu = function (options, parent) {
             if(jqObject.hasClass('jstree-leaf')){
                 jqObject.find('a:first').append(
                     '<span class="action-buttons">' +
-                        '<i class="fa fa-download m-r-xs"></i>' +
-                        '<i class="fa fa-info-circle m-r-xs"></i>' +
-                        '<i class="fa fa-remove text-danger"></i>' +
+                        '<i class="fa fa-download m-r-xs" title="Lae alla"></i>' +
+                        '<i class="fa fa-info-circle m-r-xs" title="Info"></i>' +
+                        '<i class="fa fa-remove text-danger" title="Kustuta"></i>' +
                     '</span>' );
             }
         }

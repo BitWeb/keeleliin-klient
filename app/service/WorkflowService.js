@@ -17,6 +17,17 @@ define(['angularAMD'], function (angularAMD) {
 
             };
 
+            this.runWorkflow = function (workflowId, callback) {
+                $http.put(config.API_URL + '/workflow/' + workflowId + '/run').then(
+                    function(data) {
+                        callback(null, data.data);
+                    },
+                    function(data) {
+                        callback(data);
+                    }
+                );
+            };
+
             this.cancelWorkflow = function (workflowId, callback) {
 
                 $http.put(config.API_URL + '/workflow/' + workflowId + '/cancel').then(
@@ -27,7 +38,7 @@ define(['angularAMD'], function (angularAMD) {
                         callback(data);
                     }
                 );
-            }
+            };
 
         }
     ]);

@@ -1,10 +1,11 @@
 
-define(["angularAMD"], function (angularAMD) {
+define(['angularAMD'], function (angularAMD) {
     angularAMD.controller('AddDefinitionModalController',
-        [ "$scope", "$state", "WorkflowDefinitionService", "project",
-            function ($scope, $state, workflowDefinitionService, project) {
+        [ '$scope', '$state', 'WorkflowDefinitionService', 'project','$log',
+            function ($scope, $state, workflowDefinitionService, project, $log) {
 
                 $scope.definition = {
+                    projectId: project.id,
                     name: '',
                     description: '',
                     purpose: ''
@@ -17,14 +18,17 @@ define(["angularAMD"], function (angularAMD) {
                         return;
                     }
 
-                    workflowDefinitionService.addDefinition($scope.definition, project, function (err, definition) {
+                    workflowDefinitionService.defineNewWorkflow( $scope.definition, function (err, workflow) {
                         if(err){
                             console.log(err);
                             alert('Err'); //todo
                             return;
                         }
                         $scope.$dismiss();
-                        $state.go('workflow-definition-edit', {id: definition.id});
+
+                        $log.debug(workflow);
+
+                        $state.go('workflow-definition-edit', {id: workflow.id});
                     });
                 };
 

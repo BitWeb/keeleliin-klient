@@ -1,1 +1,139 @@
-<p>Hell no {{id}}</p>
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Projektid</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a ui-sref="home">Avaleht</a>
+            </li>
+            <li>
+                <a ui-sref="projects">Projektid</a>
+            </li>
+            <li>
+                <a ui-sref="app.project_detail_view">Esimene projekt</a>
+            </li>
+            <li class="active">
+                <strong>Töövoo koostamine </strong>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content">
+    <div class="row animated fadeInDown">
+        <div class="col-lg-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>{{workflow.name}}</h5>
+                    <div ibox-tools></div>
+                </div>
+                <div class="ibox-content">
+                    <div>
+                        <strong>Kirjeldus</strong>
+                        <p>
+                            {{workflow.description}}
+                        </p>
+                    </div>
+                    <div>
+                        <strong>Eesmärk</strong>
+                        <p>
+                            {{workflow.purpose}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Töövoo failid</h5>
+                    <div ibox-tools-simple ></div>
+                </div>
+                <div class="ibox-content">
+                    <div class="file-manager">
+                        <div filetree></div>
+                        <p>
+                            Töövoole tuleb defineerida sisend. Lae üles failid, kopeeri tekst või vali olemasolevast projektist sisend.
+                        </p>
+                        <a ui-sref="workflow-resource-upload({id: workflow.id})" class="btn btn-primary btn-block">Määra sisend</a>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-9">
+            <div class="row">
+
+                <div class="col-lg-12">
+                    <div class="ibox">
+                        <div class="ibox-title">
+                            <h5>Valitavad teenused</h5>
+                            <div ibox-tools-simple ></div>
+                        </div>
+                        <div class="ibox-content">
+                            <p class="small"><i class="fa fa-hand-o-up"></i> Teenuse lisamiseks võid lohistada teenuse "Valitud teenused" kasti või teha teenusel topelt kliki. </p>
+                            <div class="row pre-scrollable">
+
+                                <div ng-hide="avaliableServices.length == 0" ui-sortable="draggable" ng-model="avaliableServices" class="sortable-list clearfix">
+                                    <div class="col-sm-3 serviceItem" ng-repeat="service in avaliableServices track by $index" ng-dblclick="addSelectedService(service)">
+                                        <div class="ibox available-service">
+                                            <div class="ibox-title">
+                                                <h5>{{service.name}}</h5>
+                                            </div>
+                                            <div class="ibox-content" style="height: 100px; overflow: hidden;">
+                                                {{service.description}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-show="avaliableServices.length == 0" class="col-md-12">
+                                    <i>Sobivad teenused puuduvad</i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="ibox">
+                        <div class="ibox-title">
+                            <h5>Valitud teenused</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row" style="position:relative; overflow: hidden; min-height: 200px;">
+                                <div ng-show="dragging" class="dropzone" ui-sortable="dropzone" ng-model="droppedServices" style="min-height: 200px; position: absolute; top: 0; right: 0; left:0; bottom: 0;">
+                                    <div ng-repeat="item in droppedServices track by $index"></div>
+                                </div>
+                                <div class="sortable-list selectedServices clearfix">
+                                    <div class="col-sm-3 not-sortable" ng-repeat="selectedService in selectedServices track by $index" ng-init=" service = getServiceById( selectedService.serviceId ) ">
+                                        <div class="ibox available-service">
+                                            <div class="ibox-title">
+                                                <h5>{{$index + 1}}. {{service.name}}</h5>
+                                                <a class="pull-right text-lg icon" ng-click="removeSelectedServicesFromIndex($index)" title="Eemalda">
+                                                    <i class="fa fa-trash error"></i>
+                                                </a>
+                                                <a class="pull-right text-lg icon" ng-click="showInfo( selectedService )" title="Info" style="margin-right: 5px">
+                                                    <i class="fa fa-info-circle"></i>
+                                                </a>
+                                                <a class="pull-right text-lg icon" ng-click="showSettings( selectedService )" title="Seaded" style="margin-right: 5px">
+                                                    <i class="fa fa-gears"></i>
+                                                </a>
+                                            </div>
+                                            <div class="ibox-content" style="height: 100px; overflow: hidden;">
+                                                {{service.description}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ibox-footer text-right">
+                            <a ui-sref="project-item({id: workflow.projectId})" class="btn btn-sm btn-link pull-left"><i class="fa fa-caret-left"></i> Tagasi projekti vaatesse</a>
+                            <a ng-click="runWorkflow()" class="btn btn-info btn-sm"><i class="fa fa-play"></i> Käivita töövoog</a>
+                            <a ng-click="updateDefinitionServices()" class="btn btn-primary btn-sm"><i class="fa fa-run"></i> Salvesta töövoog</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

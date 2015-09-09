@@ -3,12 +3,13 @@ define([
     'ng-jstree',
     'ProjectService',
     'WorkflowService',
+    'ResourceService',
     'footable',
-    'ResourceTreeController'
+    'filetree'
 ], function (angularAMD) {
 
-    angularAMD.controller('WorkflowViewController', [ '$scope', '$state', '$stateParams', '$log', 'WorkflowService', '$timeout',
-        function($scope, $state, $stateParams, $log, workflowService, $timeout ) {
+    angularAMD.controller('WorkflowViewController', [ '$scope','$rootScope', '$state', '$stateParams', '$log', 'WorkflowService', '$timeout','ResourceService',
+        function($scope, $rootScope, $state, $stateParams, $log, workflowService, $timeout, resourceService ) {
 
             $scope.workflowId = $stateParams.id;
 
@@ -23,17 +24,22 @@ define([
                     if(workflow.status == 'RUNNING'){
                         $timeout(update, 2500)
                     }
+                    $rootScope.$broadcast('resourceUpdated');
                 });
             };
             update();
 
             function findProgress(){
 
+                if($scope.workflow.status == 'INIT'){
+                    $scope.progress = 0;
+                    return
+                }
+
                 var progress = 100;
                 if($scope.workflow.workflowServices.length > 0){
                     progress = Math.round(($scope.workflow.workflowServices.filter(function(value){return value.status == 'FINISHED';}).length * 100) / $scope.workflow.workflowServices.length);
                 }
-
                 $scope.progress = progress;
             }
 
@@ -59,6 +65,19 @@ define([
                 return resources;
             };
 
+            $scope.getServiceLogs = function (service) {
+                var logs = [];
+                service.subSteps.forEach(function (substep) {
+                    if(substep.log){
+                        logs.push(substep.log);
+                    }
+                });
+                if(service.log){
+                    logs.push(service.log);
+                }
+                return logs;
+            };
+
             $scope.cancelWorkflow = function () {
                 workflowService.cancelWorkflow($scope.workflow.id, function (err, workflow) {
 
@@ -79,10 +98,9 @@ define([
                 alert('Todo');
             };
 
-
-
-
-
+            $scope.openResourceInfoModal = function ( resourceId ) {
+                resourceService.openInfoModal( resourceId );
+            };
 
         }]);
 });

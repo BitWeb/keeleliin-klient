@@ -1,0 +1,62 @@
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Projektid</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a ui-sref="home">Avaleht</a>
+            </li>
+            <li>
+                <a ui-sref="project">Projektid</a>
+            </li>
+            <li>
+                Projekt
+            </li>
+            <li>
+                Töövoo koostamine
+            </li>
+            <li class="active">
+                <strong>Ressursside lisamine </strong>
+            </li>
+        </ol>
+    </div>
+</div>
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>Lisatud failid</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="file-manager">
+                        <div filetree ></div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 animated fadeInRight">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <form action="" class="dropzone" drop-zone="" >
+                        <div class="dz-message" data-dz-message>
+                            <span>Lohista failid siia või vali arvutist</span>
+                        </div>
+                    </form>
+                </div>
+                <div class="ibox-footer text-right ng-scope">
+                    <a ui-sref="workflow-definition-edit({id: workflowId})" class="btn btn-sm btn-link pull-left">
+                        <i class="fa fa-caret-left"></i> Tagasi töövoo juurde
+                    </a>
+                    <a ng-click="open7()" class="btn btn-info btn-sm">
+                        <i class="fa fa-plus"></i> Vali olemasolevate failide hulgast
+                    </a>
+                    <a ng-click="startUpload()" class="btn btn-primary btn-sm">
+                        <i class="fa fa-upload"></i> Lae üles failid
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

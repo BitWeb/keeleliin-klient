@@ -1,4 +1,4 @@
-define(['angularAMD'], function (angularAMD) {
+define(['angularAMD', 'ResourceInfoController', 'ResourceDeleteController'], function (angularAMD) {
 
     angularAMD.service('ResourceService', [ '$log', '$http', 'config', '$modal','UserService',
         function( $log, $http, config, $modal, userService ) {
@@ -55,7 +55,7 @@ define(['angularAMD'], function (angularAMD) {
                             text: item.workflowName ? item.workflowName : ('Töövoog ' + item.workflowId),
                             children: [],
                             state: {
-                                opened:false
+                                opened:true
                             }
                         };
                         map[workflowId] = workflow
@@ -89,6 +89,44 @@ define(['angularAMD'], function (angularAMD) {
                 })[0].click();
             };
 
+            this.getResourceInfo = function (resourceId, callback) {
+                $http.get(config.API_URL + '/resource/' + resourceId).then(
+                    function(data) {
+                        $log.log(data);
+                        callback(null, data.data.data);
+                    },
+                    function(data) {
+                        callback(data);
+                    }
+                );
+            };
+
+            this.updateResourceInfo = function (resource, callback) {
+                $http.put(config.API_URL + '/resource/' + resource.id, resource).then(
+                    function(data) {
+                        $log.log(data);
+                        callback(null, data.data.data);
+                    },
+                    function(data) {
+                        callback(data);
+                    }
+                );
+            };
+
+
+            this.deleteResource = function(resource, deleteData, callback) {
+
+                $http.delete(config.API_URL + '/resource/' + resource.id, deleteData ).then(
+                    function(data) {
+                        $log.log(data);
+                        callback(null, data.data.data);
+                    },
+                    function(data) {
+                        callback(data);
+                    }
+                );
+            };
+
             this.getResourceTypes = function (callback) {
 
                 $http.get(config.API_URL + '/resource/types').then(
@@ -100,7 +138,32 @@ define(['angularAMD'], function (angularAMD) {
                         callback(data);
                     }
                 );
+            };
+
+            this.openInfoModal = function( id ){
+                return $modal.open({
+                    templateUrl: '../../views/resource/info_modal.html',
+                    controller: 'ResourceInfoController',
+                    resolve: {
+                        resourceId: function(){
+                            return id
+                        }
+                    }
+                });
+            };
+
+            this.openDeleteModal = function( id ){
+                return $modal.open({
+                    templateUrl: '../../views/resource/delete_modal.html',
+                    controller: 'ResourceDeleteController',
+                    resolve: {
+                        resourceId: function(){
+                            return id
+                        }
+                    }
+                });
             }
+
         }
     ]);
 });
