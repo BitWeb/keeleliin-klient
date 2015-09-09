@@ -2,22 +2,14 @@ define(['angularAMD','jq-dropzone', 'jquery'], function (angularAMD) {
     /**
      * dropZone - Directive for Drag and drop zone file upload plugin
      */
-
-    console.log('dropZone define');
-
-    angularAMD.directive('dropZone', ['config', '$rootScope', function (config, $rootScope) {
-
-        console.log('dropZone directive');
+    angularAMD.directive('dropZone', ['config', '$rootScope', '$http', function (config, $rootScope, $http) {
 
         return {
             restrict: 'A',
             transclude: true,
             link: function ($scope, $element, $attrs) {
-
-                console.log('dropZone link');
-
                 $element.dropzone({
-                    url: config.API_URL + "/resource/upload",
+                    url: config.API_URL + '/resource/upload',
                     autoProcessQueue: false,
                     params: $scope.resourceUploadParams,
                     maxFilesize: 100,
@@ -26,7 +18,7 @@ define(['angularAMD','jq-dropzone', 'jquery'], function (angularAMD) {
                     parallelUploads: 5,
                     method: 'POST',
                     uploadMultiple: false,
-                    //headers,
+                    headers: $http.defaults.headers.common,
                     addRemoveLinks: true,
                     dictRemoveFile: 'Loobu',
                     //previewsContainer: null
