@@ -5,7 +5,8 @@ define([
     'WorkflowService',
     'ResourceService',
     'footable',
-    'filetree'
+    'filetree',
+    'WorkflowSettingsModalController'
 ], function (angularAMD) {
 
     angularAMD.controller('WorkflowViewController', [ '$scope','$rootScope', '$state', '$stateParams', '$log', 'WorkflowService', '$timeout','ResourceService',
@@ -95,13 +96,18 @@ define([
                 });
             };
 
-            $scope.openWorkflowPropertiesModal = function(){
-                alert('Todo');
+            $scope.openWorkflowSettingsModal = function(){
+                workflowService.openWorkflowSettingsModal($scope, $scope.workflow.id);
+            };
+            $scope.updateScopeWorkflowSettings = function (data) {
+                $scope.workflow.name = data.name;
+                $scope.workflow.description = data.description;
+                $scope.workflow.purpose = data.purpose;
+                $rootScope.$broadcast('updateBreadcrumb');
             };
 
             $scope.openResourceInfoModal = function ( resourceId ) {
                 resourceService.openInfoModal( resourceId );
             };
-
         }]);
 });

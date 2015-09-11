@@ -5,7 +5,6 @@ define(['angularAMD'], function (angularAMD) {
             var self = this;
 
             this.getWorkflow = function (workflowId, callback) {
-
                 $http.get(config.API_URL + '/workflow/' + workflowId).then(
                     function(data) {
                         callback(null, data.data);
@@ -39,6 +38,41 @@ define(['angularAMD'], function (angularAMD) {
                     }
                 );
             };
+
+            this.openWorkflowSettingsModal = function ($scope, workflowId) {
+                return $modal.open({
+                    templateUrl: '../../views/workflow/settings_modal.html',
+                    scope: $scope,
+                    controller: 'WorkflowSettingsModalController',
+                    resolve: {
+                        workflowId: function(){
+                            return workflowId;
+                        }
+                    }
+                });
+            };
+
+            this.getWorkflowSettings = function (workflowId, callback) {
+                $http.get(config.API_URL + '/workflow/' + workflowId + '/settings').then(
+                    function(data) {
+                        callback(null, data.data.data);
+                    },
+                    function(data) {
+                        callback(data);
+                    }
+                );
+            };
+
+            this.updateWorkflowSettings = function (settings, callback) {
+                $http.put(config.API_URL + '/workflow/' + settings.id + '/settings', settings).then(
+                    function(data) {
+                        callback(null, data.data.data);
+                    },
+                    function(data) {
+                        callback(data);
+                    }
+                );
+            }
 
         }
     ]);

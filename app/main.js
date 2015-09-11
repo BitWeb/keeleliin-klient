@@ -46,6 +46,7 @@ require.config({
 
         'MainController'        : 'controller/MainController',
         'WorkflowAddDefinitionModalController': 'controller/workflow/AddDefinitionModalController',
+        'WorkflowSettingsModalController' : 'controller/workflow/SettingsModalController',
         'WorkflowDefinitionEditController' : 'controller/workflow/DefinitionEditController',
         'WorkflowViewController'    : 'controller/workflow/ViewController',
         'WorkflowResourceUploadController' : 'controller/workflow/ResourceUploadController',

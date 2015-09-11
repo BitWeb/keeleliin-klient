@@ -5,7 +5,8 @@ define([
     'WorkflowService',
     'ServiceService',
     'ui-sortable',
-    'filetree'
+    'filetree',
+    'WorkflowSettingsModalController'
 ], function (angularAMD) {
     angularAMD.controller('WorkflowDefinitionEditController',
         [ '$scope', '$state', '$stateParams', 'WorkflowDefinitionService', 'ServiceService', '$log', 'WorkflowService',
@@ -108,7 +109,7 @@ define([
                 };
 
                 $scope.showInfo = function( selectedService ){
-                  alert(' todo info ' + selectedService.serviceId);
+                    alert(' todo info ' + selectedService.serviceId);
                 };
 
                 $scope.showSettings = function( selectedService ){
@@ -136,5 +137,16 @@ define([
                         $state.go('workflow-view', {workflowId: $scope.workflow.id});
                     });
                 };
+
+                $scope.openWorkflowSettingsModal = function(){
+                    workflowService.openWorkflowSettingsModal($scope, $scope.workflow.id);
+                };
+                $scope.updateScopeWorkflowSettings = function (data) {
+                    $scope.workflow.name = data.name;
+                    $scope.workflow.description = data.description;
+                    $scope.workflow.purpose = data.purpose;
+                    $scope.$broadcast('updateBreadcrumb');
+                };
+
             }]);
 });
