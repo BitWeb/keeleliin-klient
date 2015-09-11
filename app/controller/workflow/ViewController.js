@@ -97,13 +97,7 @@ define([
             };
 
             $scope.openWorkflowSettingsModal = function(){
-                workflowService.openWorkflowSettingsModal($scope, $scope.workflow.id);
-            };
-            $scope.updateScopeWorkflowSettings = function (data) {
-                $scope.workflow.name = data.name;
-                $scope.workflow.description = data.description;
-                $scope.workflow.purpose = data.purpose;
-                $rootScope.$broadcast('updateBreadcrumb');
+                workflowService.openWorkflowSettingsModal($scope, $scope.workflow);
             };
 
             $scope.openResourceInfoModal = function ( resourceId ) {

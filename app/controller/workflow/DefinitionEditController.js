@@ -126,7 +126,6 @@ define([
                     });
                 };
 
-
                 $scope.runWorkflow = function () {
 
                     workflowService.runWorkflow($scope.workflow.id, function (err, response) {
@@ -139,14 +138,7 @@ define([
                 };
 
                 $scope.openWorkflowSettingsModal = function(){
-                    workflowService.openWorkflowSettingsModal($scope, $scope.workflow.id);
+                    workflowService.openWorkflowSettingsModal($scope, $scope.workflow);
                 };
-                $scope.updateScopeWorkflowSettings = function (data) {
-                    $scope.workflow.name = data.name;
-                    $scope.workflow.description = data.description;
-                    $scope.workflow.purpose = data.purpose;
-                    $scope.$broadcast('updateBreadcrumb');
-                };
-
             }]);
 });
