@@ -28,7 +28,7 @@ define(['angularAMD'], function (angularAMD) {
 
                         $log.debug(workflow);
 
-                        $state.go('workflow-definition-edit', {id: workflow.id});
+                        $state.go('workflow-definition-edit', {workflowId: workflow.id});
                     });
                 };
 

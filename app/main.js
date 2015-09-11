@@ -35,12 +35,15 @@ require.config({
         'sidebarDirectives' : 'directive/sidebarDirectives',
         'filetree'          : 'directive/filetree',
         'drop-zone'         : 'directive/dropZone',
+        'breadcrumb'        : 'directive/breadcrumb',
 
         'stateConfig'       : 'config/stateConfig',
         'AuthController'        : 'controller/AuthController',
         'HomeController'        : 'controller/HomeController',
         'ProjectListController' : 'controller/project/ListController',
         'ProjectViewController' : 'controller/project/ViewController',
+        'ProjectResourceUploadController' : 'controller/project/ResourceUploadController',
+
         'MainController'        : 'controller/MainController',
         'WorkflowAddDefinitionModalController': 'controller/workflow/AddDefinitionModalController',
         'WorkflowDefinitionEditController' : 'controller/workflow/DefinitionEditController',

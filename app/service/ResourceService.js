@@ -82,11 +82,7 @@ define(['angularAMD', 'ResourceInfoController', 'ResourceDeleteController'], fun
             };
 
             this.downloadResourceById = function (id) {
-                var anchor = angular.element('<a/>');
-                anchor.attr({
-                    href: config.API_URL + '/resource/download/' +id + '?token=' + userService.getToken(),
-                    target: '_blank'
-                })[0].click();
+                window.location.href = config.API_URL + '/resource/download/' +id + '?token=' + userService.getToken();
             };
 
             this.getResourceInfo = function (resourceId, callback) {
@@ -117,19 +113,6 @@ define(['angularAMD', 'ResourceInfoController', 'ResourceDeleteController'], fun
             this.deleteResource = function(resource, deleteData, callback) {
 
                 $http.delete(config.API_URL + '/resource/' + resource.id, deleteData ).then(
-                    function(data) {
-                        $log.log(data);
-                        callback(null, data.data.data);
-                    },
-                    function(data) {
-                        callback(data);
-                    }
-                );
-            };
-
-            this.getResourceTypes = function (callback) {
-
-                $http.get(config.API_URL + '/resource/types').then(
                     function(data) {
                         $log.log(data);
                         callback(null, data.data.data);

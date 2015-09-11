@@ -4,15 +4,14 @@ define([
     'drop-zone'
 ], function (angularAMD) {
 
-    angularAMD.controller('WorkflowResourceUploadController', [ '$scope', '$state', '$stateParams', '$log',
+    angularAMD.controller('ProjectResourceUploadController', [ '$scope', '$state', '$stateParams', '$log',
         function($scope, $state, $stateParams, $log ) {
 
-            $scope.workflowId = $stateParams.workflowId;
-
-            $scope.hideFileTreeTabs = true;
+            $scope.projectId = $stateParams.projectId;
+            $scope.hideFileTreeTabs = false;
 
             $scope.resourceUploadParams = {
-                workflowId: $stateParams.workflowId
+                projectId: $stateParams.projectId
             };
             $scope.uploadFiles = [];
 

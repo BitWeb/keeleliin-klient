@@ -11,10 +11,10 @@ define([
     angularAMD.controller('WorkflowViewController', [ '$scope','$rootScope', '$state', '$stateParams', '$log', 'WorkflowService', '$timeout','ResourceService',
         function($scope, $rootScope, $state, $stateParams, $log, workflowService, $timeout, resourceService ) {
 
-            $scope.workflowId = $stateParams.id;
+            $scope.workflowId = $stateParams.workflowId;
 
             var update = function(){
-                workflowService.getWorkflow($stateParams.id, function (err, workflow) {
+                workflowService.getWorkflow($stateParams.workflowId, function (err, workflow) {
                     if(err){
                         console.log(err);
                         return alert('Err');
@@ -24,6 +24,7 @@ define([
                     if(workflow.status == 'RUNNING'){
                         $timeout(update, 2500)
                     }
+
                     $rootScope.$broadcast('resourceUpdated');
                 });
             };

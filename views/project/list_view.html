@@ -1,17 +1,4 @@
-
-<div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-lg-10">
-        <h2>Projektid</h2>
-        <ol class="breadcrumb">
-            <li>
-                <a ui-sref="home">Avaleht</a>
-            </li>
-            <li class="active">
-                <strong>Projektid</strong>
-            </li>
-        </ol>
-    </div>
-</div>
+<div kl-breadcrumb></div>
 
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-content m-b-sm border-bottom">
@@ -66,7 +53,7 @@
                                 </td>
                                 <td class="text-right" footable-ng-row>
                                     <a ng-if="project.canDelete" ng-click="openRemoveProject(project)" class="btn btn-white btn-xs"><i class="fa fa-trash"></i> Kustuta </a>
-                                    <a ui-sref="project-item({id: project.id})" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Vaata </a>
+                                    <a ui-sref="project-item({projectId: project.id})" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Vaata </a>
                                 </td>
                             </tr>
                             </tbody>

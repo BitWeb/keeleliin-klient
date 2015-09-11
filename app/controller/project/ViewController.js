@@ -14,7 +14,7 @@ define([
         function($scope, $state, $stateParams, projectService, $modal, workflowDefinitionService, resourceService, $log ) {
             $log.log('ProjectController');
 
-            $scope.projectId = $stateParams.id;
+            $scope.projectId = $stateParams.projectId;
 
 
             projectService.getProject($scope.projectId, function (err, project) {

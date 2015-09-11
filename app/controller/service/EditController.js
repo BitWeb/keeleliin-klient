@@ -2,13 +2,14 @@ define([
     'angularAMD',
     'ServiceService',
     'ResourceService',
+    'ResourceTypeService',
     'chosen',
     'icheck'
 ], function(angularAMD) {
 
-    angularAMD.controller('ServiceEditController', ['$scope', '$stateParams', 'ServiceService', 'ResourceService','$log',
-        function( $scope, $stateParams, serviceService, resourceService, $log ) {
-
+    angularAMD.controller('ServiceEditController', ['$scope', '$stateParams', 'ServiceService', 'ResourceService', 'ResourceTypeService' ,'$log',
+        function( $scope, $stateParams, serviceService, resourceService, resourceTypeService, $log ) {
+            $scope.serviceId = $stateParams.serviceId;
             $scope.errorMessage = null;
             $scope.successMessage = null;
 
@@ -19,7 +20,7 @@ define([
             };
 
             var loadServiceFromServer = function () {
-                serviceService.getService( $stateParams.id, function (err, data) {
+                serviceService.getService( $stateParams.serviceId, function (err, data) {
                     if(err){
                         return alert('Err');
                     }
@@ -36,13 +37,13 @@ define([
                 $scope.servicesList = data;
             });
 
-            resourceService.getResourceTypes(function (err, types) {
+            resourceTypeService.getResourceTypesList(function (err, types) {
                 if(err){
                     return alert('Err');//todo
                 }
                 $scope.resourceTypes = types;
 
-                if( $stateParams.id ){
+                if( $stateParams.serviceId ){
                     loadServiceFromServer();
                 }
             });
@@ -137,6 +138,7 @@ define([
                     $scope.errorMessage = null;
                     form.submitted = false;
                     $scope.successMessage = 'Salvestatud';
+                    $scope.$broadcast('updateBreadcrumb');
                 };
 
                 if($scope.service.id){

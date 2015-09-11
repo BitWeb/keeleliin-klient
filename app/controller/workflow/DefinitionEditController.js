@@ -5,13 +5,13 @@ define([
     'WorkflowService',
     'ServiceService',
     'ui-sortable',
-    'filetree',
+    'filetree'
 ], function (angularAMD) {
     angularAMD.controller('WorkflowDefinitionEditController',
         [ '$scope', '$state', '$stateParams', 'WorkflowDefinitionService', 'ServiceService', '$log', 'WorkflowService',
             function ($scope, $state, $stateParams, workflowDefinitionService, serviceService, $log, workflowService) {
 
-                $scope.workflowId = $stateParams.id;
+                $scope.workflowId = $stateParams.workflowId;
                 $scope.hideFileTreeTabs = true;
 
                 $scope.hideFileTreeTabs = true;
@@ -26,16 +26,13 @@ define([
                         return alert('Err');
                     }
                     servicesList = services;
-                    workflowDefinitionService.getWorkflowsDefinition($stateParams.id, function (err, workflow) {
+                    workflowDefinitionService.getWorkflowsDefinition($stateParams.workflowId, function (err, workflow) {
                         if(err){
                             console.log(err);
                             return alert('Err');
                         }
                         $log.debug('Workflow', workflow);
                         $scope.workflow = workflow;
-
-                        console.log($scope.workflow);
-
                         $scope.selectedServices = $scope.workflow.workflowDefinition.definitionServices;
                         $scope.updateAvailableServices();
                     });
@@ -46,7 +43,7 @@ define([
                 };
 
                 $scope.addSelectedService = function ( service ) {
-                    console.log('Add service', service);
+
                     var selectedService = {
                         id: null,
                         serviceId: service.id,
@@ -136,7 +133,7 @@ define([
                             $log.debug(err);
                             return alert('Err');
                         }
-                        $state.go('workflow-view', {id: $scope.workflow.id});
+                        $state.go('workflow-view', {workflowId: $scope.workflow.id});
                     });
                 };
             }]);

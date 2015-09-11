@@ -5,9 +5,10 @@ define([
     'icheck'
 ], function(angularAMD) {
 
-    angularAMD.controller('ResourceTypeEditController', ['$scope', '$stateParams', 'ResourceTypeService', '$log','config',
-        function( $scope, $stateParams, resourceTypeService, $log, config ) {
+    angularAMD.controller('ResourceTypeEditController', ['$scope', '$rootScope', '$stateParams', 'ResourceTypeService', '$log','config',
 
+        function( $scope, $rootScope, $stateParams, resourceTypeService, $log, config ) {
+            $scope.resourceTypeId = $stateParams.resourceTypeId;
             $scope.errorMessage = null;
             $scope.successMessage = null;
 
@@ -21,7 +22,7 @@ define([
             };
 
             var loadResourceTypeFromServer = function () {
-                resourceTypeService.getResourceType( $stateParams.id, function (err, item) {
+                resourceTypeService.getResourceType( $stateParams.resourceTypeId, function (err, item) {
                     if(err){
                         return alert('Err');
                     }
@@ -29,7 +30,7 @@ define([
                 });
             };
 
-            if( $stateParams.id ){
+            if( $stateParams.resourceTypeId ){
                 loadResourceTypeFromServer();
             }
 
@@ -53,6 +54,9 @@ define([
                     $scope.resourceType = data;
                     form.submitted = false;
                     $scope.message = 'Salvestatud';
+
+                    $scope.$broadcast('updateBreadcrumb');
+
                 };
 
                 if($scope.resourceType.id){

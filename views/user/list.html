@@ -1,16 +1,5 @@
-<div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-lg-10">
-        <h2>Kasutajate haldus</h2>
-        <ol class="breadcrumb">
-            <li>
-                <a ui-sref="home">Avaleht</a>
-            </li>
-            <li class="active">
-                <strong>Kasutajate haldus</strong>
-            </li>
-        </ol>
-    </div>
-</div>
+<div kl-breadcrumb></div>
+
 <div class="wrapper wrapper-content animated fadeInRight">
     <div ng-show="errorMessage" class="alert alert-error">{{errorMessage}}</div>
 
@@ -51,7 +40,7 @@
                 <tbody>
                     <tr dir-paginate="user in users | filter: searchFilter | itemsPerPage: perPage" total-items="totalCount" current-page="pagination.current" boundary-links="true">
                         <td>{{user.id}}</td>
-                        <td><a ui-sref="user-edit({id: user.id})">{{user.name}}</a></td>
+                        <td><a ui-sref="user-edit({userId: user.id})">{{user.name}}</a></td>
                         <td>{{user.created_at | date : 'dd.MM.yyyy'}}</td>
                         <td>{{user.updated_at | date : 'dd.MM.yyyy'}}</td>
                         <td>{{user.role | translate}}</td>

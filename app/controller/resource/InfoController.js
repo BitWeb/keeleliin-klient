@@ -1,9 +1,11 @@
 define([
-    'angularAMD'
+    'angularAMD',
+    'ResourceService',
+    'ResourceTypeService'
 ], function (angularAMD) {
 
-    angularAMD.controller('ResourceInfoController', [ '$scope', '$rootScope', '$log', 'ResourceService', 'resourceId',
-        function($scope, $rootScope, $log, resourceService, resourceId ) {
+    angularAMD.controller('ResourceInfoController', [ '$scope', '$rootScope', '$log', 'ResourceService','ResourceTypeService', 'resourceId',
+        function($scope, $rootScope, $log, resourceService, resourceTypeService, resourceId ) {
 
             resourceService.getResourceInfo( resourceId, function (err, info) {
                 if(err){
@@ -13,7 +15,7 @@ define([
                 $scope.resource = info;
             });
 
-            resourceService.getResourceTypes(function (err, types) {
+            resourceTypeService.getResourceTypesList(function (err, types) {
                 if(err){
                     return alert('Err');
                 }

@@ -1,24 +1,11 @@
+<div kl-breadcrumb></div>
 
-<div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-lg-10">
-        <h2>Esimene projekt</h2>
-        <ol class="breadcrumb">
-            <li>
-                <a ui-sref="home">Avaleht</a>
-            </li>
-            <li>
-                <a ui-sref="project">Projektid</a>
-            </li>
-            <li class="active">
-                <strong>{{project.name}}</strong>
-            </li>
-        </ol>
-    </div>
-</div>
 <div class="row">
     <div class="wrapper wrapper-content animated fadeInUp">
         <div class="col-md-4">
-            <a class="btn btn-block btn-primary m-b-sm" ui-sref="forms.project_file_manager"><i class="fa fa-edit"></i> Muuda projekti resursse</a>
+            <a class="btn btn-block btn-primary m-b-sm" ui-sref="project-resource-upload({projectId:projectId})">
+                <i class="fa fa-edit"></i> Muuda projekti ressursse
+            </a>
             <div filetree></div>
         </div>
         <div class="col-md-8">
@@ -102,8 +89,8 @@
 
                                     </td>
                                     <td class="project-actions">
-                                        <a ng-show="workflow.status == 'INIT'" ui-sref="workflow-definition-edit({id: workflow.id})" class="btn btn-white btn-xs"><i class="fa fa-pencil"></i> Muuda </a>
-                                        <a ng-show="workflow.status != 'INIT'" ui-sref="workflow-view({id: workflow.id})" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Vaata </a>
+                                        <a ng-show="workflow.status == 'INIT'" ui-sref="workflow-definition-edit({workflowId: workflow.id})" class="btn btn-white btn-xs"><i class="fa fa-pencil"></i> Muuda </a>
+                                        <a ng-show="workflow.status != 'INIT'" ui-sref="workflow-view({workflowId: workflow.id})" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Vaata </a>
                                     </td>
                                 </tr>
                             </tbody>

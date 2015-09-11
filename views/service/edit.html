@@ -1,19 +1,5 @@
-<div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-lg-10">
-        <h2>{{service.name || 'Uus teenus'}}</h2>
-        <ol class="breadcrumb">
-            <li>
-                <a ui-sref="home">Avaleht</a>
-            </li>
-            <li>
-                <a ui-sref="services">Teenuste haldus</a>
-            </li>
-            <li class="active">
-                <strong>{{service.name || 'Uus teenus'}} </strong>
-            </li>
-        </ol>
-    </div>
-</div>
+<div kl-breadcrumb></div>
+
 <div class="row">
     <form name="serviceForm" role="form" novalidate>
         <div class="wrapper wrapper-content animated fadeInUp">

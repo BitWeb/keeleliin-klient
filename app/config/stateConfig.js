@@ -5,7 +5,7 @@
 define(['angularAMD'], function (angularAMD) {
 
     return {
-        setStates: function(app, $stateProvider, $urlRouterProvider, $ocLazyLoad){
+        setStates: function (app, $stateProvider, $urlRouterProvider, $ocLazyLoad) {
 
             $urlRouterProvider.otherwise("/auth");
 
@@ -13,23 +13,30 @@ define(['angularAMD'], function (angularAMD) {
                 'auth', angularAMD.route({
                     url: "/auth",
                     templateUrl: "views/auth/auth.html",
-                    controller: 'AuthController'
+                    controller: 'AuthController',
+                    breadcrumb: {
+                        title: 'Sisselogimine'
+                    }
                 }));
 
             $stateProvider.state(
                 'home', angularAMD.route({
                     url: "/home",
                     templateUrl: "views/home/home-view.html",
-                    controller: 'HomeController'
+                    controller: 'HomeController',
+                    breadcrumb: {
+                        hide: true,
+                        title: 'Avaleht'
+                    }
                 }));
-
 
             $stateProvider.state('projectState', {
                 url: "/project",
                 abstract: true,
                 template: '<ui-view/>'
             });
-            $stateProvider.state( 'projects',
+
+            $stateProvider.state('projects',
                 angularAMD.route({
                     parent: 'projectState',
                     url: "",
@@ -45,13 +52,25 @@ define(['angularAMD'], function (angularAMD) {
                                 }
                             ]);
                         }
+                    },
+                    breadcrumb: {
+                        parent: 'home',
+                        title: 'Projektid'
                     }
                 })
             );
-            $stateProvider.state( 'project-item',
+
+            $stateProvider.state('projectItemState', {
+                parent: 'projectState',
+                url: "/{projectId:[0-9]{1,8}}",
+                abstract: true,
+                template: '<ui-view/>'
+            });
+
+            $stateProvider.state('project-item',
                 angularAMD.route({
-                    parent: 'projectState',
-                    url: "/{id:[0-9]{1,8}}", //
+                    parent: 'projectItemState',
+                    url: "", //
                     templateUrl: "views/project/view.html",
                     controller: 'ProjectViewController',
                     resolve: {
@@ -64,57 +83,87 @@ define(['angularAMD'], function (angularAMD) {
                                 }
                             ]);
                         }
+                    },
+                    breadcrumb: {
+                        parent: 'projects',
+                        title: '{{projectId}}',
+                        attributes: '{projectId: projectId}'
                     }
                 })
             );
-            $stateProvider.state( 'workflow-definition-edit',
+            $stateProvider.state('project-resource-upload',
                 angularAMD.route({
-                    url: "/workflow-definition/{id:[0-9]{1,8}}", //
-                    templateUrl: "views/workflow/definition_edit.html",
-                    controller: 'WorkflowDefinitionEditController'
+                    parent: 'projectItemState',
+                    url: "/resource-upload", //
+                    templateUrl: "views/project/resource_upload.html",
+                    controller: 'ProjectResourceUploadController',
+                    resolve: {
+                        loadPlugin: function ($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                {
+                                    files: ['assets/css/plugins/dropzone/basic.css', 'assets/css/plugins/dropzone/dropzone.css',]
+                                }
+                            ]);
+                        }
+                    },
+                    breadcrumb: {
+                        parent: 'project-item',
+                        title: 'Ressursside haldus',
+                        attributes: '{projectId: projectId}'
+                    }
                 })
             );
 
-            $stateProvider.state('usersState', {
-                url: '/user',
+            $stateProvider.state('workflowItemState', {
+                parent: 'projectItemState',
+                url: "/workflow/{workflowId:[0-9]{1,8}}",
                 abstract: true,
                 template: '<ui-view/>'
             });
-            $stateProvider.state('users', angularAMD.route({
-                parent: 'usersState',
-                url: '',
-                templateUrl: 'views/user/list.html',
-                controller: 'UserListController'
-            }));
-            $stateProvider.state('user-edit', angularAMD.route({
-                parent: 'usersState',
-                url: '/{id:[0-9]{1,8}}',
-                templateUrl: 'views/user/edit.html',
-                controller: 'UserEditController'
-            }));
 
-
-            $stateProvider.state(
-                'workflow-view', angularAMD.route({
-                    url: "/workflow/{id:[0-9]{1,8}}", //
-                    templateUrl: "views/workflow/view.html",
-                    controller: 'WorkflowViewController'
+            $stateProvider.state('workflow-definition-edit',
+                angularAMD.route({
+                    parent: 'workflowItemState',
+                    url: "/definition", //
+                    templateUrl: "views/workflow/definition_edit.html",
+                    controller: 'WorkflowDefinitionEditController',
+                    breadcrumb: {
+                        parent: 'project-item',
+                        title: 'Töövoo {{workflowId}} definitsioon',
+                        attributes: '{workflowId: workflowId}'
+                    }
                 })
-            );
-
-            $stateProvider.state(
+            ).state( 'workflow-view',
+                angularAMD.route({
+                    parent: 'workflowItemState',
+                    url: "", //
+                    templateUrl: "views/workflow/view.html",
+                    controller: 'WorkflowViewController',
+                    breadcrumb: {
+                        parent: 'project-item',
+                        title: "{{workflowId}}",
+                        attributes: '{workflowId: workflowId}'
+                    }
+                })
+            ).state(
                 'workflow-resource-upload', angularAMD.route({
-                    url: "/workflow/{id:[0-9]{1,8}}/resource-upload", //
+                    parent: 'workflowItemState',
+                    url: "/resource-upload", //
                     templateUrl: "views/workflow/resource_upload.html",
                     controller: 'WorkflowResourceUploadController',
                     resolve: {
                         loadPlugin: function ($ocLazyLoad) {
                             return $ocLazyLoad.load([
                                 {
-                                    files: ['assets/css/plugins/dropzone/basic.css', 'assets/css/plugins/dropzone/dropzone.css', ]
+                                    files: ['assets/css/plugins/dropzone/basic.css', 'assets/css/plugins/dropzone/dropzone.css',]
                                 }
                             ]);
                         }
+                    },
+                    breadcrumb: {
+                        parent: 'workflow-definition-edit',
+                        title: "Ressursside lisamine",
+                        attributes: '{workflowId: workflowId}'
                     }
                 })
             );
@@ -124,16 +173,20 @@ define(['angularAMD'], function (angularAMD) {
                 abstract: true,
                 url: '/service',
                 template: '<ui-view/>'
-            });
-            $stateProvider.state('services', angularAMD.route({
+            }
+            ).state('services', angularAMD.route({
                 parent: 'serviceState',
                 url: '',
                 templateUrl: 'views/service/list.html',
-                controller: 'ServiceListController'
-            }));
-            $stateProvider.state('service-edit', angularAMD.route({
+                controller: 'ServiceListController',
+                breadcrumb: {
+                    parent: 'home',
+                    title: "Teenuste haldus"
+                }
+            })
+            ).state('service-edit', angularAMD.route({
                 parent: 'serviceState',
-                url: '/{id:[0-9]{1,8}}',
+                url: '/{serviceId:[0-9]{1,8}}',
                 templateUrl: 'views/service/edit.html',
                 controller: 'ServiceEditController',
                 resolve: {
@@ -149,9 +202,14 @@ define(['angularAMD'], function (angularAMD) {
                             }
                         ]);
                     }
+                },
+                breadcrumb: {
+                    parent: 'services',
+                    title: "{{serviceId}}",
+                    attributes: '{serviceId: serviceId}'
                 }
-            }));
-            $stateProvider.state('service-insert', angularAMD.route({
+            })
+            ).state('service-insert', angularAMD.route({
                 parent: 'serviceState',
                 url: '/insert',
                 templateUrl: 'views/service/edit.html',
@@ -169,6 +227,10 @@ define(['angularAMD'], function (angularAMD) {
                             }
                         ]);
                     }
+                },
+                breadcrumb: {
+                    parent: 'services',
+                    title: "Teenuse lisamine"
                 }
             }));
 
@@ -176,26 +238,67 @@ define(['angularAMD'], function (angularAMD) {
                 abstract: true,
                 url: '/resource-type',
                 template: '<ui-view/>'
-            });
-            $stateProvider.state('resource-types', angularAMD.route({
+            }
+            ).state('resource-types', angularAMD.route({
                 parent: 'resourceTypeState',
                 url: '',
                 templateUrl: 'views/resource_type/list.html',
-                controller: 'ResourceTypeListController'
-            }));
-            $stateProvider.state('resource-type-insert', angularAMD.route({
+                controller: 'ResourceTypeListController',
+                breadcrumb: {
+                    parent: 'home',
+                    title: "Ressursi tüüpide haldus"
+                }
+            })
+            ).state('resource-type-insert', angularAMD.route({
                 parent: 'resourceTypeState',
                 url: '/insert',
                 templateUrl: 'views/resource_type/edit.html',
-                controller: 'ResourceTypeEditController'
-            }));
-            $stateProvider.state('resource-type-edit', angularAMD.route({
+                controller: 'ResourceTypeEditController',
+                breadcrumb: {
+                    parent: 'resource-types',
+                    title: "Ressursi tüübi lisamine"
+                }
+            })
+            ).state('resource-type-edit', angularAMD.route({
                 parent: 'resourceTypeState',
-                url: '/{id:[0-9]{1,8}}',
+                url: '/{resourceTypeId:[0-9]{1,8}}',
                 templateUrl: 'views/resource_type/edit.html',
-                controller: 'ResourceTypeEditController'
+                controller: 'ResourceTypeEditController',
+                breadcrumb: {
+                    parent: 'resource-types',
+                    title: '{{resourceTypeId}}',
+                    attributes: '{resourceTypeId: resourceTypeId}'
+                }
             }));
 
+            $stateProvider.state('usersState',
+                {
+                    url: '/user',
+                    abstract: true,
+                    template: '<ui-view/>'
+                }
+            ).state('users', angularAMD.route({
+                    parent: 'usersState',
+                    url: '',
+                    templateUrl: 'views/user/list.html',
+                    controller: 'UserListController',
+                    breadcrumb: {
+                        parent: 'home',
+                        title: 'Kasutajate haldus'
+                    }
+                })
+            ).state('user-edit', angularAMD.route({
+                    parent: 'usersState',
+                    url: '/{userId:[0-9]{1,8}}',
+                    templateUrl: 'views/user/edit.html',
+                    controller: 'UserEditController',
+                    breadcrumb: {
+                        parent: 'users',
+                        title: "{{userId}}",
+                        attributes: '{userId: userId}'
+                    }
+                })
+            );
         }
     }
 });

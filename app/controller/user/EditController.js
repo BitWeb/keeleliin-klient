@@ -1,5 +1,6 @@
 define(['angularAMD'], function(angularAMD) {
     angularAMD.controller('UserEditController', ['$scope', '$stateParams', 'UserService', 'config', function($scope, $stateParams, userService, config) {
+        $scope.userId = $stateParams.userId;
         $scope.message = null;
         $scope.user = null;
         $scope.roles = config.user.roles;
@@ -27,7 +28,7 @@ define(['angularAMD'], function(angularAMD) {
             $scope.user = angular.copy($scope.master);
         };
 
-        userService.getUser($stateParams.id, function(err, user) {
+        userService.getUser($stateParams.userId, function(err, user) {
             if (err) {
                 console.log(err);
                 return alert(err);

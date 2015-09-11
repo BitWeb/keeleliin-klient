@@ -1,0 +1,13 @@
+<div class="row wrapper border-bottom white-bg page-heading" style="height: 95px;">
+    <div class="col-lg-10">
+        <h2>{{breadcrumb.title}}</h2>
+        <ol class="breadcrumb">
+            <li ng-repeat="link in breadcrumb.links" ng-class="{'active': $last}">
+                <strong ng-if="$last">
+                    {{link.title}}
+                </strong>
+                <a ng-if="!$last" ui-sref="{{link.shref}}">{{link.title}}</a>
+            </li>
+        </ol>
+    </div>
+</div>

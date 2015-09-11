@@ -30,7 +30,7 @@ define(["angularAMD"], function (angularAMD) {
                     return;
                 }
                 $scope.$close();
-                $state.go('project-item', {id: project.id});
+                $state.go('project-item', {projectId: project.id});
             });
         };
 

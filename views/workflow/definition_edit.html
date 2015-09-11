@@ -1,23 +1,4 @@
-
-<div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-lg-10">
-        <h2>Projektid</h2>
-        <ol class="breadcrumb">
-            <li>
-                <a ui-sref="home">Avaleht</a>
-            </li>
-            <li>
-                <a ui-sref="projects">Projektid</a>
-            </li>
-            <li>
-                <a ui-sref="app.project_detail_view">Esimene projekt</a>
-            </li>
-            <li class="active">
-                <strong>Töövoo koostamine </strong>
-            </li>
-        </ol>
-    </div>
-</div>
+<div kl-breadcrumb></div>
 
 <div class="wrapper wrapper-content">
     <div class="row animated fadeInDown">
@@ -53,7 +34,7 @@
                         <p>
                             Töövoole tuleb defineerida sisend. Lae üles failid, kopeeri tekst või vali olemasolevast projektist sisend.
                         </p>
-                        <a ui-sref="workflow-resource-upload({id: workflow.id})" class="btn btn-primary btn-block">Määra sisend</a>
+                        <a ui-sref="workflow-resource-upload({workflowId: workflow.id})" class="btn btn-primary btn-block">Määra sisend</a>
                         <div class="clearfix"></div>
                     </div>
                 </div>
@@ -127,7 +108,7 @@
                         </div>
 
                         <div class="ibox-footer text-right">
-                            <a ui-sref="project-item({id: workflow.projectId})" class="btn btn-sm btn-link pull-left"><i class="fa fa-caret-left"></i> Tagasi projekti vaatesse</a>
+                            <a ui-sref="project-item({projectId: workflow.projectId})" class="btn btn-sm btn-link pull-left"><i class="fa fa-caret-left"></i> Tagasi projekti vaatesse</a>
                             <a ng-click="runWorkflow()" class="btn btn-info btn-sm"><i class="fa fa-play"></i> Käivita töövoog</a>
                             <a ng-click="updateDefinitionServices()" class="btn btn-primary btn-sm"><i class="fa fa-run"></i> Salvesta töövoog</a>
                         </div>

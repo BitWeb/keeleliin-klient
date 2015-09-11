@@ -11,6 +11,7 @@ define([
     'inspinia',
     'angular-translate',
     'directives',
+    'breadcrumb',
     'sidebarDirectives',
     'ui-bootstrap',
     'icheck'

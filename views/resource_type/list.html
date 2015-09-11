@@ -1,17 +1,4 @@
-
-<div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-lg-10">
-        <h2>Ressursi tüüpide haldus</h2>
-        <ol class="breadcrumb">
-            <li>
-                <a ui-sref="home">Avaleht</a>
-            </li>
-            <li class="active">
-                <strong>Ressursi tüüpide haldus</strong>
-            </li>
-        </ol>
-    </div>
-</div>
+<div kl-breadcrumb></div>
 
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
@@ -42,7 +29,7 @@
                                     {{resourceType.value}}
                                 </td>
                                 <td class="text-right" footable-ng-row>
-                                    <a ui-sref="resource-type-edit({id: resourceType.id})" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Vaata </a>
+                                    <a ui-sref="resource-type-edit({resourceTypeId: resourceType.id})" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Vaata </a>
                                 </td>
                             </tr>
                             </tbody>
