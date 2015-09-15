@@ -45,7 +45,7 @@
         <div class="col-lg-9">
             <div class="row">
 
-                <div class="col-lg-12">
+                <div ng-if="workflow.workflowDefinition.editStatus != 'locked'" class="col-lg-12">
                     <div class="ibox">
                         <div class="ibox-title">
                             <h5>Valitavad teenused</h5>
@@ -90,13 +90,13 @@
                                         <div class="ibox available-service">
                                             <div class="ibox-title">
                                                 <h5>{{$index + 1}}. {{service.name}}</h5>
-                                                <a class="pull-right text-lg icon" ng-click="removeSelectedServicesFromIndex($index)" title="Eemalda">
+                                                <a class="pull-right text-lg icon" ng-click="removeSelectedServicesFromIndex($index)" title="Eemalda" ng-if="workflow.workflowDefinition.editStatus != 'locked'">
                                                     <i class="fa fa-trash error"></i>
                                                 </a>
                                                 <a class="pull-right text-lg icon" ng-click="showInfo( selectedService )" title="Info" style="margin-right: 5px">
                                                     <i class="fa fa-info-circle"></i>
                                                 </a>
-                                                <a class="pull-right text-lg icon" ng-click="showSettings( selectedService )" title="Seaded" style="margin-right: 5px">
+                                                <a class="pull-right text-lg icon" ng-click="showSettings( selectedService )" title="Seaded" style="margin-right: 5px" ng-if="workflow.workflowDefinition.editStatus != 'locked'">
                                                     <i class="fa fa-gears"></i>
                                                 </a>
                                             </div>
@@ -111,8 +111,9 @@
 
                         <div class="ibox-footer text-right">
                             <a ui-sref="project-item({projectId: workflow.projectId})" class="btn btn-sm btn-link pull-left"><i class="fa fa-caret-left"></i> Tagasi projekti vaatesse</a>
+                            <a ng-if="workflow.workflowDefinition.editStatus == 'locked'" ng-click="editDefinitionServices()" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Muuda teenuseid</a>
                             <a ng-click="runWorkflow()" class="btn btn-info btn-sm"><i class="fa fa-play"></i> Käivita töövoog</a>
-                            <a ng-click="updateDefinitionServices()" class="btn btn-primary btn-sm"><i class="fa fa-run"></i> Salvesta töövoog</a>
+                            <a ng-if="workflow.workflowDefinition.editStatus != 'locked'" ng-click="updateDefinitionServices()" class="btn btn-primary btn-sm"><i class="fa fa-run"></i> Salvesta töövoog</a>
                         </div>
                     </div>
                 </div>

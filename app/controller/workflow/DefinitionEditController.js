@@ -140,5 +140,10 @@ define([
                 $scope.openWorkflowSettingsModal = function(){
                     workflowService.openWorkflowSettingsModal($scope, $scope.workflow);
                 };
+
+
+                $scope.editDefinitionServices = function () {
+                    $scope.workflow.workflowDefinition.editStatus = 'edit';
+                };
             }]);
 });
