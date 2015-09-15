@@ -101,7 +101,7 @@ define(['angularAMD'], function (angularAMD) {
                         loadPlugin: function ($ocLazyLoad) {
                             return $ocLazyLoad.load([
                                 {
-                                    files: ['assets/css/plugins/dropzone/basic.css', 'assets/css/plugins/dropzone/dropzone.css',]
+                                    files: ['assets/css/plugins/dropzone/basic.css', 'assets/css/plugins/dropzone/dropzone.css']
                                 }
                             ]);
                         }
@@ -127,6 +127,17 @@ define(['angularAMD'], function (angularAMD) {
                     url: "/definition", //
                     templateUrl: "views/workflow/definition_edit.html",
                     controller: 'WorkflowDefinitionEditController',
+                    resolve: {
+                        loadPlugin: function ($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                {
+                                    insertBefore: '#loadBefore',
+                                    name: 'localytics.directives',
+                                    files: ['assets/css/plugins/chosen/chosen.css']
+                                }
+                            ]);
+                        }
+                    },
                     breadcrumb: {
                         parent: 'project-item',
                         title: 'Töövoo {{workflowId}} definitsioon',
@@ -139,6 +150,17 @@ define(['angularAMD'], function (angularAMD) {
                     url: "", //
                     templateUrl: "views/workflow/view.html",
                     controller: 'WorkflowViewController',
+                    resolve: {
+                        loadPlugin: function ($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                {
+                                    insertBefore: '#loadBefore',
+                                    name: 'localytics.directives',
+                                    files: ['assets/css/plugins/chosen/chosen.css']
+                                }
+                            ]);
+                        }
+                    },
                     breadcrumb: {
                         parent: 'project-item',
                         title: "{{workflowId}}",

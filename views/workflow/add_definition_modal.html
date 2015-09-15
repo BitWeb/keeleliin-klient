@@ -20,6 +20,34 @@
                 <label class="control-label">Eesmärk</label>
                 <textarea name="purpose" ng-model="definition.purpose" placeholder="Töövoo eesmärk" class="form-control"></textarea>
             </div>
+
+            <div class="form-group clearfix">
+                <label>Privaatsussätted</label>
+                <div class="col-sm-12">
+                    <label class="radio-inline">
+                        <input type="radio" ng-model="definition.accessStatus" name="accessStatus" value="private"> Privaatne
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" ng-model="definition.accessStatus" name="accessStatus" value="public"> Avalik
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" ng-model="definition.accessStatus" name="accessStatus" value="shared"> Jagatud
+                    </label>
+                </div>
+            </div>
+
+            <div ng-show="definition.accessStatus == 'shared'" class="form-group">
+                <select
+                        multiple
+                        chosen
+                        class="chosen-select m-t-md"
+                        style="width:100%;"
+                        tabindex="4"
+                        data-placeholder="Vali kasutaja"
+                        ng-model="definition.users"
+                        ng-options="user.id as user.name for user in usersList">
+                </select>
+            </div>
         </form>
     </div>
 </div>

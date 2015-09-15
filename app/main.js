@@ -45,6 +45,7 @@ require.config({
         'ProjectResourceUploadController' : 'controller/project/ResourceUploadController',
 
         'MainController'        : 'controller/MainController',
+        'WorkflowAddModalController': 'controller/workflow/AddModalController',
         'WorkflowAddDefinitionModalController': 'controller/workflow/AddDefinitionModalController',
         'WorkflowSettingsModalController' : 'controller/workflow/SettingsModalController',
         'WorkflowDefinitionEditController' : 'controller/workflow/DefinitionEditController',

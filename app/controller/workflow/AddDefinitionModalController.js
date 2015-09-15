@@ -1,15 +1,21 @@
 
-define(['angularAMD'], function (angularAMD) {
+define(['angularAMD', 'UserService'], function (angularAMD) {
+
     angularAMD.controller('AddDefinitionModalController',
-        [ '$scope', '$state', 'WorkflowDefinitionService', 'project','$log',
-            function ($scope, $state, workflowDefinitionService, project, $log) {
+        [ '$scope', '$state', 'WorkflowDefinitionService', 'project','$log','UserService',
+            function ($scope, $state, workflowDefinitionService, project, $log, userService) {
 
                 $scope.definition = {
                     projectId: project.id,
                     name: '',
                     description: '',
-                    purpose: ''
+                    purpose: '',
+                    accessStatus: 'private'
                 };
+
+                userService.getUsersList( {}, function (err, users) {
+                    $scope.usersList = users.rows;
+                });
 
                 $scope.save = function (form) {
                     form.submitted = true;

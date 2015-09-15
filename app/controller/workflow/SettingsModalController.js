@@ -1,8 +1,8 @@
 
-define(['angularAMD'], function (angularAMD) {
+define(['angularAMD','UserService', 'chosen' ], function (angularAMD) {
     angularAMD.controller('WorkflowSettingsModalController',
-        [ '$scope', '$state', 'WorkflowService', 'workflowId','$log', '$modalInstance',
-            function ($scope, $state, workflowService, workflowId, $log, $modalInstance) {
+        [ '$scope', '$state', 'WorkflowService', 'workflowId','$log', '$modalInstance','UserService',
+            function ($scope, $state, workflowService, workflowId, $log, $modalInstance, userService) {
 
                 $scope.workflow = {
                     id: null,
@@ -10,13 +10,23 @@ define(['angularAMD'], function (angularAMD) {
                     description: '',
                     purpose: ''
                 };
-                workflowService.getWorkflowSettings(workflowId, function (err, settings) {
-                    if(err){
-                        $log.error(err);
-                        return alert('Err');
-                    }
-                    $scope.workflow = settings;
+
+                userService.getUsersList( {}, function (err, users) {
+                    $scope.usersList = users.rows;
+
+
+
+                    workflowService.getWorkflowSettings(workflowId, function (err, settings) {
+                        if(err){
+                            $log.error(err);
+                            return alert('Err');
+                        }
+                        $scope.workflow = settings;
+                    });
                 });
+
+
+
 
                 $scope.save = function (form) {
                     form.submitted = true;

@@ -1,0 +1,58 @@
+
+<div class="modal-header">
+    <h4 class="modal-title">Töövoo lisamine</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+
+        <div ng-if="errorMessage" class="alert alert-danger">
+            {{errorMessage}}
+        </div>
+
+        <div class="input-group">
+            <input ng-keyup="updateList()" ng-model="definitionFilterName" type="text" placeholder="Sisesta töövoo nimetus või märksõna" class="input-sm form-control">
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-sm btn-primary"> Otsi</button>
+            </span>
+        </div>
+        <div class="m-t-sm m-b-md">
+            <label class="m-r-sm">Filtreeri:</label>
+            <div data-toggle="buttons" class="btn-group">
+                <label ng-click="updateList()" class="btn btn-sm btn-white active"> <input type="radio" id="option1" name="type"> Kõik </label>
+                <label ng-click="updateList('public')" class="btn btn-sm btn-white"> <input type="radio" id="option2" name="type"> Avalikud</label>
+                <label ng-click="updateList('private')" class="btn btn-sm btn-white"> <input type="radio" id="option3" name="type"> Isiklikud</label>
+                <label ng-click="updateList('shared')" class="btn btn-sm btn-white"> <input type="radio" id="option4" name="type"> Minule jagatud</label>
+            </div>
+        </div>
+
+        <div class="panel-group m-t-sm">
+            <div ng-if="definitions.length == 0">
+                <i>Töövooge ei leitud</i>
+            </div>
+            <div ng-repeat="definition in definitions" class="panel panel-default">
+                <div class="panel-heading">
+                    <h5 class="panel-title">
+                        <a data-toggle="collapse" data-target="#flow-{{$index}}">{{definition.name}}</a>
+                        <label class="radio-inline pull-right">
+                            <input ng-model="workflow.workflowDefinitionId" type="radio" value="{{definition.id}}" name="definition"> Vali
+                        </label>
+                    </h5>
+                </div>
+                <div id="flow-{{$index}}" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <h4 ng-if="definition.description">Kirjeldus:</h4>
+                        <p>{{definition.description}}</p>
+                        <hr ng-if="definition.description">
+
+                        <h4 ng-if="definition.purpose">Eesmärk:</h4>
+                        <p>{{definition.purpose}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <a href="" class="btn btn-white btn-sm" ng-click="$dismiss()">Katkesta</a>
+    <a href="" class="btn btn-primary btn-sm" ng-click="addWorkflow()">Lisa töövoog</a>
+</div>

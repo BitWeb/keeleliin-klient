@@ -3,8 +3,8 @@ define([
     'ng-jstree',
     'ProjectService',
     'footable',
-    'chosen',
     'WorkflowAddDefinitionModalController',
+    'WorkflowAddModalController',
     'WorkflowDefinitionService',
     'filetree',
     'controller/project/UpdateController'
@@ -35,6 +35,10 @@ define([
 
             $scope.openDefineWorkflowModal = function () {
                 workflowDefinitionService.openAddDefinitionModal($scope, $scope.project);
+            };
+
+            $scope.openAddWorkflowModal = function () {
+                workflowDefinitionService.openAddWorkflowModal($scope, $scope.project);
             };
 
             $scope.openUpdateModal = function () {

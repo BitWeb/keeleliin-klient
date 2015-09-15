@@ -22,11 +22,8 @@ define(['appModule'], function (app) {
             this.isAuthorized = function( toState ){
 
                 if( toState.name != 'auth' && !isAuthenticated ){
-                    console.log(user);
-                    console.log('Not authorized');
                     return false;
                 }
-                console.log('Authorized for state ' + toState.name);
                 return true;
             };
 
@@ -65,7 +62,7 @@ define(['appModule'], function (app) {
             };
 
             this._requestUserInfo = function ( callback ) {
-                console.log('Request user Info');
+
                 $http.get( config.API_URL + '/user').then(function ( response ) {
                     self.updateUserInfo(response.data);
                     callback();
@@ -82,7 +79,6 @@ define(['appModule'], function (app) {
                 } else {
                     isAuthenticated = true;
                     user = userData.data;
-                    console.log('gotUser');
                     $rootScope.user = user;
                     $rootScope.$broadcast('authorized', $state);
                 }
@@ -115,10 +111,6 @@ define(['appModule'], function (app) {
 
             this.getUsersList = function (pagination, callback) {
 
-                console.log($http.defaults.headers.common);
-
-
-                console.log('Request user Info');
                 pagination = pagination  || {};
                 var url = config.API_URL + '/user/list?',
                     isParamAdded = false;

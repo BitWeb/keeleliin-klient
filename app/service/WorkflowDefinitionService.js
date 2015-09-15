@@ -17,6 +17,19 @@ define(['angularAMD'], function (angularAMD) {
                 });
             };
 
+            this.openAddWorkflowModal = function ($scope, project) {
+                return $modal.open({
+                    templateUrl: '../../views/workflow/add_modal.html',
+                    scope: $scope,
+                    controller: 'WorkflowAddModalController',
+                    resolve: {
+                        project: function(){
+                            return project;
+                        }
+                    }
+                });
+            };
+
             this.defineNewWorkflow = function (definition, callback) {
 
                 $http.post(config.API_URL + '/workflow/define', definition).then(
@@ -46,6 +59,22 @@ define(['angularAMD'], function (angularAMD) {
                             return callback(status);
                         }
                         console.log(data);
+                        callback(data);
+                    }
+                );
+            };
+
+            this.getWorkflowsDefinitionsList = function (params, callback) {
+
+                $http.get(config.API_URL + '/workflow-definition', {} ).then(
+                    function(data, status) {
+                        callback(null, data.data.data);
+                    },
+                    function(data, status) {
+                        if(!data){
+                            return callback(status);
+                        }
+                        console.error(data);
                         callback(data);
                     }
                 );
@@ -96,8 +125,47 @@ define(['angularAMD'], function (angularAMD) {
                 });
             };
 
+            this.filterDefinitionsList = function(definitions, type, name){
+                var map = {};
+                var updated = [];
 
+                for( i in definitions){
+                    var item = definitions[i];
+                    if( map[item.id] == item.id ){
+                        continue;
+                    }
+                    if( type && item.accessStatus != type ){
+                        continue;
+                    }
+                    if(name && !(item.name.indexOf(name) > -1 || item.description.indexOf(name) > -1 || item.purpose.indexOf(name) > -1)){
+                        continue;
+                    }
+                    map[item.id] = item.id;
+                    updated.push(item);
+                }
+                return updated;
+            };
 
+            this.createWorkflowFromDefinition = function (definitionId, projectId, callback) {
+
+                var data = {
+                    workflowDefinitionId: definitionId,
+                    projectId: projectId
+                };
+
+                $http.post(config.API_URL + '/workflow/create', data).then(
+                    function(data, status) {
+                        console.log(data.data);
+                        callback(null, data.data.data);
+                    },
+                    function(data, status) {
+                        if(!data){
+                            return callback(status);
+                        }
+                        callback(data);
+                    }
+                );
+            };
         }
     ]);
 });
