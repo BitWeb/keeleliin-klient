@@ -12,7 +12,7 @@ define(['angularAMD','jq-dropzone', 'jquery'], function (angularAMD) {
                     url: config.API_URL + '/resource/upload',
                     autoProcessQueue: false,
                     params: $scope.resourceUploadParams,
-                    maxFilesize: 100,
+                    maxFilesize: 2048,
                     paramName: "resourceFile",
                     maxThumbnailFilesize: 5,
                     parallelUploads: 5,
