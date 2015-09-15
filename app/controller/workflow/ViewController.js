@@ -15,7 +15,13 @@ define([
             $scope.workflowId = $stateParams.workflowId;
 
             var update = function(){
+
+                if( $state.current.name != 'workflow-view' ){
+                    return
+                }
+
                 workflowService.getWorkflow($stateParams.workflowId, function (err, workflow) {
+
                     if(err){
                         console.log(err);
                         return alert('Err');
