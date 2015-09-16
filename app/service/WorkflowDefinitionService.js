@@ -52,7 +52,7 @@ define(['angularAMD'], function (angularAMD) {
                 $http.get(config.API_URL + '/workflow/'+ workflowId +'/definition' ).then(
                     function(data, status) {
                         console.log(data.data);
-                        callback(null, data.data);
+                        callback(null, data.data.data);
                     },
                     function(data, status) {
                         if(!data){
@@ -85,7 +85,7 @@ define(['angularAMD'], function (angularAMD) {
                 $http.put(config.API_URL + '/workflow/'+ workflow.id +'/definition/services', selectedServices ).then(
                     function(data, status) {
                         console.log(data.data);
-                        callback(null, data.data);
+                        callback(null, data.data.data);
                     },
                     function(data, status) {
                         if(!data){

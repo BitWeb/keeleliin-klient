@@ -129,7 +129,10 @@
                     </div>
                 </div>
                 <div class="ibox-footer text-right">
-                    <a ui-sref="project-item({projectId: workflow.projectId})" class="btn btn-sm btn-link pull-left"><i class="fa fa-caret-left"></i> Tagasi projekti vaatesse</a>
+                    <a ng-if="projectId" ui-sref="project-item({projectId: workflow.projectId})" class="btn btn-sm btn-link pull-left"><i class="fa fa-caret-left"></i> Tagasi projekti vaatesse</a>
+                    <a ng-if="!projectId" ui-sref="workflow-management-list" class="btn btn-sm btn-link pull-left"><i class="fa fa-caret-left"></i> Tagasi</a>
+
+
                     <a ng-click="openWorkflowSettingsModal()" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Muuda töövoo sätteid</a>
                     <a ng-if="workflow.status == 'RUNNING'" class="btn btn-danger btn-sm" ng-click="cancelWorkflow()">
                         <i class="fa fa-stop"></i> Katkesta käimasolev töövoog

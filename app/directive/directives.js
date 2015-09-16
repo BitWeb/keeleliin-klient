@@ -107,8 +107,6 @@ app.directive('fullScroll', fullScroll)
             CANCELLED   : 'label-warning',
             ERROR       : 'label-danger'
         };
-
-
         return {
             restrict: 'A',
             scope: {},
@@ -129,6 +127,53 @@ app.directive('fullScroll', fullScroll)
                 });
 
             }]
+        };
+    }]);
+
+    app.directive('klWorkflowRuntime', ['$filter', function ($filter) {
+
+        var statusClassMap = {
+            INIT        : 'label-default',
+            RUNNING     : 'label-primary',
+            FINISHED    : 'label-success',
+            CANCELLED   : 'label-warning',
+            ERROR       : 'label-danger'
+        };
+
+        function findTime(element, status, start, end) {
+
+            if(status == 'INIT'){
+                return element.text('00:00:00');
+            }
+            var startDate = new Date(start);
+            var endDate = end ? new Date(end) : new Date();
+            var timeDiff = Math.abs(startDate.getTime() - endDate.getTime());
+            //tundi
+            var hour = Math.floor( timeDiff  / (1000 * 60 * 60) );
+            //min
+            var min = Math.floor( (timeDiff - (hour * 1000 * 60 * 60)) / (1000 * 60 ) );
+            //sec
+            var sec = Math.floor( (timeDiff - (min * 1000 * 60 )) / (1000) );
+
+            var format = function (value) {
+                var stringvalue = value.toString();
+                if(stringvalue.length == 1){
+                    stringvalue = '0' + stringvalue;
+                }
+                return stringvalue;
+            };
+            var time = format(hour) + ':' + format(min) + ':' + format(sec);
+            element.text( time );
+        }
+
+        return {
+            restrict: 'A',
+            scope: {},
+            link: function(scope, element, attrs) {
+                element.addClass('label');
+                element.addClass(statusClassMap[attrs.status]);
+                findTime(element, attrs.status, attrs.start, attrs.end);
+            }
         };
     }]);
 });

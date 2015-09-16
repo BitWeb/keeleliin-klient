@@ -7,19 +7,18 @@ define(['angularAMD'], function (angularAMD) {
             this.getWorkflow = function (workflowId, callback) {
                 $http.get(config.API_URL + '/workflow/' + workflowId).then(
                     function(data) {
-                        callback(null, data.data);
+                        callback(null, data.data.data);
                     },
                     function(data) {
                         callback(data);
                     }
                 );
-
             };
 
             this.runWorkflow = function (workflowId, callback) {
                 $http.put(config.API_URL + '/workflow/' + workflowId + '/run').then(
                     function(data) {
-                        callback(null, data.data);
+                        callback(null, data.data.data);
                     },
                     function(data) {
                         callback(data);
@@ -31,7 +30,7 @@ define(['angularAMD'], function (angularAMD) {
 
                 $http.put(config.API_URL + '/workflow/' + workflowId + '/cancel').then(
                     function(data) {
-                        callback(null, data.data);
+                        callback(null, data.data.data);
                     },
                     function(data) {
                         callback(data);
@@ -77,7 +76,18 @@ define(['angularAMD'], function (angularAMD) {
                         callback(data);
                     }
                 );
-            }
+            };
+
+            this.getWorkflowsManagementList = function (pagination, callback) {
+
+                pagination = pagination  || {};
+
+                $http.get(config.API_URL + '/workflow/management-list', {params: pagination}).then(function (response) {
+                    callback(null, response.data.data);
+                }, function (response) {
+                    callback(response);
+                });
+            };
 
         }
     ]);

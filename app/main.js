@@ -51,6 +51,8 @@ require.config({
         'WorkflowDefinitionEditController' : 'controller/workflow/DefinitionEditController',
         'WorkflowViewController'    : 'controller/workflow/ViewController',
         'WorkflowResourceUploadController' : 'controller/workflow/ResourceUploadController',
+        'WorkflowManagementListController': 'controller/workflow/ManagementListController',
+
         'ServiceListController'     : 'controller/service/ListController',
         'ServiceEditController'     : 'controller/service/EditController',
 

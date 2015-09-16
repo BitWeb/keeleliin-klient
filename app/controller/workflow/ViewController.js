@@ -12,21 +12,23 @@ define([
     angularAMD.controller('WorkflowViewController', [ '$scope','$rootScope', '$state', '$stateParams', '$log', 'WorkflowService', '$timeout','ResourceService',
         function($scope, $rootScope, $state, $stateParams, $log, workflowService, $timeout, resourceService ) {
 
+            var initStateName = $state.current.name;
+            $scope.projectId = $stateParams.projectId;
             $scope.workflowId = $stateParams.workflowId;
 
             var update = function(){
-
-                if( $state.current.name != 'workflow-view' ){
-                    return
+                if( initStateName != $state.current.name ){
+                    return;
                 }
 
                 workflowService.getWorkflow($stateParams.workflowId, function (err, workflow) {
-
                     if(err){
-                        console.log(err);
+                        console.error(err);
                         return alert('Err');
                     }
+
                     $scope.workflow = workflow;
+
                     findProgress();
                     if(workflow.status == 'RUNNING'){
                         $timeout(update, 2500)
@@ -45,7 +47,7 @@ define([
                 }
 
                 var progress = 100;
-                if($scope.workflow.workflowServices.length > 0){
+                if($scope.workflow.workflowServices && $scope.workflow.workflowServices.length > 0){
                     progress = Math.round(($scope.workflow.workflowServices.filter(function(value){return value.status == 'FINISHED';}).length * 100) / $scope.workflow.workflowServices.length);
                 }
                 $scope.progress = progress;
@@ -58,7 +60,6 @@ define([
                         resources.push(resource);
                     });
                 });
-                console.log('Input', resources);
                 return resources;
             };
 
@@ -69,7 +70,6 @@ define([
                         resources.push(resource);
                     });
                 });
-                console.log('Output: ',resources);
                 return resources;
             };
 
@@ -88,12 +88,8 @@ define([
 
             $scope.cancelWorkflow = function () {
                 workflowService.cancelWorkflow($scope.workflow.id, function (err, workflow) {
-
-                    console.log(workflow);
-                    console.log(err);
-
                     if (err) {
-                        console.log(err);
+                        console.error(err);
                         return alert('Err');
                     }
                     $scope.workflow = workflow;

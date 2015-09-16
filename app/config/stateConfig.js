@@ -191,6 +191,60 @@ define(['angularAMD'], function (angularAMD) {
             );
 
 
+            $stateProvider.state('workflowManagementState', {
+                url: "/workflow-management",
+                abstract: true,
+                template: '<ui-view/>'
+            }
+            ).state('workflow-management-list',
+                angularAMD.route({
+                    parent: 'workflowManagementState',
+                    url: "", //
+                    templateUrl: "views/workflow/management_list.html",
+                    controller: 'WorkflowManagementListController',
+                    resolve: {
+                        loadPlugin: function ($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                {
+                                    insertBefore: '#loadBefore',
+                                    name: 'localytics.directives',
+                                    files: ['assets/css/plugins/chosen/chosen.css']
+                                }
+                            ]);
+                        }
+                    },
+                    breadcrumb: {
+                        parent: 'home',
+                        title: 'Töövoogude haldus'
+                    }
+                })
+            ).state( 'workflow-management-item',
+                angularAMD.route({
+                    parent: 'workflowManagementState',
+                    url: "/workflow/{workflowId:[0-9]{1,8}}",
+                    templateUrl: "views/workflow/view.html",
+                    controller: 'WorkflowViewController',
+                    resolve: {
+                        loadPlugin: function ($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                {
+                                    insertBefore: '#loadBefore',
+                                    name: 'localytics.directives',
+                                    files: ['assets/css/plugins/chosen/chosen.css']
+                                }
+                            ]);
+                        }
+                    },
+                    breadcrumb: {
+                        parent: 'workflow-management-list',
+                        title: "{{workflowId}}",
+                        attributes: '{workflowId: workflowId}'
+                    }
+                })
+            );
+            ///
+
+
             $stateProvider.state('serviceState', {
                 abstract: true,
                 url: '/service',

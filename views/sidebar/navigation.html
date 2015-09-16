@@ -42,6 +42,13 @@
                     <i class="fa fa-wrench"></i> <span class="nav-label">Ressursi tüüpide haldus</span>
                 </a>
             </li>
+
+            <li ng-class="{active : $state.includes('workflowManagementState')}">
+                <a ui-sref="workflow-management-list">
+                    <i class="fa fa-tasks"></i> <span class="nav-label">Töövoogude haldus</span>
+                </a>
+            </li>
+
             <li ng-class="{active : $state.includes('usersState')}">
                 <a ui-sref="users">
                     <i class="fa fa-users"></i> <span class="nav-label">Kasutajate haldus</span>
