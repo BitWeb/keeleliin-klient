@@ -183,25 +183,7 @@ app.directive('fullScroll', fullScroll)
         return {
             restrict: 'A',
             scope: {},
-            /*link: function(scope, element, attrs) {
-
-
-                console.log(attrs);
-
-                attrs.$observe(attrs, function(attrs){
-                    console.log(attrs);
-                });
-
-
-                element.text('<i class="fa fa-save"></i> Salvesta ');
-
-
-                element.attr('disabled', true);
-
-            },*/
-
             template: '<i class="fa fa-save"></i> {{message}} ',
-
             controller: ['$scope','$element', '$attrs', function($scope, $element, $attrs ) {
 
                 var messages = $attrs.messages.split(':');
@@ -257,5 +239,25 @@ app.directive('fullScroll', fullScroll)
         };
     }]);
     //
+
+    app.directive('klFilesize', [function () {
+        function formatBytes(bytes,decimals) {
+            if(bytes == 0) return '0 Byte';
+            var k = 1000;
+            var dm = decimals + 1 || 3;
+            var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+            var i = Math.floor(Math.log(bytes) / Math.log(k));
+            return (bytes / Math.pow(k, i)).toPrecision(dm) + ' ' + sizes[i];
+        }
+        return {
+            restrict: 'A',
+            scope: {},
+            link: function(scope, element, attrs) {
+                attrs.$observe('klFilesize', function(value) {
+                    return element.text(formatBytes(value,2));
+                });
+            }
+        };
+    }]);
 
 });

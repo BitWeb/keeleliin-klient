@@ -24,6 +24,10 @@
                 </span>
             </div>
             <div class="form-group">
+                <label class="control-label">Suurus: </label>
+                <span kl-filesize="{{resource.fileSize}}"></span>
+            </div>
+            <div class="form-group">
                 <label class="control-label">Kirjeldus: </label>
                 <textarea name="description" ng-model="resource.description" placeholder="Ressursi kirjeldus" class="form-control"></textarea>
             </div>

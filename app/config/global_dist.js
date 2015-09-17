@@ -13,7 +13,8 @@ define([], function () {
         },
         resource_type: {
             split_types: ['NONE', 'LINE', 'BYTE']
-        }
+        },
+        hearbeat_interval: 360000
     };
 
 });

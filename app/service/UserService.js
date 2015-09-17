@@ -135,6 +135,10 @@ define(['appModule'], function (app) {
 
             this.doHeardBeat = function () {
 
+                if(!config.hearbeat_interval){
+                    return
+                }
+
                 $timeout(function () {
 
                     if(!self.isAuthenticated){
@@ -147,7 +151,7 @@ define(['appModule'], function (app) {
                     }, function(response) {
                         $log.error(response);
                     });
-                }, 2500);
+                }, config.hearbeat_interval);
             };
         }
     ]);
