@@ -36,7 +36,14 @@
 
         <div class="ibox-footer text-right ng-scope">
             <a ui-sref="resource-types" class="btn btn-sm btn-link pull-left"><i class="fa fa-caret-left"></i> Tagasi ressursi tüüpide nimekirja</a>
-            <a class="btn btn-primary btn-sm" ng-click="saveResourceType(form)" ><i class="fa fa-save"></i> Salvesta</a>
+
+            <a kl-save-button
+               enabled="{{form.$dirty}}"
+               processing="{{savingType}}"
+               messages="Salvesta:Salvestan:Salvestatud"
+               class="btn btn-primary btn-sm"
+               ng-click="saveResourceType(form)"></a>
+
         </div>
     </div>
 </div>

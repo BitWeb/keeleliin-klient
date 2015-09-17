@@ -265,9 +265,18 @@
                 </fieldset>
             </div>
             <div class="ibox-footer text-right ng-scope">
-                <a ui-sref="services" class="btn btn-sm btn-link pull-left"><i class="fa fa-caret-left"></i> Tagasi teenuste nimekirja</a>
-                <a ng-if="service.id" class="btn btn-danger btn-sm m-r-lg"><i class="fa fa-trash"></i> Kustuta teenus</a>
-                <a ng-click="saveService(serviceForm)" class="btn btn-primary btn-sm"><i class="fa fa-save"></i> Salvesta</a>
+                <a ui-sref="services" class="btn btn-sm btn-link pull-left">
+                    <i class="fa fa-caret-left"></i> Tagasi teenuste nimekirja
+                </a>
+                <a ng-if="service.id" class="btn btn-danger btn-sm m-r-lg">
+                    <i class="fa fa-trash"></i> Kustuta teenus
+                </a>
+                <a kl-save-button
+                   enabled="{{serviceForm.$dirty}}"
+                   processing="{{savingService}}"
+                   messages="Salvesta:Salvestan:Salvestatud"
+                   class="btn btn-primary btn-sm"
+                   ng-click="saveService(serviceForm)"></a>
             </div>
         </div>
     </div>

@@ -42,14 +42,16 @@ define(["angularAMD"], function (angularAMD) {
                     if(!projectForm.$valid){
                         return;
                     }
+
+                    $scope.savingProject = true;
                     projectService.updateProject(project, $scope.updateProject, function (err, updatedProject) {
                         if(err){
                             console.log(err);
                             alert('Err'); //todo
                             return;
                         }
-
                         console.log('Updated');
+                        $scope.savingProject = false;
                         $modalInstance.close(updatedProject);
                         $scope.$close();
                     });

@@ -58,10 +58,12 @@ define([
                     'description': '',
                     'paramOptions': []
                 });
+                $scope.serviceForm.$dirty = true;
             };
 
             $scope.removeServiceParam = function(index){
                 $scope.service.serviceParams.splice(index, 1);
+                $scope.serviceForm.$dirty = true;
             };
 
             $scope.addParamOption = function(serviceParam){
@@ -79,10 +81,12 @@ define([
 
             $scope.addServiceInputType = function () {
                 $scope.service.serviceInputTypes.push({});
+                $scope.serviceForm.$dirty = true;
             };
 
             $scope.removeServiceInputType = function (index) {
                 $scope.service.serviceInputTypes.splice(index, 1);
+                $scope.serviceForm.$dirty = true;
             };
 
             var getResourceTypeById = function (id) {
@@ -112,10 +116,12 @@ define([
 
             $scope.addServiceOutputType = function () {
                 $scope.service.serviceOutputTypes.push({});
+                $scope.serviceForm.$dirty = true;
             };
 
             $scope.removeServiceOutputType = function (index) {
                 $scope.service.serviceOutputTypes.splice(index, 1);
+                $scope.serviceForm.$dirty = true;
             };
 
             $scope.saveService = function (form) {
@@ -127,7 +133,10 @@ define([
                     return;
                 }
 
+                $scope.savingService = true;
                 var saveCallback = function (err, data) {
+                    $scope.savingService = false;
+
                     if(err || !data){
                         $log.debug('Err', err);
 
@@ -137,6 +146,7 @@ define([
                     $scope.service = data;
                     $scope.errorMessage = null;
                     form.submitted = false;
+                    form.$dirty = false;
                     $scope.successMessage = 'Salvestatud';
                     $scope.$broadcast('updateBreadcrumb');
                 };

@@ -72,5 +72,9 @@
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-white btn-sm" ng-click="$dismiss()">Loobu</button>
-    <input type="submit" class="btn btn-primary btn-sm" ng-click="saveOk( projectForm )" value="Salvesta" />
+    <a kl-save-button
+       enabled="{{projectForm.$dirty}}"
+       messages="Salvesta:Salvestamine:Salvestatud"
+       class="btn btn-primary btn-sm"
+       ng-click="saveOk( projectForm )"></a>
 </div>

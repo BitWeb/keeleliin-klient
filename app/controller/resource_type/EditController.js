@@ -44,15 +44,23 @@ define([
                     return;
                 }
 
+                $scope.savingType = true;
                 var saveCallback = function (err, data) {
+                    $scope.savingType = false;
+
                     if(err || !data){
                         $log.debug('Err', err);
-
+                        alert('Err');
                         $scope.errorMessage = 'Salvestamisel tekkis viga';
                         return;
                     }
                     $scope.resourceType = data;
+
                     form.submitted = false;
+                    form.$dirty = false;
+                    form.$setPristine();
+                    form.$setUntouched();
+
                     $scope.message = 'Salvestatud';
 
                     $scope.$broadcast('updateBreadcrumb');

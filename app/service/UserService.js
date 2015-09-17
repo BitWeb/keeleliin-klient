@@ -113,25 +113,8 @@ define(['appModule'], function (app) {
             this.getUsersList = function (pagination, callback) {
 
                 pagination = pagination  || {};
-                var url = config.API_URL + '/user/list?',
-                    isParamAdded = false;
 
-                if (pagination.page && pagination.perPage) {
-                    url += 'page=' + pagination.page + '&perPage=' + pagination.perPage;
-                    isParamAdded = true;
-                }
-
-                if (pagination.name) {
-                    url += (isParamAdded ? '&' : '') + 'name=' + pagination.name;
-                    isParamAdded = true;
-                }
-
-                if (pagination.role) {
-                    url += (isParamAdded ? '&' : '') + 'role=' + pagination.role;
-                }
-
-                $http.get(url).then(function (response) {
-
+                $http.get(config.API_URL + '/user/list', {params: pagination}).then(function (response) {
                     callback(null, response.data.data);
                 }, function (response) {
                     callback(response);

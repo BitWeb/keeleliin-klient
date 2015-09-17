@@ -34,11 +34,19 @@
                 </fieldset>
             </form>
         </div>
-
         <div class="ibox-footer text-right ng-scope">
-            <a ui-sref="users" class="btn btn-sm btn-link pull-left"><i class="fa fa-caret-left"></i> Tagasi kasutajate nimekirja</a>
+            <a ui-sref="users" class="btn btn-sm btn-link pull-left">
+                <i class="fa fa-caret-left"></i> Tagasi kasutajate nimekirja
+            </a>
             <a class="btn btn-white btn-sm" ng-click="reset(userForm)">Katkesta</a>
-            <a class="btn btn-primary btn-sm" ng-click="update(user)" ng-disabled="userForm.$invalid"><i class="fa fa-save"></i> Salvesta</a>
+
+            <a kl-save-button
+               enabled="{{userForm.$dirty}}"
+               processing="{{savingUser}}"
+               messages="Salvesta:Salvestan:Salvestatud"
+               class="btn btn-primary btn-sm"
+               ng-click="update(user, userForm)"></a>
+
         </div>
     </div>
 </div>

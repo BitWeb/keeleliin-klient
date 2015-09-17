@@ -49,5 +49,9 @@
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-white btn-sm" ng-click="$dismiss()">Katkesta</button>
-    <button type="button" class="btn btn-primary btn-sm" ng-click="save( form )">Salvesta</button>
+    <a kl-save-button
+       enabled="{{form.$dirty}}"
+       messages="Salvesta:Salvestan:Salvestatud"
+       class="btn btn-primary btn-sm"
+       ng-click="save(form)"></a>
 </div>
