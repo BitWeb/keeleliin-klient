@@ -14,6 +14,10 @@
                 <i ng-show="resourceForm.name.$error.required && resourceForm.submitted">Väli on nõutud</i>
             </div>
             <div class="form-group">
+                <label class="control-label">PID:</label>
+                <input name="name" type="text" ng-model="resource.pid" placeholder="PID" class="form-control">
+            </div>
+            <div class="form-group">
                 <label class="control-label">Loodud: </label>
                 <span>
                     {{resource.createdAt | date : 'dd.MM.yyyy H:mm'}}
