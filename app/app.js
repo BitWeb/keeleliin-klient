@@ -24,14 +24,14 @@ define([
         $rootScope.$state = $state;
         $rootScope.userService = userService;
 
-        $rootScope.$on('notAuthorized', function(event, fromState) {
+        $rootScope.$on('notAuthenticated', function(event, fromState) {
             console.info('Not authorized');
             console.log(fromState);
             $state.go('auth');
             event.preventDefault();
         });
 
-        $rootScope.$on('authorized', function(event, fromState) {
+        $rootScope.$on('authenticated', function(event, fromState) {
             console.info('Authorized');
             if(fromState.current.name == 'auth'){
                 $state.go('home');

@@ -1,7 +1,7 @@
 define(['appModule'], function (app) {
 
-    app.service('UserService', [ '$http','$state','config','$location','$rootScope',
-        function($http, $state, config, $location, $rootScope) {
+    app.service('UserService', [ '$http','$state','config','$location','$rootScope','$timeout','$log',
+        function($http, $state, config, $location, $rootScope, $timeout, $log) {
             var self = this;
 
             var user = null;
@@ -35,7 +35,7 @@ define(['appModule'], function (app) {
 
                 $http.get(config.API_URL + '/user/logout').
                     then(function(response) {
-                        $rootScope.$broadcast('notAuthorized', $state);
+                        $rootScope.$broadcast('notAuthenticated', $state);
                     }, function(response) {
                         console.error(response);
                     });
@@ -80,7 +80,8 @@ define(['appModule'], function (app) {
                     isAuthenticated = true;
                     user = userData.data;
                     $rootScope.user = user;
-                    $rootScope.$broadcast('authorized', $state);
+                    $rootScope.$broadcast('authenticated', $state);
+                    self.doHeardBeat();
                 }
             };
 
@@ -147,7 +148,24 @@ define(['appModule'], function (app) {
                 }, function(response) {
                     callback(response);
                 });
-            }
+            };
+
+            this.doHeardBeat = function () {
+
+                $timeout(function () {
+
+                    if(!self.isAuthenticated){
+                        return;
+                    }
+
+                    $http.post(config.API_URL + '/user/register-api-access', {}).then(function(response) {
+                        $log.debug('HearBeat: ', response.data.data);
+                        self.doHeardBeat();
+                    }, function(response) {
+                        $log.error(response);
+                    });
+                }, 2500);
+            };
         }
     ]);
 });
