@@ -11,12 +11,18 @@ $.jstree.plugins.actionmenu = function (options, parent) {
         var self = this;
         this.element
             .on("click.jstree", ".fa-download", function (e) {
+                e.stopPropagation();
+                e.preventDefault();
                 self.element.trigger("downloadAction", $(this).closest('.jstree-leaf').attr('id'));
             })
             .on("click.jstree", ".fa-info-circle", function (e) {
+                e.stopPropagation();
+                e.preventDefault();
                 self.element.trigger("infoAction", $(this).closest('.jstree-leaf').attr('id'));
             })
             .on("click.jstree", ".fa-remove", function (e) {
+                e.stopPropagation();
+                e.preventDefault();
                 self.element.trigger("deleteAction", $(this).closest('.jstree-leaf').attr('id'));
             });
     };

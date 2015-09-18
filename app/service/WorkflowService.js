@@ -89,6 +89,21 @@ define(['angularAMD'], function (angularAMD) {
                 });
             };
 
+            this.addResourcesToWorkflow = function( workflowId, resourcesIds, callback) {
+
+                var data = {
+                    resources: resourcesIds
+                };
+
+                $http.put(config.API_URL + '/workflow/' + workflowId + '/add-resources', data).then(
+                    function(data) {
+                        callback(null, data.data.data);
+                    },
+                    function(data) {
+                        callback(data);
+                    }
+                );
+            };
         }
     ]);
 });

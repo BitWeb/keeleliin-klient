@@ -61,6 +61,7 @@ require.config({
 
         'ResourceInfoController'    : 'controller/resource/InfoController',
         'ResourceDeleteController'    : 'controller/resource/DeleteController',
+        'ResourceMultiselectController' : 'controller/resource/MultiselectController',
 
         'UserEditController'        : 'controller/user/EditController',
         'UserListController'        : 'controller/user/ListController',

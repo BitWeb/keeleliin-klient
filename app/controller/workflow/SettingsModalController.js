@@ -13,9 +13,6 @@ define(['angularAMD','UserService', 'chosen' ], function (angularAMD) {
 
                 userService.getUsersList( {}, function (err, users) {
                     $scope.usersList = users.rows;
-
-
-
                     workflowService.getWorkflowSettings(workflowId, function (err, settings) {
                         if(err){
                             $log.error(err);
@@ -24,9 +21,6 @@ define(['angularAMD','UserService', 'chosen' ], function (angularAMD) {
                         $scope.workflow = settings;
                     });
                 });
-
-
-
 
                 $scope.save = function (form) {
                     form.submitted = true;

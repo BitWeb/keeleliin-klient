@@ -9,7 +9,6 @@ define([
 
                 return {
                     restrict: 'A',
-                    //require: 'ng-jstree',
                     transclude: true,
                     templateUrl: 'views/resource/filetree.html',
                     //replace:true,
@@ -24,6 +23,8 @@ define([
                             projectId: $scope.projectId,
                             workflowId: $scope.workflowId
                         };
+
+
 
                         $log.debug('Filetree params: ', resourceParams);
 
@@ -65,6 +66,11 @@ define([
                             $scope.reloadResourcesTreeList();
                         });
 
+                        var plugins = [ 'types', 'actionmenu', 'conditionalselect' ];
+                        if($attrs.checkbox){
+                            plugins.push('checkbox');
+                        }
+
                         $scope.treeConfig = {
                             core : {
                                 multiple : true,
@@ -74,11 +80,9 @@ define([
                                 },
                                 worker : true
                             },
-                            'plugins' : [ 'types', 'actionmenu', 'conditionalselect' ],
+                            'plugins' : plugins,
                             'conditionalselect' : function (node, event) {
-                                if(node.type == 'default'){
-                                    return false;
-                                }
+                                //return node.type != 'default';
                                 return true;
                             },
                             'types' : {
@@ -99,10 +103,15 @@ define([
                         $scope.searchFile = function () {
                             updateResourcesView();
                         };
+
+                        $scope.getSelectedFiles = function () {
+                            var selectedNodes = $scope.treeInstance.jstree(true).get_selected();
+                            return selectedNodes.map(function (id) {
+                                return resourcesMap[id];
+                            });
+                        };
+
                         $scope.downloadAll = function () {
-                            $log.debug($scope.treeInstance);
-                            var selected_nodes = $scope.treeInstance.jstree(true).get_selected();
-                            $log.log(selected_nodes);
                             alert('todo');
                         };
                         $scope.readyCB = function() {

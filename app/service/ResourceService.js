@@ -145,8 +145,15 @@ define(['angularAMD', 'ResourceInfoController', 'ResourceDeleteController'], fun
                         }
                     }
                 });
-            }
+            };
 
+            this.openResourceMultiselectModal = function(callback){
+                return $modal.open({
+                    templateUrl: '../../views/resource/multiselect_modal.html',
+                    controller: 'ResourceMultiselectController',
+                    resolve: {}
+                });
+            };
         }
     ]);
 });
