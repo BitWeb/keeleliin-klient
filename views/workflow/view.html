@@ -103,18 +103,34 @@
                                         {{service.datetimeEnd | date : 'dd.MM.yyyy H:mm:ss'}}
                                     </td>
                                     <td>
-                                        <ul class="unstyled">
-                                            <li ng-repeat="resource in getServiceInputResources(service)">
-                                                <a ng-click="openResourceInfoModal(resource.id)" href="">{{resource.name}}</a>
-                                            </li>
-                                        </ul>
+                                        <table>
+                                            <tr ng-repeat="resource in getServiceInputResources(service)">
+                                                <td>
+                                                    <a ng-click="openResourceInfoModal(resource.id)" href="">{{resource.name}}</a>
+                                                </td>
+                                                <td>
+                                                    <span class="m-l-sm">
+                                                        <i ng-click="openResourceInfoModal(resource.id)" class="fa fa-info-circle m-r-xs" title="Info"></i>
+                                                        <i ng-click="downloadResource(resource.id)" class="fa fa-download m-r-xs" title="Lae alla"></i>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </table>
                                     </td>
                                     <td footable-ng-row>
-                                        <ul class="unstyled">
-                                            <li ng-repeat="resource in getServiceOutputResources(service)">
-                                                <a ng-click="openResourceInfoModal(resource.id)" href="">{{resource.name}}</a>
-                                            </li>
-                                        </ul>
+                                        <table style="margin-top: 10px;">
+                                            <tr ng-repeat="resource in getServiceOutputResources(service)">
+                                                <td>
+                                                    <a ng-click="openResourceInfoModal(resource.id)" href="">{{resource.name}}</a>
+                                                </td>
+                                                <td>
+                                                    <span class="m-l-sm">
+                                                        <i ng-click="openResourceInfoModal(resource.id)" class="fa fa-info-circle m-r-xs" title="Info"></i>
+                                                        <i ng-click="downloadResource(resource.id)" class="fa fa-download m-r-xs" title="Lae alla"></i>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </table>
                                     </td>
                                     <td>
                                         <dd ng-init="logs = getServiceLogs(service)"></dd>

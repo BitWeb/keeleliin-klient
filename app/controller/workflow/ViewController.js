@@ -105,5 +105,10 @@ define([
             $scope.openResourceInfoModal = function ( resourceId ) {
                 resourceService.openInfoModal( resourceId );
             };
+            $scope.downloadResource = function ( resourceId ) {
+                resourceService.downloadResourceById( resourceId );
+            };
+
+
         }]);
 });
