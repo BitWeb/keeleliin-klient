@@ -65,6 +65,7 @@ require.config({
 
         'UserEditController'        : 'controller/user/EditController',
         'UserListController'        : 'controller/user/ListController',
+        'ResourceTreeMapper'        : 'service/mapper/resourceTreeMapper',
         'UserService'               : 'service/UserService',
         'ProjectService'            : 'service/ProjectService',
         'WorkflowService'           : 'service/WorkflowService',

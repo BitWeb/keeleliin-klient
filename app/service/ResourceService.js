@@ -1,4 +1,4 @@
-define(['angularAMD', 'ResourceInfoController', 'ResourceDeleteController'], function (angularAMD) {
+define(['angularAMD', 'ResourceTreeMapper', 'ResourceInfoController', 'ResourceDeleteController'], function (angularAMD, resourceTreeMapper) {
 
     angularAMD.service('ResourceService', [ '$log', '$http', 'config', '$modal','UserService',
         function( $log, $http, config, $modal, userService ) {
@@ -17,68 +17,8 @@ define(['angularAMD', 'ResourceInfoController', 'ResourceDeleteController'], fun
                 );
             };
 
-            this.getJsTreeMapByWorkflow = function (list, type, keyword) {
-                var map = {};
-                var treeMap = {};
-
-                for(i in list){
-                    var item = list[i];
-
-                    if(type && item.contextType != type){
-                        continue;
-                    }
-
-                    if(keyword){
-                        var name = item.name;
-                        if(name.indexOf(keyword) == -1){
-                            continue;
-                        }
-                    }
-
-                    var fileId = i;
-                    var workflowId = item.workflowId + 10000000;
-
-                    if(!item.workflowId){
-                        treeMap[fileId] = item.id;
-                        map[fileId] = {
-                            id      : fileId,
-                            text    : item.name,
-                            type    : "text"
-                        };
-                        continue;
-                    }
-
-                    var workflow = map[workflowId];
-                    if(!workflow){
-                        workflow = {
-                            id: workflowId,
-                            text: item.workflowName ? item.workflowName : ('Töövoog ' + item.workflowId),
-                            children: [],
-                            state: {
-                                opened:true
-                            }
-                        };
-                        map[workflowId] = workflow
-                    }
-
-                    treeMap[fileId] = item.id;
-                    var child = {
-                        id      : fileId,
-                        text    : item.name,
-                        type    : "text"
-                    };
-                    workflow.children.push( child );
-                }
-
-                var workflows = [];
-                for(i in map){
-                    workflows.push(map[i]);
-                }
-
-                return {
-                    resources: workflows,
-                    resourcesMap: treeMap
-                };
+            this.getJsTreeMapByWorkflow = function (list, context, keyword, resourceParams) {
+                return resourceTreeMapper.map(list, context, keyword, resourceParams);
             };
 
             this.downloadResourceById = function (id) {

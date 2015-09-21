@@ -24,25 +24,23 @@ define([
                             workflowId: $scope.workflowId
                         };
 
-
-
                         $log.debug('Filetree params: ', resourceParams);
 
 
                         $scope.fileDownloadAction = function (event, id) {
-                            resourceService.downloadResourceById( resourcesMap[id] );
+                            resourceService.downloadResourceById( resourcesMap[id].id );
                         };
 
                         $scope.fileInfoAction = function (event, id) {
-                            resourceService.openInfoModal( resourcesMap[id] );
+                            resourceService.openInfoModal( resourcesMap[id].id );
                         };
 
                         $scope.fileDeleteAction = function (event, id) {
-                            resourceService.openDeleteModal( resourcesMap[id] );
+                            resourceService.openDeleteModal( resourcesMap[id].id );
                         };
 
                         var updateResourcesView = function () {
-                            var resourcesDto = resourceService.getJsTreeMapByWorkflow(resourcesList, $scope.filterType, $scope.searchKeyword);
+                            var resourcesDto = resourceService.getJsTreeMapByWorkflow(resourcesList, $scope.filterType, $scope.searchKeyword, resourceParams);
                             resourcesMap = resourcesDto.resourcesMap;
                             angular.copy(resourcesDto.resources, $scope.resources);
                             $scope.treeConfig.version++;
@@ -107,7 +105,7 @@ define([
                         $scope.getSelectedFiles = function () {
                             var selectedNodes = $scope.treeInstance.jstree(true).get_selected();
                             return selectedNodes.map(function (id) {
-                                return resourcesMap[id];
+                                return resourcesMap[id].id;
                             });
                         };
 
