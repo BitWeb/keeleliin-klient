@@ -2,6 +2,8 @@ define(['angularAMD', 'angular-utils-pagination', 'WorkflowService'], function(a
     angularAMD.controller('WorkflowManagementListController', ['$scope', 'WorkflowService', 'config', '$timeout', function($scope, workflowService, config, $timeout) {
         var timer;
 
+        $scope.statuses = config.workflow_statuses;
+
         $scope.totalCount = 0;
         $scope.workflows = [];
         $scope.pagination = {
