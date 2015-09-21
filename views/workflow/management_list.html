@@ -35,7 +35,7 @@
                                         <span kl-workflow-runtime status="{{workflow.status}}" start="{{workflow.datetimeStart}}" end="{{workflow.datetimeEnd}}"></span>
                                     </td>
                                     <td class="project-title">
-                                        <a>{{workflow.name}} {{workflow.id}}</a>
+                                        <a ui-sref="workflow-management-item({workflowId: workflow.id})">{{workflow.name}} {{workflow.id}}</a>
                                         <br/>
                                         <small>Käivitatud {{workflow.datetimeStart | date: 'dd.MM.yyyy H:mm'}}</small>
                                     </td>
