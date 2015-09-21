@@ -127,7 +127,6 @@ define([], function () {
                     text: item.name,
                     type    : "text"
                 };
-                console.log('Item index' + fileIndex, map[fileIndex]);
             }
 
             var flatTree = [];
