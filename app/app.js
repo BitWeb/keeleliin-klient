@@ -25,14 +25,13 @@ define([
         $rootScope.userService = userService;
 
         $rootScope.$on('notAuthenticated', function(event, fromState) {
-            console.info('Not authorized');
-            console.log(fromState);
+            userService.setLandingPath(window.location.href);
             $state.go('auth');
             event.preventDefault();
         });
 
         $rootScope.$on('authenticated', function(event, fromState) {
-            console.info('Authorized');
+            userService.removeLandingPath();
             if(fromState.current.name == 'auth'){
                 $state.go('home');
                 event.preventDefault();
@@ -42,12 +41,17 @@ define([
         userService.init(function () {
 
             $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-                console.info('$stateChangeStart', toState);
 
-                if(!userService.isAuthorized( toState )){
-                    console.log('User not authorized. Wanted to go state: ' + toState.name);
+                if(userService.isAuthenticated() && toState.name == 'auth'){
+                    $state.go('home');
+                    event.preventDefault();
+                    return
+                }
+
+                if(!userService.isAuthenticated() && toState.name != 'auth'){
                     $state.go('auth');
                     event.preventDefault();
+                    return
                 }
             });
         });

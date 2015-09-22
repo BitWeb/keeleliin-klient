@@ -260,4 +260,68 @@ app.directive('fullScroll', fullScroll)
         };
     }]);
 
+    app.directive('klHappenedTime', [function () {
+
+        function getDateDiff( createdAt ) {
+
+            var now = new Date();
+            var diff = now.getTime() - createdAt.getTime();
+
+            if(diff > 86400000){
+                var daysCount = Math.round(diff / 86400000 );
+                if(daysCount > 1){
+                    return daysCount + ' päeva tagasi';
+                }
+                return '1 päeva tagasi';
+            }
+
+            if(diff > 3600000){
+                var hourCount = Math.round(diff / 3600000 );
+                if(hourCount > 1){
+                    return hourCount + ' tundi tagasi';
+                }
+                return '1 tund tagasi';
+            }
+
+            if(diff > 60000){
+                var minCount = Math.round(diff / 60000 );
+                if(minCount > 1){
+                    return minCount + ' minutit tagasi';
+                }
+                return '1 minut tagasi';
+            }
+            return 'Nüüd';
+        }
+
+        return {
+            restrict: 'A',
+            scope: {},
+            link: function(scope, element, attrs) {
+                attrs.$observe('klHappenedTime', function(value) {
+                    return element.text( getDateDiff(new Date(value)) );
+                });
+            }
+        };
+    }]);
+
+    app.directive('klNotification', ['$http', 'config','$rootScope', function ($http, config, $rootScope) {
+
+        return {
+            restrict: 'A',
+            scope: {},
+            link: function(scope, element, attrs) {
+                element.bind('click', function () {
+                    $http.post(config.API_URL + '/notification/read', {notificationId: attrs.klNotification}).then(
+                        function (data) {
+                            $rootScope.userService.doHeardBeat();
+                            window.location.href = attrs.klNotificationHref;
+                        },function (data) {
+                            console.error(data);
+                        }
+                    );
+                });
+            }
+        };
+    }]);
+
 });

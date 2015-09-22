@@ -7,7 +7,7 @@ define(['angularAMD'], function (angularAMD) {
     return {
         setStates: function (app, $stateProvider, $urlRouterProvider, $ocLazyLoad) {
 
-            $urlRouterProvider.otherwise("/auth");
+            $urlRouterProvider.otherwise("/home");
 
             $stateProvider.state(
                 'auth', angularAMD.route({

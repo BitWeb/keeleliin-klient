@@ -11,8 +11,6 @@ define([
                     restrict: 'A',
                     transclude: true,
                     templateUrl: 'views/resource/filetree.html',
-                    //replace:true,
-                   // link: function($scope, element, $attrs) {},
                     link: function( $scope, $element, $attrs ){
                         console.log("jsFileTreeDir");
                         $scope.resources = [];
@@ -60,7 +58,8 @@ define([
 
                         $scope.reloadResourcesTreeList();
 
-                        $rootScope.$on('resourceUpdated', function(event, data) {
+                        $scope.$on('resourceUpdated', function(event, data) {
+                            console.log('resourceUpdated');
                             $scope.reloadResourcesTreeList();
                         });
 

@@ -31,10 +31,11 @@ define([
 
                     findProgress();
                     if(workflow.status == 'RUNNING'){
-                        $timeout(update, 2500)
+                        $timeout(function () {
+                            update();
+                            $scope.$broadcast('resourceUpdated');
+                        }, 2500)
                     }
-
-                    $rootScope.$broadcast('resourceUpdated');
                 });
             };
             update();
@@ -94,7 +95,10 @@ define([
                     }
                     $scope.workflow = workflow;
                     findProgress();
-                    $timeout(update, 4000)
+                    $timeout(function () {
+                        update();
+                        $scope.$broadcast('resourceUpdated');
+                    }, 4000)
                 });
             };
 

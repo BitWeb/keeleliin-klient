@@ -36,7 +36,6 @@ require.config({
         'filetree'          : 'directive/filetree',
         'drop-zone'         : 'directive/dropZone',
         'breadcrumb'        : 'directive/breadcrumb',
-
         'stateConfig'       : 'config/stateConfig',
         'AuthController'        : 'controller/AuthController',
         'HomeController'        : 'controller/HomeController',

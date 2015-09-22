@@ -19,14 +19,6 @@ define(['appModule'], function (app) {
                 return isAuthenticated;
             };
 
-            this.isAuthorized = function( toState ){
-
-                if( toState.name != 'auth' && !isAuthenticated ){
-                    return false;
-                }
-                return true;
-            };
-
             this.signOut = function () {
                 user = null;
                 self.removeToken();
@@ -43,7 +35,10 @@ define(['appModule'], function (app) {
             };
 
             this.startAuth = function () {
-                var queryUrl = config.API_URL + '/user/login/' + $location.protocol() + '%3A%2F%2F' + location.host;
+
+                var returnPath =  self.getLandingPath() ? encodeURIComponent(self.getLandingPath()) : ($location.protocol() + '%3A%2F%2F' + location.host);
+
+                var queryUrl = config.API_URL + '/user/login/' + returnPath;
                 $http.get(queryUrl).
                     then(function(response) {
                         if(response.data.data){
@@ -98,6 +93,17 @@ define(['appModule'], function (app) {
                 return  window.sessionStorage.removeItem('token');
             };
 
+            this.getLandingPath = function () {
+                return  window.sessionStorage.getItem('landingPath');
+            };
+            this.setLandingPath = function (landingPath) {
+                return  window.sessionStorage.setItem('landingPath', landingPath);
+            };
+            this.removeLandingPath = function () {
+                return  window.sessionStorage.removeItem('landingPath');
+            };
+
+
             this.setupHttpHeader = function(token) {
                 $http.defaults.headers.common['x-access-token'] = token;
             };
@@ -133,25 +139,37 @@ define(['appModule'], function (app) {
                 });
             };
 
+            var timeoutPromise = null;
+
+
             this.doHeardBeat = function () {
 
-                if(!config.hearbeat_interval){
-                    return
+                if(!self.isAuthenticated){
+                    return;
                 }
 
-                $timeout(function () {
+                if(timeoutPromise){
+                    $timeout.cancel(timeoutPromise);
+                }
 
-                    if(!self.isAuthenticated){
-                        return;
+                $http.post(config.API_URL + '/user/heart-beat', {}).then(function(response) {
+                    $rootScope.notificationsSummary = response.data.data;
+                    if(!config.hearbeat_interval){
+                        return
                     }
+                    timeoutPromise = $timeout(function () {
 
-                    $http.post(config.API_URL + '/user/register-api-access', {}).then(function(response) {
-                        $log.debug('HearBeat: ', response.data.data);
+                        if(!self.isAuthenticated){
+                            return;
+                        }
                         self.doHeardBeat();
-                    }, function(response) {
-                        $log.error(response);
-                    });
-                }, config.hearbeat_interval);
+
+                    }, config.hearbeat_interval);
+
+                }, function(response) {
+                    $log.error(response);
+                });
+
             };
         }
     ]);

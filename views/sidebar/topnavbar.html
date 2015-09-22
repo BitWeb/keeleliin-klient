@@ -9,38 +9,35 @@
             </form>
         </div>
         <ul ng-if="userService.isAuthenticated()" class="nav navbar-top-links navbar-right">
-            <li class="dropdown" dropdown>
+            <li ng-if="notificationsSummary" class="dropdown" dropdown>
                 <a class="dropdown-toggle count-info" href dropdown-toggle>
-                    <i class="fa fa-bell"></i> <span class="label label-primary">3</span>
+                    <i class="fa fa-bell"></i>
+                    <span ng-if="notificationsSummary.notifications.length > 0" class="label label-primary">{{notificationsSummary.total}}</span>
                 </a>
+
                 <ul class="dropdown-menu dropdown-alerts">
-                    <li>
+                    <li ng-if="notificationsSummary.notifications.length == 0">
                         <a class="clearfix">
-                            <div>
-                                <span class="col-sm-7 p-xxs">Töövoog "Sõnede jaotus" lõpetas</span>
-                                <span class="col-sm-5 text-muted small no-padding text-right">10 minutit tagasi</span>
-                            </div>
+                        <div>
+                            <span class="col-sm-12 p-xxs">
+                                <i>Uusi teavitusi ei ole</i>
+                            </span>
+                        </div>
                         </a>
                     </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a class="clearfix">
+
+                    <li ng-if="notificationsSummary.notifications.length > 0" ng-repeat="notification in notificationsSummary.notifications">
+                        <a class="clearfix" kl-notification="{{notification.id}}" kl-notification-href="{{notification.url}}">
                             <div>
-                                <span class="col-sm-7 p-xxs">Töövoog "Tõlgi kõik ära" lõpetas</span>
-                                <span class="col-sm-5 text-muted small no-padding text-right">1 tund tagasi</span>
+                                <span class="col-sm-7 p-xxs">{{notification.message}}</span>
+                                <span class="col-sm-5 text-muted small no-padding text-right" >
+                                    <span kl-happened-time="{{notification.createdAt}}"></span>
+                                </span>
                             </div>
                         </a>
+                        <div class="divider"></div>
                     </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a class="clearfix">
-                            <div>
-                                <span class="col-sm-7 p-xxs">Töövoog "Keeruline analüüs" ebaõnnestus</span>
-                                <span class="col-sm-5 text-muted small no-padding text-right">2 päeva tagasi</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="divider"></li>
+
                     <li>
                         <div class="text-center link-block">
                             <a>
