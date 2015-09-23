@@ -17,13 +17,11 @@
 
                 <ul class="dropdown-menu dropdown-alerts">
                     <li ng-if="notificationsSummary.notifications.length == 0">
-                        <a class="clearfix">
-                        <div>
+                        <div class="clearfix">
                             <span class="col-sm-12 p-xxs">
                                 <i>Uusi teavitusi ei ole</i>
                             </span>
                         </div>
-                        </a>
                     </li>
 
                     <li ng-if="notificationsSummary.notifications.length > 0" ng-repeat="notification in notificationsSummary.notifications">
