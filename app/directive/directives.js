@@ -1,4 +1,4 @@
-define(['appModule', 'slimscroll', 'jquery'], function (app) {
+define(['appModule', 'slimscroll', 'jquery', 'NotificationService'], function (app) {
 
 /**
  * fullScroll - Directive for slimScroll with 100%
@@ -304,21 +304,17 @@ app.directive('fullScroll', fullScroll)
         };
     }]);
 
-    app.directive('klNotification', ['$http', 'config','$rootScope', function ($http, config, $rootScope) {
+    app.directive('klNotification', ['$http', 'config','$rootScope','NotificationService', function ($http, config, $rootScope, notificationService) {
 
         return {
             restrict: 'A',
             scope: {},
             link: function(scope, element, attrs) {
                 element.bind('click', function () {
-                    $http.post(config.API_URL + '/notification/read', {notificationId: attrs.klNotification}).then(
-                        function (data) {
-                            $rootScope.userService.doHeardBeat();
-                            window.location.href = attrs.klNotificationHref;
-                        },function (data) {
-                            console.error(data);
-                        }
-                    );
+                    notificationService.markNotificationAsRead(attrs.klNotification, function (err, data) {
+                        $rootScope.userService.doHeardBeat();
+                        window.location.href = attrs.klNotificationHref;
+                    });
                 });
             }
         };

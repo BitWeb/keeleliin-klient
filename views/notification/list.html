@@ -1,0 +1,56 @@
+<div kl-breadcrumb></div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="wrapper wrapper-content animated fadeInUp">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <div class="project-list">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="col-md-2">
+                                        Loodud
+                                    </th>
+                                    <th>
+                                        Teade
+                                    </th>
+                                    <th class="col-md-1"></th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                            <tr dir-paginate="notification in notifications | filter: searchFilter | itemsPerPage: pagination.perPage" total-items="totalCount" current-page="pagination.page" boundary-links="true">
+                                <td >
+                                    {{notification.createdAt | date: 'dd.MM.yyyy H:mm'}}
+                                </td>
+                                <td>
+                                    <a kl-notification="{{notification.id}}" kl-notification-href="{{notification.url}}">
+                                        <strong ng-if="!notification.isRead" style="color:#676a6c;">
+                                            {{notification.message}}
+                                        </strong>
+                                        <span ng-if="notification.isRead" style="color:#676a6c;">
+                                            {{notification.message}}
+                                        </span>
+                                    </a>
+                                </td>
+                                <td>
+                                    <button ng-if="!notification.isRead" ng-click="markAsRead(notification)" class="btn btn-primary btn-xs"> Märgi loetuks </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="text-right">
+                            <dir-pagination-controls on-page-change="changePage(newPageNumber)" template-url="views/templates/pagination.html"></dir-pagination-controls>
+                        </div>
+                    </div>
+                    <div ng-if="!notifications.length || notifications.length == 0">
+                        <i>Teavitusi ei leitud</i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

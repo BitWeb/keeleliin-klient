@@ -347,6 +347,18 @@ define(['angularAMD'], function (angularAMD) {
                 }
             }));
 
+
+            $stateProvider.state('notification', angularAMD.route({
+                    url: '/notifications',
+                    templateUrl: 'views/notification/list.html',
+                    controller: 'NotificationListController',
+                    breadcrumb: {
+                        parent: 'home',
+                        title: "Teavitused"
+                    }
+                })
+            );
+
             $stateProvider.state('usersState',
                 {
                     url: '/user',

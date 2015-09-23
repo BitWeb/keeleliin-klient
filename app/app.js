@@ -33,6 +33,7 @@ define([
         $rootScope.$on('authenticated', function(event, fromState) {
             userService.removeLandingPath();
             if(fromState.current.name == 'auth'){
+                console.log('Go home frm auth state');
                 $state.go('home');
                 event.preventDefault();
             }
@@ -43,6 +44,7 @@ define([
             $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
 
                 if(userService.isAuthenticated() && toState.name == 'auth'){
+                    console.log('Go home');
                     $state.go('home');
                     event.preventDefault();
                     return;

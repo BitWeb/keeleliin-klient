@@ -64,6 +64,8 @@ require.config({
 
         'UserEditController'        : 'controller/user/EditController',
         'UserListController'        : 'controller/user/ListController',
+        'NotificationListController': 'controller/notification/ListController',
+
         'ResourceTreeMapper'        : 'service/mapper/resourceTreeMapper',
         'UserService'               : 'service/UserService',
         'ProjectService'            : 'service/ProjectService',
@@ -71,7 +73,8 @@ require.config({
         'WorkflowDefinitionService' : 'service/WorkflowDefinitionService',
         'ResourceService'           : 'service/ResourceService',
         'ServiceService'            : 'service/ServiceService',
-        'ResourceTypeService'       : 'service/ResourceTypeService'
+        'ResourceTypeService'       : 'service/ResourceTypeService',
+        'NotificationService'       : 'service/NotificationService'
     },
     shim: {
         'angular'           : ['jquery'],
