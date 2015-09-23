@@ -11,7 +11,7 @@ angularAMD.controller('ProjectListController', [ '$scope', '$state', '$statePara
     function($scope, $state, $stateParams, projectService, userService) {
         console.log('ProjectListController');
 
-        projectService.getList( function (err, data) {
+        projectService.getList({}, function (err, data) {
             if(err){
                 alert('Err'); //todo
                 $scope.projects = [];

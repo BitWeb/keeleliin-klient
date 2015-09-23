@@ -16,7 +16,6 @@ define([
 
             $scope.projectId = $stateParams.projectId;
 
-
             projectService.getProject($scope.projectId, function (err, project) {
                 if(err){
                    console.log(err);

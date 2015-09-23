@@ -1,11 +1,62 @@
-<div class="row ng-scope">
+<div class="row">
     <div class="col-lg-12">
         <div class="wrapper wrapper-content">
-            <p>Töölaud</p>
-            <a ui-sref="project" class="thumb">LINK</a>
+            <div ng-if="project" class="col-sm-12">
+                <div class="box-content">
+                    <div class="ibox-content ibox-heading">
+                        <div class="col-sm-6 text-right pull-right">
+                            <a ng-click="openDefineWorkflowModal()" href="" class="btn btn-primary btn-sm">
+                                <i class="fa fa-edit"></i> Defineeri uus töövoog
+                            </a>
+                            <a ng-click="openAddWorkflowModal()" href="" class="btn btn-info btn-sm">
+                                <i class="fa fa-plus"></i> Lisa uus töövoog
+                            </a>
+                        </div>
+
+                        <h3><a ui-sref="project-item({projectId: project.id})">{{project.name}}</a></h3>
+                        <small> Viimati muudetud: {{project.updatedAt | date : 'dd.MM.yyyy H:mm:ss'}}</small>
+                    </div>
+
+                    <div class="ibox-content">
+                        <div class="project-list">
+                            <table class="table table-hover">
+                                <tbody>
+                                    <tr ng-repeat="workflow in workflows">
+                                        <td class="project-status">
+                                            <span kl-status="{{workflow.status}}" />
+                                        </td>
+                                        <td class="project-title">
+                                            <a ng-show="workflow.status == 'INIT'" ui-sref="workflow-definition-edit({workflowId: workflow.id, projectId: project.id})">
+                                                {{workflow.name || ('Töövoog ' + workflow.id)}}
+                                            </a>
+                                            <a ng-show="workflow.status != 'INIT'" ui-sref="workflow-view({workflowId: workflow.id, projectId: project.id})">
+                                                {{workflow.name || ('Töövoog ' + workflow.id)}}
+                                            </a>
+                                            <br>
+                                            <small>Lisatud {{workflow.datetimeCreated | date : 'dd.MM.yyyy'}}</small>
+                                        </td>
+                                        <td>
+                                            Alustatud
+                                            <br>
+                                            <small> {{workflow.datetimeStart | date : 'dd.MM.yyyy H:mm'}}</small>
+                                        </td>
+                                        <td>
+
+                                        </td>
+                                        <td class="project-completion">
+                                            <small>Progress: {{workflow.progress}}%</small>
+                                            <div class="progress progress-mini">
+                                                <div ng-style="{width: workflow.progress + '%'}" class="progress-bar"></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-
-
 

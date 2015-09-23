@@ -4,9 +4,9 @@ define(['angularAMD'], function (angularAMD) {
         function( $http, config, $modal, $log ) {
             var self = this;
 
-            this.getList = function ( callback ) {
+            this.getList = function (params, callback ) {
 
-                $http.get(config.API_URL + '/project').then(
+                $http.get(config.API_URL + '/project', {params: params }).then(
                     function(data) {
                         console.log(data);
                         callback(null, data.data.data);
@@ -15,6 +15,23 @@ define(['angularAMD'], function (angularAMD) {
                         callback(data);
                     }
                 );
+            };
+
+            this.getHomeProject = function ( callback ) {
+
+                var params = {
+                    sort: 'updated_at',
+                    order: 'DESC',
+                    page: 1,
+                    perPage: 1
+                };
+
+                self.getList(params, function (err, data) {
+                    if(err){
+                        return callback(err);
+                    }
+                    return callback(null, data.rows[0]);
+                });
             };
 
             this.deleteProject = function(project, callback){

@@ -34,7 +34,7 @@ define(['angularAMD', 'UserService'], function (angularAMD) {
 
                         $log.debug(workflow);
 
-                        $state.go('workflow-definition-edit', {workflowId: workflow.id});
+                        $state.go('workflow-definition-edit', {workflowId: workflow.id, projectId: project.id});
                     });
                 };
 

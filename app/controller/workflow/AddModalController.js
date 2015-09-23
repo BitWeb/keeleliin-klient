@@ -31,9 +31,9 @@ define(['angularAMD'], function (angularAMD) {
                         return;
                     }
 
-                    workflowDefinitionService.createWorkflowFromDefinition($scope.workflow.workflowDefinitionId, $stateParams.projectId, function (err, workflow) {
+                    workflowDefinitionService.createWorkflowFromDefinition($scope.workflow.workflowDefinitionId, project.id, function (err, workflow) {
                         $scope.$dismiss();
-                        $state.go('workflow-definition-edit', {workflowId: workflow.id});
+                        $state.go('workflow-definition-edit', {workflowId: workflow.id, projectId: project.id});
                     });
                 };
             }])
