@@ -103,9 +103,13 @@ define([
 
                         $scope.getSelectedFiles = function () {
                             var selectedNodes = $scope.treeInstance.jstree(true).get_selected();
-                            return selectedNodes.map(function (id) {
-                                return resourcesMap[id].id;
-                            });
+                            var result = [];
+                            for(i in selectedNodes){
+                                if(resourcesMap[selectedNodes[i]]){
+                                    result.push( resourcesMap[selectedNodes[i]].id );
+                                }
+                            }
+                            return result;
                         };
 
                         $scope.downloadAll = function () {

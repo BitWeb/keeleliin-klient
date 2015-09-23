@@ -45,13 +45,13 @@ define([
                 if(userService.isAuthenticated() && toState.name == 'auth'){
                     $state.go('home');
                     event.preventDefault();
-                    return
+                    return;
                 }
 
                 if(!userService.isAuthenticated() && toState.name != 'auth'){
                     $state.go('auth');
                     event.preventDefault();
-                    return
+                    return;
                 }
             });
         });
