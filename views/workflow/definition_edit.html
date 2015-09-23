@@ -89,7 +89,7 @@
                                     <div class="col-sm-3 not-sortable" ng-repeat="selectedService in selectedServices track by $index" ng-init=" service = getServiceById( selectedService.serviceId ) ">
                                         <div class="ibox available-service">
                                             <div class="ibox-title">
-                                                <h5>{{$index + 1}}. {{service.name}}</h5>
+                                                <h5>{{selectedService.orderNum + 1}}. {{service.name}}</h5>
                                                 <a class="pull-right text-lg icon" ng-click="removeSelectedServicesFromIndex($index)" title="Eemalda" ng-if="workflow.workflowDefinition.editStatus != 'locked'">
                                                     <i class="fa fa-trash error"></i>
                                                 </a>
