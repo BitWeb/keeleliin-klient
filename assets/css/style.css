@@ -2532,7 +2532,7 @@ a.forum-item-title:hover {
   .forum-info {
     margin: 15px 0 10px 0px;
     /* Comment this is you want to show forum info in small devices */
-  
+
     display: none;
   }
   .forum-desc {
@@ -3916,7 +3916,7 @@ a.close-canvas-menu:hover {
 }
 
 .p-r-none {
-    padding-right: 0;
+  padding-right: 0;
 }
 .m-xxs {
   margin: 2px 4px;
@@ -5443,7 +5443,7 @@ del {
   }
   50% {
     /* Hack to make FF rotate in the right direction */
-  
+
     -webkit-transform: translatex(42px) translatey(42px) rotate(-179deg);
     transform: translatex(42px) translatey(42px) rotate(-179deg);
   }
@@ -5467,7 +5467,7 @@ del {
   }
   50% {
     /* Hack to make FF rotate in the right direction */
-  
+
     -webkit-transform: translatex(42px) translatey(42px) rotate(-179deg);
     transform: translatex(42px) translatey(42px) rotate(-179deg);
   }
@@ -6652,11 +6652,11 @@ body.landing-page {
 @media (min-width: 768px) {
   .landing-page {
     /* Navbar positioning foo */
-  
+
     /* The navbar becomes detached from the top, so we round the corners */
-  
+
     /* Bump up size of carousel content */
-  
+
   }
   .landing-page .navbar-wrapper {
     margin-top: 20px;
@@ -7531,10 +7531,7 @@ body.skin-3 {
 .text-lg {
   font-size: 18px;
 }
-.ibox-title .icon {
-  margin-top: -5px;
-  color: #c4c4c4;
-}
+
 #search-file {
   position: relative;
   font-size: 13px;
@@ -7606,13 +7603,76 @@ body.skin-3 {
 }
 
 .checkbox-inline input[type=checkbox] {
-    margin-top: 2px;
+  margin-top: 2px;
 }
 
 .radio-inline input[type=radio] {
-    margin-top: 0;
+  margin-top: 0;
 }
 
 .chosen-container {
-    width: 100% !important;
+  width: 100% !important;
 }
+
+/*
+Custom styles
+*/
+
+.available-service {
+  width: 100%;
+  display: table;
+}
+
+.available-service .ibox-title {
+  position: relative;
+  display: table-cell;
+  width: 100%;
+  height: 75px;
+  vertical-align: middle;
+  border-width: 4px 0px 0;
+}
+
+.available-service .ibox-title H5 {
+  display: block;
+  position: relative;
+  padding-left: 25px;
+  line-height: 1.4em;
+  font-weight: normal;
+  float: none;
+  margin-bottom: 0;
+}
+
+.available-service .ibox-title SPAN.order {
+  position: absolute;
+  left: 0;
+  padding: 0 7px;
+  height: 71px;
+  line-height: 71px;
+  top: 0;
+  font-size: 24px;
+  color: #ccc;
+  font-weight: bold;
+}
+
+.available-service .ibox-title:hover .buttons {
+  display: block;
+}
+
+.available-service .ibox-title .buttons {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background-color: rgba(246, 248, 251, 0.8);
+  display: none;
+  padding: 7px 0 5px 15px;
+}
+
+.available-service .ibox-title .buttons a {
+  margin-right: 10px;
+  font-size: 20px;
+}
+
+.available-service .ibox-title .buttons a.active {
+  color: #23c6c8;
+}
+

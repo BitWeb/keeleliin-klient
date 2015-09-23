@@ -1,7 +1,7 @@
 define(['angularAMD'], function (angularAMD) {
 
-    angularAMD.service('ServiceService', [ '$http', 'config','$log',
-        function( $http, config, $log ) {
+    angularAMD.service('ServiceService', [ '$http', 'config','$log','$modal',
+        function( $http, config, $log, $modal ) {
             var self = this;
 
             this.getServicesList = function (callback) {
@@ -82,8 +82,19 @@ define(['angularAMD'], function (angularAMD) {
                         callback(data);
                     }
                 );
-            }
+            };
 
+            this.openServiceInfoModal = function (serviceId) {
+                $modal.open({
+                    templateUrl: '../../views/service/info_modal.html',
+                    controller: 'ServiceInfoModalController',
+                    resolve: {
+                        serviceId: function(){
+                            return serviceId;
+                        }
+                    }
+                });
+            }
 
         }
     ]);

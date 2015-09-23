@@ -6,11 +6,12 @@ define([
     'ServiceService',
     'ui-sortable',
     'filetree',
-    'WorkflowSettingsModalController'
+    'WorkflowSettingsModalController',
+    'ServiceInfoModalController'
 ], function (angularAMD) {
     angularAMD.controller('WorkflowDefinitionEditController',
-        [ '$scope', '$state', '$stateParams', 'WorkflowDefinitionService', 'ServiceService', '$log', 'WorkflowService',
-            function ($scope, $state, $stateParams, workflowDefinitionService, serviceService, $log, workflowService) {
+        [ '$scope', '$state', '$stateParams', 'WorkflowDefinitionService', 'ServiceService', '$log', 'WorkflowService','$modal',
+            function ($scope, $state, $stateParams, workflowDefinitionService, serviceService, $log, workflowService, $modal) {
 
                 $scope.workflowId = $stateParams.workflowId;
                 $scope.hideFileTreeTabs = true;
@@ -73,12 +74,6 @@ define([
                     $scope.avaliableServices = workflowDefinitionService.getAvailableFollowingServices( $scope.selectedServices, servicesList );
                 };
 
-                $scope.removeSelectedServicesFromIndex = function ( index ) {
-                    $scope.selectedServices = $scope.selectedServices.slice(0, index);
-                    $scope.updateAvailableServices();
-                    $scope.updateDefinitionServices();
-                };
-
                 $scope.droppedServices = [];
                 $scope.dragging = false;
                 $scope.dropzone = {};
@@ -106,10 +101,6 @@ define([
                             $scope.$apply($scope.dragging = false);
                         }
                     }
-                };
-
-                $scope.showInfo = function( selectedService ){
-                    alert(' todo info ' + selectedService.serviceId);
                 };
 
                 $scope.showSettings = function( selectedService ){
@@ -144,6 +135,30 @@ define([
 
                 $scope.editDefinitionServices = function () {
                     $scope.workflow.workflowDefinition.editStatus = 'edit';
+                };
+
+
+                ///MODALS
+                $scope.showServiceInfo = function ( serviceId ) {
+                    serviceService.openServiceInfoModal( serviceId );
+                };
+
+
+                $scope.deleteSelectedServicesFromIndex = function ( index ) {
+
+                    var deleteModal = $modal.open({
+                        templateUrl: '../../views/workflow/remove_from_flow_modal.html',
+                        scope: $scope
+                    });
+
+                    $scope.deleteConfirmed = function () {
+                        deleteModal.close();
+                        $scope.selectedServices = $scope.selectedServices.slice(0, index);
+                        $scope.updateAvailableServices();
+                        $scope.updateDefinitionServices();
+                    };
+
+
                 };
             }]);
 });

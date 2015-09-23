@@ -54,6 +54,7 @@ require.config({
 
         'ServiceListController'     : 'controller/service/ListController',
         'ServiceEditController'     : 'controller/service/EditController',
+        'ServiceInfoModalController': 'controller/service/InfoModalController',
 
         'ResourceTypeListController': 'controller/resource_type/ListController',
         'ResourceTypeEditController': 'controller/resource_type/EditController',

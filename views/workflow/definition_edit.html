@@ -59,11 +59,14 @@
                                     <div class="col-sm-3 serviceItem" ng-repeat="service in avaliableServices track by $index" ng-dblclick="addSelectedService(service)">
                                         <div class="ibox available-service">
                                             <div class="ibox-title">
-                                                <h5>{{service.name}}</h5>
+                                                <h5> {{service.name}}</h5>
+                                                <div class="buttons">
+                                                    <a class="pull-right text-lg icon" ng-click="showServiceInfo( service.id )" title="Info" style="margin-right: 5px">
+                                                        <i class="fa fa-info-circle"></i>
+                                                    </a>
+                                                </div>
                                             </div>
-                                            <div class="ibox-content" style="height: 100px; overflow: hidden;">
-                                                {{service.description}}
-                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -89,19 +92,22 @@
                                     <div class="col-sm-3 not-sortable" ng-repeat="selectedService in selectedServices track by $index" ng-init=" service = getServiceById( selectedService.serviceId ) ">
                                         <div class="ibox available-service">
                                             <div class="ibox-title">
-                                                <h5>{{selectedService.orderNum + 1}}. {{service.name}}</h5>
-                                                <a class="pull-right text-lg icon" ng-click="removeSelectedServicesFromIndex($index)" title="Eemalda" ng-if="workflow.workflowDefinition.editStatus != 'locked'">
-                                                    <i class="fa fa-trash error"></i>
-                                                </a>
-                                                <a class="pull-right text-lg icon" ng-click="showInfo( selectedService )" title="Info" style="margin-right: 5px">
-                                                    <i class="fa fa-info-circle"></i>
-                                                </a>
-                                                <a class="pull-right text-lg icon" ng-click="showSettings( selectedService )" title="Seaded" style="margin-right: 5px" ng-if="workflow.workflowDefinition.editStatus != 'locked'">
-                                                    <i class="fa fa-gears"></i>
-                                                </a>
-                                            </div>
-                                            <div class="ibox-content" style="height: 100px; overflow: hidden;">
-                                                {{service.description}}
+                                                <span class="order">
+                                                    {{selectedService.orderNum + 1}}.
+                                                </span>
+                                                <h5> {{service.name}}</h5>
+
+                                                <div class="buttons">
+                                                    <a class="pull-right text-lg icon" ng-click="deleteSelectedServicesFromIndex($index)" title="Eemalda" ng-if="workflow.workflowDefinition.editStatus != 'locked'">
+                                                        <i class="fa fa-trash error"></i>
+                                                    </a>
+                                                    <a class="pull-right text-lg icon" ng-click="showServiceInfo( selectedService.serviceId )" title="Info" style="margin-right: 5px">
+                                                        <i class="fa fa-info-circle"></i>
+                                                    </a>
+                                                    <a class="pull-right text-lg icon" ng-click="showSettings( selectedService )" title="Seaded" style="margin-right: 5px" ng-if="workflow.workflowDefinition.editStatus != 'locked'">
+                                                        <i class="fa fa-gears"></i>
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
