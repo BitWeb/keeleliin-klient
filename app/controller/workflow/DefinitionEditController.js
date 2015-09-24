@@ -7,6 +7,7 @@ define([
     'ui-sortable',
     'filetree',
     'WorkflowSettingsModalController',
+    'WorkflowDefinitionServiceSettingsModalController',
     'ServiceInfoModalController'
 ], function (angularAMD) {
     angularAMD.controller('WorkflowDefinitionEditController',
@@ -44,28 +45,31 @@ define([
                     return workflowDefinitionService.getServiceFromList(id, servicesList);
                 };
 
+
+                $scope.hasEditableSettings = function( id ){
+                    var service = $scope.getServiceById(id);
+                    for(i in service.serviceParams){
+                        if(service.serviceParams[i].isEditable){
+                            return true;
+                        }
+                    }
+                    return false;
+                };
+
                 $scope.addSelectedService = function ( service ) {
 
                     var selectedService = {
                         id: null,
                         serviceId: service.id,
                         orderNum: $scope.selectedServices.length,
-                        paramValues: []
+                        serviceParamsValues: {}
                     };
                     for(i in service.serviceParams){
                         var param = service.serviceParams[i];
-
-                        if(param.isEditable == false){
-                            continue;
-                        }
-                        selectedService.paramValues.push({
-                            id: null,
-                            serviceParamId: param.id,
-                            value: param.value
-                        });
+                        selectedService.serviceParamsValues[param.key] = param.value;
                     }
+
                     $scope.selectedServices.push( selectedService );
-                    console.log( $scope.workflow.workflowDefinition.definitionServices );
                     $scope.updateAvailableServices();
                     $scope.updateDefinitionServices();
                 };
@@ -104,7 +108,22 @@ define([
                 };
 
                 $scope.showSettings = function( selectedService ){
-                    alert('todo settings ' + selectedService.serviceId);
+                    $modal.open({
+                        templateUrl: '../../views/workflow/definition_service_settings_modal.html',
+                        controller: 'WorkflowDefinitionServiceSettingsModalController',
+                        resolve: {
+                            selectedService: function(){
+                                return selectedService;
+                            },
+                            service: function(){
+                                return $scope.getServiceById(selectedService.serviceId);
+                            }
+                        }
+                    }).result.then(function (updatedSelectedService) {
+                        $scope.updateDefinitionServices();
+                    }, function () {
+                        $log.info('Dismissed');
+                    });
                 };
 
                 $scope.updateDefinitionServices = function () {
@@ -117,8 +136,32 @@ define([
                     });
                 };
 
-                $scope.runWorkflow = function () {
+                $scope.openWorkflowSettingsModal = function(){
+                    workflowService.openWorkflowSettingsModal($scope, $scope.workflow);
+                };
 
+                $scope.editDefinitionServices = function () {
+                    $scope.workflow.workflowDefinition.editStatus = 'edit';
+                };
+
+                $scope.showServiceInfo = function ( serviceId ) {
+                    serviceService.openServiceInfoModal( serviceId );
+                };
+
+                $scope.deleteSelectedServicesFromIndex = function ( index ) {
+                    var deleteModal = $modal.open({
+                        templateUrl: '../../views/workflow/remove_from_flow_modal.html',
+                        scope: $scope
+                    });
+                    $scope.deleteConfirmed = function () {
+                        deleteModal.close();
+                        $scope.selectedServices = $scope.selectedServices.slice(0, index);
+                        $scope.updateAvailableServices();
+                        $scope.updateDefinitionServices();
+                    };
+                };
+
+                $scope.runWorkflow = function () {
                     workflowService.runWorkflow($scope.workflow.id, function (err, response) {
                         if(err){
                             $log.debug(err);
@@ -128,37 +171,5 @@ define([
                     });
                 };
 
-                $scope.openWorkflowSettingsModal = function(){
-                    workflowService.openWorkflowSettingsModal($scope, $scope.workflow);
-                };
-
-
-                $scope.editDefinitionServices = function () {
-                    $scope.workflow.workflowDefinition.editStatus = 'edit';
-                };
-
-
-                ///MODALS
-                $scope.showServiceInfo = function ( serviceId ) {
-                    serviceService.openServiceInfoModal( serviceId );
-                };
-
-
-                $scope.deleteSelectedServicesFromIndex = function ( index ) {
-
-                    var deleteModal = $modal.open({
-                        templateUrl: '../../views/workflow/remove_from_flow_modal.html',
-                        scope: $scope
-                    });
-
-                    $scope.deleteConfirmed = function () {
-                        deleteModal.close();
-                        $scope.selectedServices = $scope.selectedServices.slice(0, index);
-                        $scope.updateAvailableServices();
-                        $scope.updateDefinitionServices();
-                    };
-
-
-                };
             }]);
 });

@@ -52,6 +52,8 @@ require.config({
         'WorkflowResourceUploadController' : 'controller/workflow/ResourceUploadController',
         'WorkflowManagementListController': 'controller/workflow/ManagementListController',
 
+        'WorkflowDefinitionServiceSettingsModalController': 'controller/workflow/DefinitionServiceSettingsModalController',
+
         'ServiceListController'     : 'controller/service/ListController',
         'ServiceEditController'     : 'controller/service/EditController',
         'ServiceInfoModalController': 'controller/service/InfoModalController',

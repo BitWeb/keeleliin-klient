@@ -104,7 +104,7 @@
                                                     <a class="pull-right text-lg icon" ng-click="showServiceInfo( selectedService.serviceId )" title="Info" style="margin-right: 5px">
                                                         <i class="fa fa-info-circle"></i>
                                                     </a>
-                                                    <a class="pull-right text-lg icon" ng-click="showSettings( selectedService )" title="Seaded" style="margin-right: 5px" ng-if="workflow.workflowDefinition.editStatus != 'locked'">
+                                                    <a ng-class="{'active': hasEditableSettings(selectedService.serviceId)}" class="pull-right text-lg icon" ng-click="showSettings( selectedService )" title="Seaded" style="margin-right: 5px" ng-if="workflow.workflowDefinition.editStatus != 'locked'">
                                                         <i class="fa fa-gears"></i>
                                                     </a>
                                                 </div>
