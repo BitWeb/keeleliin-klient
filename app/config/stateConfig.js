@@ -16,6 +16,9 @@ define(['angularAMD'], function (angularAMD) {
                     controller: 'AuthController',
                     breadcrumb: {
                         title: 'Sisselogimine'
+                    },
+                    data: {
+                        specialClass: 'gray-bg pace-done'
                     }
                 }));
 

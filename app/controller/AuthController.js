@@ -4,7 +4,7 @@
 
 define(['angularAMD','UserService'], function (angularAMD) {
 
-    angularAMD.controller('AuthController', ['$scope','UserService', function ($scope, userService) {
+    angularAMD.controller('AuthController', ['$scope', 'UserService', function ($scope, userService) {
         $scope.startAuthentication = function () {
             userService.startAuth();
         };

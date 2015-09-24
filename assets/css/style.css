@@ -1,3 +1,4 @@
+
 /* TOOGLE SWICH */
 @import url("http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&lang=en");
 /*
@@ -4185,7 +4186,7 @@ body.modal-open {
 }
 /* ERROR & LOGIN & LOCKSCREEN*/
 .middle-box {
-  max-width: 400px;
+  max-width: 600px;
   z-index: 100;
   margin: 0 auto;
   padding-top: 40px;
@@ -7675,4 +7676,13 @@ Custom styles
 .available-service .ibox-title .buttons a.active {
   color: #23c6c8;
 }
+
+.loginscreen.middle-box {
+  width: 600px;
+}
+
+.middle-box h1 {
+  font-size: 160px;
+}
+
 

@@ -12,6 +12,7 @@ define(['appModule'], function (app) {
                 if(token){
                     self.setupHttpHeader( token );
                 }
+
                 return self._requestUserInfo( callback );
             };
 
@@ -20,13 +21,14 @@ define(['appModule'], function (app) {
             };
 
             this.signOut = function () {
-                user = null;
-                self.removeToken();
-                isAuthenticated = false;
-                $rootScope.user = null;
 
                 $http.get(config.API_URL + '/user/logout').
                     then(function(response) {
+                        //$state.go('auth');
+                        user = null;
+                        self.removeToken();
+                        isAuthenticated = false;
+                        $rootScope.user = null;
                         $rootScope.$broadcast('notAuthenticated', $state);
                     }, function(response) {
                         console.error(response);
@@ -57,6 +59,11 @@ define(['appModule'], function (app) {
             };
 
             this._requestUserInfo = function ( callback ) {
+
+                if(!self.getToken()){
+                    callback();
+                    return;
+                }
 
                 $http.get( config.API_URL + '/user').then(function ( response ) {
                     self.updateUserInfo(response.data);

@@ -26,14 +26,14 @@ define([
 
         $rootScope.$on('notAuthenticated', function(event, fromState) {
             userService.setLandingPath(window.location.href);
+            //console.log('Go auth from event', event);
             $state.go('auth');
-            event.preventDefault();
         });
 
         $rootScope.$on('authenticated', function(event, fromState) {
             userService.removeLandingPath();
             if(fromState.current.name == 'auth'){
-                console.log('Go home frm auth state');
+                console.log('Go home from auth state');
                 $state.go('home');
                 event.preventDefault();
             }
