@@ -94,7 +94,7 @@ define(['angularAMD'], function (angularAMD) {
             $stateProvider.state('project-item',
                 angularAMD.route({
                     parent: 'projectItemState',
-                    url: "/view", //
+                    url: "", //
                     templateUrl: "views/project/view.html",
                     controller: 'ProjectViewController',
                     resolve: {
@@ -171,7 +171,7 @@ define(['angularAMD'], function (angularAMD) {
             ).state( 'workflow-view',
                 angularAMD.route({
                     parent: 'workflowItemState',
-                    url: "/view", //
+                    url: "", //
                     templateUrl: "views/workflow/view.html",
                     controller: 'WorkflowViewController',
                     resolve: {
