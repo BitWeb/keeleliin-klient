@@ -60,7 +60,7 @@ define([
         });
 
         $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
-            console.log(' State change success loading state: ', toState.name);
+            $log.debug(' State change success loading state: ', toState.name);
             if(userService.isAuthenticated()){
                 userService.setLandingPath($location.path());
             }
@@ -74,10 +74,9 @@ define([
             $log.debug('State change start. To state: ', toState.name + ' Is authenticated: ' + userService.isAuthenticated() );
 
             if($rootScope.isInitFinished == false){
-                console.log('Prevent change before init is finished');
+                $log.debug('Prevent change before init is finished', toState);
                 initState = toState;
                 initParams = toParams;
-                console.log(toState);
                 event.preventDefault();
                 sChange();
                 return;
@@ -102,16 +101,19 @@ define([
             console.log('Ready');
 
             if(initState){
-                $state.go(initState, initParams);
+                $log.debug('Go to init state: ', initState);
+                $state.go(initState, initParams, {reload: true});
                 return;
             }
 
             if(userService.isAuthenticated()){
+                $log.debug('Is auth but No init state. Go home ');
                 $state.go('home');
                 return;
             }
 
             if(!userService.isAuthenticated()){
+                $log.debug('Not authenticated. Go auth ');
                 userService.setLandingPath($location.path());
                 $state.go('auth');
                 return;
