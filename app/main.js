@@ -37,12 +37,14 @@ require.config({
         'drop-zone'         : 'directive/dropZone',
         'breadcrumb'        : 'directive/breadcrumb',
         'stateConfig'       : 'config/stateConfig',
+
         'AuthController'        : 'controller/AuthController',
         'HomeController'        : 'controller/HomeController',
         'ProjectListController' : 'controller/project/ListController',
         'ProjectViewController' : 'controller/project/ViewController',
         'ProjectResourceUploadController' : 'controller/project/ResourceUploadController',
 
+        'NotFoundController'        : 'controller/NotFoundController',
         'MainController'        : 'controller/MainController',
         'WorkflowAddModalController': 'controller/workflow/AddModalController',
         'WorkflowAddDefinitionModalController': 'controller/workflow/AddDefinitionModalController',

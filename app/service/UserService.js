@@ -1,7 +1,7 @@
 define(['appModule'], function (app) {
 
-    app.service('UserService', [ '$http','$state','config','$location','$rootScope','$timeout','$log',
-        function($http, $state, config, $location, $rootScope, $timeout, $log) {
+    app.service('UserService', [ '$http','$state','config','$location','$rootScope','$timeout','$log','$window','$location',
+        function($http, $state, config, $location, $rootScope, $timeout, $log, $window, $location) {
             var self = this;
 
             var user = null;
@@ -9,12 +9,32 @@ define(['appModule'], function (app) {
 
             this.init = function ( callback ) {
                 var token = self.getToken();
+                $log.debug('Token: ', token);
                 if(token){
                     self.setupHttpHeader( token );
                 }
-
-                return self._requestUserInfo( callback );
+                self._requestUserInfo( callback );
+                return;
             };
+
+            this._requestUserInfo = function ( callback ) {
+
+                if(!self.getToken()){
+                    $log.debug('Has no user token.');
+                    callback();
+                    return;
+                }
+
+                $http.get( config.API_URL + '/user').then(function ( response ) {
+                    self.updateUserInfo(response.data);
+                    callback();
+                }, function ( response ) {
+                    self.updateUserInfo(response.data);
+                    callback();
+                });
+            };
+
+
 
             this.isAuthenticated = function () {
                 return isAuthenticated;
@@ -38,17 +58,22 @@ define(['appModule'], function (app) {
 
             this.startAuth = function () {
 
-                var returnPath =  self.getLandingPath() ? encodeURIComponent(self.getLandingPath()) : ($location.protocol() + '%3A%2F%2F' + location.host);
+                var landingPath = self.getLandingPath() ? self.getLandingPath() : '/';
+                var returnPath = $location.protocol() + '://' + location.host +'/#'+ landingPath;
+                var returnPathEncoded =  encodeURIComponent(returnPath);
 
-                var queryUrl = config.API_URL + '/user/login/' + returnPath;
+                var queryUrl = config.API_URL + '/user/login/' + returnPathEncoded;
                 $http.get(queryUrl).
                     then(function(response) {
                         if(response.data.data){
                             if(response.data.data.authUrl){
                                 self.setToken(response.data.data.token);
-                                window.location.href = response.data.data.authUrl;
+                                $window.location.href = response.data.data.authUrl;
                             } else {
                                 self.updateUserInfo(response.data);
+                                if( isAuthenticated = true ){
+                                    $rootScope.$broadcast('authenticated', $state);
+                                }
                             }
                         } else {
                             console.error(response);
@@ -58,23 +83,9 @@ define(['appModule'], function (app) {
                     });
             };
 
-            this._requestUserInfo = function ( callback ) {
-
-                if(!self.getToken()){
-                    callback();
-                    return;
-                }
-
-                $http.get( config.API_URL + '/user').then(function ( response ) {
-                    self.updateUserInfo(response.data);
-                    callback();
-                }, function ( response ) {
-                    self.updateUserInfo(response.data);
-                    callback();
-                });
-            };
-
             this.updateUserInfo = function (userData) {
+
+                $log.debug('Update user info ', userData);
 
                 if(userData.statusCode != 200){
                     self.signOut();
@@ -82,7 +93,6 @@ define(['appModule'], function (app) {
                     isAuthenticated = true;
                     user = userData.data;
                     $rootScope.user = user;
-                    $rootScope.$broadcast('authenticated', $state);
                     self.doHeardBeat();
                 }
             };
@@ -104,12 +114,14 @@ define(['appModule'], function (app) {
                 return  window.sessionStorage.getItem('landingPath');
             };
             this.setLandingPath = function (landingPath) {
+
+                if(landingPath == '/auth' || landingPath == '/err404'){
+                    return;
+                }
+
+                $log.debug('setLandingPath: ', landingPath);
                 return  window.sessionStorage.setItem('landingPath', landingPath);
             };
-            this.removeLandingPath = function () {
-                return  window.sessionStorage.removeItem('landingPath');
-            };
-
 
             this.setupHttpHeader = function(token) {
                 $http.defaults.headers.common['x-access-token'] = token;

@@ -5,21 +5,25 @@
 define(['angularAMD'], function (angularAMD) {
 
     return {
-        setStates: function (app, $stateProvider, $urlRouterProvider, $ocLazyLoad) {
+        setStates: function ($stateProvider, $urlRouterProvider, $ocLazyLoad) {
 
-            $urlRouterProvider.otherwise("/home");
+            $urlRouterProvider.otherwise("/err404");
+
+            $urlRouterProvider.when('', '/auth');
+            $urlRouterProvider.when('/', '/auth');
 
             $stateProvider.state(
-                'auth', angularAMD.route({
-                    url: "/auth",
-                    templateUrl: "views/auth/auth.html",
-                    controller: 'AuthController',
+                'err404', angularAMD.route({
+                    url: "/err404",
+                    templateUrl: "views/page404.html",
+                    controller: 'NotFoundController',
                     breadcrumb: {
-                        title: 'Sisselogimine'
+                        title: 'Lehekülge ei leitud'
                     },
                     data: {
                         specialClass: 'gray-bg pace-done'
-                    }
+                    },
+                    role: 'all'
                 }));
 
             $stateProvider.state(
@@ -33,16 +37,33 @@ define(['angularAMD'], function (angularAMD) {
                     }
                 }));
 
+            $stateProvider.state(
+                'auth', angularAMD.route({
+                    url: "/auth",
+                    templateUrl: "views/auth/auth.html",
+                    controller: 'AuthController',
+                    breadcrumb: {
+                        title: 'Sisselogimine'
+                    },
+                    data: {
+                        specialClass: 'gray-bg pace-done'
+                    },
+                    role: 'all'
+                }));
+
+
+
             $stateProvider.state('projectState', {
                 url: "/project",
                 abstract: true,
-                template: '<ui-view/>'
+                template: '<ui-view/>',
+                onEnter: function(){}
             });
 
             $stateProvider.state('projects',
                 angularAMD.route({
                     parent: 'projectState',
-                    url: "",
+                    url: "/list",
                     templateUrl: "views/project/list_view.html",
                     controller: 'ProjectListController',
                     resolve: {
@@ -73,7 +94,7 @@ define(['angularAMD'], function (angularAMD) {
             $stateProvider.state('project-item',
                 angularAMD.route({
                     parent: 'projectItemState',
-                    url: "", //
+                    url: "/view", //
                     templateUrl: "views/project/view.html",
                     controller: 'ProjectViewController',
                     resolve: {
@@ -150,7 +171,7 @@ define(['angularAMD'], function (angularAMD) {
             ).state( 'workflow-view',
                 angularAMD.route({
                     parent: 'workflowItemState',
-                    url: "", //
+                    url: "/view", //
                     templateUrl: "views/workflow/view.html",
                     controller: 'WorkflowViewController',
                     resolve: {
@@ -202,7 +223,7 @@ define(['angularAMD'], function (angularAMD) {
             ).state('workflow-management-list',
                 angularAMD.route({
                     parent: 'workflowManagementState',
-                    url: "", //
+                    url: "/list", //
                     templateUrl: "views/workflow/management_list.html",
                     controller: 'WorkflowManagementListController',
                     resolve: {

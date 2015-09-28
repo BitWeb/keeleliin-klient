@@ -1,4 +1,8 @@
 /**
+ * Kollane6
+ *
+ *
+ *
  * Created by priit on 17.08.15.
  */
 
@@ -11,9 +15,7 @@ define([
 ], function (angularAMD) {
 
     angularAMD.controller('HomeController', ['$scope','$state', 'ProjectService','WorkflowDefinitionService', 'UserService', function ($scope, $state, projectService, workflowDefinitionService, userService) {
-
         console.log('HomeController');
-
         if(!userService.isAuthenticated()){
             $state.go('auth');
             return;

@@ -2,6 +2,9 @@ define([
     'angularAMD',
     'appModule',
     'config/global',
+    'etTranslations',
+    'stateConfig',
+    'ocLazyLoad',
     'UserService',
     'MainController',
     'jquery',
@@ -16,46 +19,103 @@ define([
     'ui-bootstrap',
     'icheck'
 
-], function (angularAMD, app, globalConf) {
+], function (angularAMD, app, globalConf, etTranslations, stateConfig, $ocLazyLoad ) {
+
+    app.config(['$stateProvider', '$urlRouterProvider', '$translateProvider', function ($stateProvider, $urlRouterProvider, $translateProvider) {
+        $translateProvider.translations('et', etTranslations);
+        $translateProvider.preferredLanguage('et');
+        stateConfig.setStates( $stateProvider, $urlRouterProvider, $ocLazyLoad);
+    }]);
 
     app.constant('config', globalConf);
 
-    app.run(['$rootScope', '$state', '$stateParams', 'UserService', function ($rootScope, $state, $stateParams, userService) {
+    app.run(['$rootScope', '$state', '$stateParams', 'UserService','$log','$location','$window','$timeout', function ($rootScope, $state, $stateParams, userService, $log, $location, $window, $timeout) {
+
+        $rootScope.isInitFinished = false;
+
+
         $rootScope.$state = $state;
         $rootScope.userService = userService;
 
         $rootScope.$on('notAuthenticated', function(event, fromState) {
-            userService.setLandingPath(window.location.href);
-            //console.log('Go auth from event', event);
+            $log.log('Not auth event. Go auth');
             $state.go('auth');
+            event.preventDefault();
         });
 
         $rootScope.$on('authenticated', function(event, fromState) {
-            userService.removeLandingPath();
-            if(fromState.current.name == 'auth'){
-                console.log('Go home from auth state');
-                $state.go('home');
+            $log.log('Auth event .', fromState.current.name);
+            $log.log('Go home from auth state');
+            $state.go('home');
+            event.preventDefault();
+        });
+
+        $rootScope.$on('$stateNotFound',
+            function(event, unfoundState, fromState, fromParams){
+                $log.error('State not found: ', unfoundState.to);
+            });
+
+        $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error){
+            $log.error('State change error.'); // "lazy.state"
+        });
+
+        $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
+            console.log(' State change success loading state: ', toState.name);
+            if(userService.isAuthenticated()){
+                userService.setLandingPath($location.path());
+            }
+        });
+
+        var initState = null;
+        var initParams = null;
+
+         var sChange = $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+
+            $log.debug('State change start. To state: ', toState.name + ' Is authenticated: ' + userService.isAuthenticated() );
+
+            if($rootScope.isInitFinished == false){
+                console.log('Prevent change before init is finished');
+                initState = toState;
+                initParams = toParams;
+                console.log(toState);
                 event.preventDefault();
+                sChange();
+                return;
+            }
+
+            if(userService.isAuthenticated() && toState.name == 'auth' && toState.abstract == false){
+                $log.error('Already authenticated. Go home.');
+                event.preventDefault();
+                $state.go('home');
+                return;
+            }
+            if(!userService.isAuthenticated() && toState.name && toState.name != 'auth'){
+                $log.error('Some not auth state:  ' + toState.name + ' with path: ' + $location.path() );
+                event.preventDefault();
+                $state.go('auth');
+                return;
             }
         });
 
         userService.init(function () {
+            $rootScope.isInitFinished = true;
+            console.log('Ready');
 
-            $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+            if(initState){
+                $state.go(initState, initParams);
+                return;
+            }
 
-                if(userService.isAuthenticated() && toState.name == 'auth'){
-                    console.log('Go home');
-                    $state.go('home');
-                    event.preventDefault();
-                    return;
-                }
+            if(userService.isAuthenticated()){
+                $state.go('home');
+                return;
+            }
 
-                if(!userService.isAuthenticated() && toState.name != 'auth'){
-                    $state.go('auth');
-                    event.preventDefault();
-                    return;
-                }
-            });
+            if(!userService.isAuthenticated()){
+                userService.setLandingPath($location.path());
+                $state.go('auth');
+                return;
+            }
         });
     }]);
 

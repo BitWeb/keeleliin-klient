@@ -4,7 +4,12 @@
 
 define(['angularAMD','UserService'], function (angularAMD) {
 
-    angularAMD.controller('AuthController', ['$scope', 'UserService', function ($scope, userService) {
+    angularAMD.controller('AuthController', ['$scope', '$state', 'UserService', function ($scope, $state, userService) {
+        if(userService.isAuthenticated()){
+            $state.go('home');
+            return;
+        }
+
         $scope.startAuthentication = function () {
             userService.startAuth();
         };

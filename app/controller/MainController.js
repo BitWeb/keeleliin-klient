@@ -6,6 +6,5 @@ define(['appModule', 'UserService'], function (app) {
 
                 console.log('MainController');
 
-
             }]);
 });

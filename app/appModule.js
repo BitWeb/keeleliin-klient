@@ -11,12 +11,5 @@ define(['stateConfig', 'etTranslations', 'ocLazyLoad', 'angular-ui-router', 'ang
         'ngIdle'
     ]);
 
-    app.config(['$stateProvider', '$urlRouterProvider', '$translateProvider', function ($stateProvider, $urlRouterProvider, $translateProvider) {
-
-        $translateProvider.translations('et', etTranslations);
-        $translateProvider.preferredLanguage('et');
-        stateConfig.setStates(app, $stateProvider, $urlRouterProvider, $ocLazyLoad);
-    }]);
-
     return app;
 });

@@ -12,20 +12,6 @@
   <link href="assets/css/style.css" rel="stylesheet" id="loadBefore">
   <script data-main="app/main.js" src="app/lib/require.js"></script>
 </head>
-<body  ng-controller="MainController" class="{{$state.current.data.specialClass}}" landing-scrollspy id="page-top">
-
-  <div ng-if="$state.current.name == 'auth'">
-    <div ui-view></div>
-  </div>
-
-  <div ng-if="$state.current.name != 'auth'" id="wrapper">
-    <div ng-include="'views/sidebar/navigation.html'"></div>
-    <div id="page-wrapper" class="gray-bg {{$state.current.name}}">
-      <div ng-include="'views/sidebar/topnavbar.html'"></div>
-      <div ui-view></div>
-      <div ng-include="'views/sidebar/footer.html'"></div>
-    </div>
-  </div>
-
+<body  ng-controller="MainController" class="{{$state.current.data.specialClass}}" landing-scrollspy id="page-top" ng-include="'views/main/main.html'">
 </body>
 </html>
