@@ -9,8 +9,6 @@ define(['angularAMD'], function (angularAMD) {
 
                 $http.get(config.API_URL + '/notification/list', {params: pagination}).then(function (response) {
                     callback(null, response.data.data);
-                }, function (response) {
-                    callback(response);
                 });
             };
 
@@ -18,8 +16,6 @@ define(['angularAMD'], function (angularAMD) {
                 $http.put(config.API_URL + '/notification/read', {notificationId: notificationId}).then(
                     function (data) {
                         callback(null, data.data.data);
-                    },function (data) {
-                        console.error(data);
                     }
                 );
             };

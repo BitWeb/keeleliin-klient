@@ -10,9 +10,6 @@ define(['angularAMD'], function (angularAMD) {
                     function(data) {
                         console.log(data);
                         callback(null, data.data.data);
-                    },
-                    function(data) {
-                        callback(data);
                     }
                 );
             };
@@ -40,13 +37,6 @@ define(['angularAMD'], function (angularAMD) {
                     function(data, status) {
                         console.log(data.data);
                         callback(null, true);
-                    },
-                    function(data, status) {
-                        if(!data){
-                            return callback(status);
-                        }
-                        console.log(data);
-                        callback(data);
                     }
                 );
             };
@@ -102,13 +92,6 @@ define(['angularAMD'], function (angularAMD) {
                     function(data, status) {
                         console.log(data.data);
                         callback(null, data.data.data);
-                    },
-                    function(data, status) {
-                        if(!data){
-                            return callback(status);
-                        }
-                        console.log(data);
-                        callback(data);
                     }
                 );
             };
@@ -119,17 +102,9 @@ define(['angularAMD'], function (angularAMD) {
                     function(data, status) {
                         console.log(data.data);
                         callback(null, data.data.data);
-                    },
-                    function(data, status) {
-                        if(!data){
-                            return callback(status);
-                        }
-                        console.log(data);
-                        callback(data);
                     }
                 );
             };
-
 
             this.getProject = function (id, callback) {
 
@@ -137,9 +112,6 @@ define(['angularAMD'], function (angularAMD) {
                     function(data) {
                         console.log(data);
                         callback(null, data.data.data);
-                    },
-                    function(data) {
-                        callback(data);
                     }
                 );
             };
@@ -150,13 +122,9 @@ define(['angularAMD'], function (angularAMD) {
                     function(data) {
                         console.log(data);
                         callback(null, data.data.data);
-                    },
-                    function(data) {
-                        callback(data);
                     }
                 );
             };
-
 
         }
     ]);

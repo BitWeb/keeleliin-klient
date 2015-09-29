@@ -44,6 +44,7 @@ require.config({
         'ProjectViewController' : 'controller/project/ViewController',
         'ProjectResourceUploadController' : 'controller/project/ResourceUploadController',
 
+        'ErrorModalController'      : 'controller/ErrorModalController',
         'NotFoundController'        : 'controller/NotFoundController',
         'MainController'        : 'controller/MainController',
         'WorkflowAddModalController': 'controller/workflow/AddModalController',
@@ -72,6 +73,8 @@ require.config({
         'NotificationListController': 'controller/notification/ListController',
 
         'ResourceTreeMapper'        : 'service/mapper/resourceTreeMapper',
+        'ErrorInterceptor'          : 'service/ErrorInterceptor',
+
         'UserService'               : 'service/UserService',
         'ProjectService'            : 'service/ProjectService',
         'WorkflowService'           : 'service/WorkflowService',

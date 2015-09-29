@@ -130,8 +130,6 @@ define(['appModule'], function (app) {
             this.getUser = function(id, callback) {
                 $http.get(config.API_URL + '/user/' + id + '/details').then(function(response) {
                     callback(null, response.data.data);
-                }, function(response) {
-                    callback(response);
                 });
             };
 
@@ -141,8 +139,6 @@ define(['appModule'], function (app) {
 
                 $http.get(config.API_URL + '/user/list', {params: pagination}).then(function (response) {
                     callback(null, response.data.data);
-                }, function (response) {
-                    callback(response);
                 });
             };
 
@@ -153,13 +149,10 @@ define(['appModule'], function (app) {
                 };
                 $http.put(config.API_URL + '/user/' + user.id + '/details', userData).then(function(response) {
                     callback(response.errors, response.data);
-                }, function(response) {
-                    callback(response);
                 });
             };
 
             var timeoutPromise = null;
-
 
             this.doHeardBeat = function () {
 

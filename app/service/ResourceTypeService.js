@@ -8,9 +8,6 @@ define(['angularAMD'], function (angularAMD) {
                 $http.get(config.API_URL + '/resource-type' ).then(
                     function(data) {
                         callback(null, data.data.data);
-                    },
-                    function(data) {
-                        callback(data);
                     }
                 );
             };
@@ -20,9 +17,6 @@ define(['angularAMD'], function (angularAMD) {
                 $http.get(config.API_URL + '/resource-type/' + id ).then(
                     function(data) {
                         callback(null, data.data.data);
-                    },
-                    function(data) {
-                        callback(data);
                     }
                 );
             };
@@ -31,9 +25,6 @@ define(['angularAMD'], function (angularAMD) {
                 $http.post(config.API_URL + '/resource-type', resourceType).then(
                     function(data) {
                         callback(null, data.data.data);
-                    },
-                    function(data) {
-                        callback(data);
                     }
                 );
             };
@@ -43,9 +34,6 @@ define(['angularAMD'], function (angularAMD) {
                     function(data) {
                         $log.debug('Update response: ', data);
                         callback(data.data.errors, data.data.data);
-                    },
-                    function(data) {
-                        callback(data);
                     }
                 );
             };

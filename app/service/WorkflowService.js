@@ -8,9 +8,6 @@ define(['angularAMD'], function (angularAMD) {
                 $http.get(config.API_URL + '/workflow/' + workflowId).then(
                     function(data) {
                         callback(null, data.data.data);
-                    },
-                    function(data) {
-                        callback(data);
                     }
                 );
             };
@@ -19,9 +16,6 @@ define(['angularAMD'], function (angularAMD) {
                 $http.put(config.API_URL + '/workflow/' + workflowId + '/run').then(
                     function(data) {
                         callback(null, data.data.data);
-                    },
-                    function(data) {
-                        callback(data);
                     }
                 );
             };
@@ -31,9 +25,6 @@ define(['angularAMD'], function (angularAMD) {
                 $http.put(config.API_URL + '/workflow/' + workflowId + '/cancel').then(
                     function(data) {
                         callback(null, data.data.data);
-                    },
-                    function(data) {
-                        callback(data);
                     }
                 );
             };
@@ -60,9 +51,6 @@ define(['angularAMD'], function (angularAMD) {
                 $http.get(config.API_URL + '/workflow/' + workflowId + '/settings').then(
                     function(data) {
                         callback(null, data.data.data);
-                    },
-                    function(data) {
-                        callback(data);
                     }
                 );
             };
@@ -71,9 +59,6 @@ define(['angularAMD'], function (angularAMD) {
                 $http.put(config.API_URL + '/workflow/' + settings.id + '/settings', settings).then(
                     function(data) {
                         callback(null, data.data.data);
-                    },
-                    function(data) {
-                        callback(data);
                     }
                 );
             };
@@ -84,8 +69,6 @@ define(['angularAMD'], function (angularAMD) {
 
                 $http.get(config.API_URL + '/workflow/management-list', {params: pagination}).then(function (response) {
                     callback(null, response.data.data);
-                }, function (response) {
-                    callback(response);
                 });
             };
 
@@ -98,9 +81,6 @@ define(['angularAMD'], function (angularAMD) {
                 $http.put(config.API_URL + '/workflow/' + workflowId + '/add-resources', data).then(
                     function(data) {
                         callback(null, data.data.data);
-                    },
-                    function(data) {
-                        callback(data);
                     }
                 );
             };

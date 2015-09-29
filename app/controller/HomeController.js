@@ -23,7 +23,7 @@ define([
 
         projectService.getHomeProject( function (err, project) {
             if(err){
-                console.log(err);
+                console.error(err);
                 return alert('Err');
             }
             $scope.project = project;
@@ -31,7 +31,7 @@ define([
 
             projectService.getProjectWorkflows($scope.projectId, function (err, workflows) {
                 if(err){
-                    console.log(err);
+                    console.error(err);
                     return alert('Err');
                 }
                 $scope.workflows = workflows;

@@ -53,13 +53,6 @@ define(['angularAMD'], function (angularAMD) {
                     function(data, status) {
                         console.log(data.data);
                         callback(null, data.data.data);
-                    },
-                    function(data, status) {
-                        if(!data){
-                            return callback(status);
-                        }
-                        console.log(data);
-                        callback(data);
                     }
                 );
             };
@@ -69,13 +62,6 @@ define(['angularAMD'], function (angularAMD) {
                 $http.get(config.API_URL + '/workflow-definition', {} ).then(
                     function(data, status) {
                         callback(null, data.data.data);
-                    },
-                    function(data, status) {
-                        if(!data){
-                            return callback(status);
-                        }
-                        console.error(data);
-                        callback(data);
                     }
                 );
             };
@@ -86,13 +72,6 @@ define(['angularAMD'], function (angularAMD) {
                     function(data, status) {
                         console.log(data.data);
                         callback(null, data.data.data);
-                    },
-                    function(data, status) {
-                        if(!data){
-                            return callback(status);
-                        }
-                        console.log(data);
-                        callback(data);
                     }
                 );
             };
@@ -157,12 +136,6 @@ define(['angularAMD'], function (angularAMD) {
                     function(data, status) {
                         console.log(data.data);
                         callback(null, data.data.data);
-                    },
-                    function(data, status) {
-                        if(!data){
-                            return callback(status);
-                        }
-                        callback(data);
                     }
                 );
             };

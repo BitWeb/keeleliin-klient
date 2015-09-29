@@ -5,6 +5,7 @@ define([
     'etTranslations',
     'stateConfig',
     'ocLazyLoad',
+    'ErrorInterceptor',
     'UserService',
     'MainController',
     'jquery',
@@ -21,10 +22,13 @@ define([
 
 ], function (angularAMD, app, globalConf, etTranslations, stateConfig, $ocLazyLoad ) {
 
-    app.config(['$stateProvider', '$urlRouterProvider', '$translateProvider', function ($stateProvider, $urlRouterProvider, $translateProvider) {
+    app.config(['$stateProvider', '$urlRouterProvider', '$translateProvider','$httpProvider', '$provide', function ($stateProvider, $urlRouterProvider, $translateProvider, $httpProvider, $provide ) {
         $translateProvider.translations('et', etTranslations);
         $translateProvider.preferredLanguage('et');
         stateConfig.setStates( $stateProvider, $urlRouterProvider, $ocLazyLoad);
+
+        $httpProvider.interceptors.push('ErrorInterceptor');
+
     }]);
 
     app.constant('config', globalConf);
