@@ -29,7 +29,6 @@ define(['appModule'], function (app) {
                     } else {
                         messages.push( $scope.rejection );
                     }
-
                     return messages;
                 }
             }]);

@@ -8,28 +8,50 @@
 
             <form class="form-horizontal" id="form" name="form">
                 <fieldset>
-                    <div class="form-group" ng-class="{ 'has-error' : form.name.$invalid && form.submitted }">
-                        <label class="col-sm-2 control-label">Nimi:</label>
-                        <div class="col-sm-5">
-                            <input ng-model="resourceType.name" class="form-control" name="name" placeholder="Nimi" type="text" required>
-                            <i ng-show="form.name.$error.required && form.submitted">Väli on nõutud</i>
+                    <div class="col-md-8">
+                        <div class="form-group" ng-class="{ 'has-error' : form.name.$invalid && form.submitted }">
+                            <label class="col-sm-2 control-label">Nimi:</label>
+                            <div class="col-sm-8">
+                                <input ng-model="resourceType.name" class="form-control" name="name" placeholder="Nimi" type="text" required>
+                                <i ng-show="form.name.$error.required && form.submitted">Väli on nõutud</i>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{ 'has-error' : form.value.$invalid && form.submitted }">
+                            <label class="col-sm-2 control-label">Kood:</label>
+                            <div class="col-sm-8">
+                                <input ng-model="resourceType.value" class="form-control" name="value" placeholder="Kood" type="text" required>
+                                <i ng-show="form.value.$error.required && form.submitted">Väli on nõutud</i>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{ 'has-error' : form.splitType.$invalid && form.submitted }">
+                            <label class="col-sm-2 control-label">Tükelduse tüüp:</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" ng-model="resourceType.splitType" name="splitType">
+                                    <option ng-repeat="splitType in splitTypes" value="{{splitType}}">{{splitType | translate}}</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group" ng-class="{ 'has-error' : form.value.$invalid && form.submitted }">
-                        <label class="col-sm-2 control-label">Kood:</label>
-                        <div class="col-sm-5">
-                            <input ng-model="resourceType.value" class="form-control" name="value" placeholder="Kood" type="text" required>
-                            <i ng-show="form.value.$error.required && form.submitted">Väli on nõutud</i>
+
+                    <div class="col-md-4">
+                        <div ng-if="resourceType.useAsInput && resourceType.useAsInput.length > 0 ">
+                            <label>Teenused, mis kasutavad sisendiks:</label>
+                            <ul>
+                                <li ng-repeat="service in resourceType.useAsInput">
+                                    <a ui-sref="service-edit({serviceId: service.id})">{{service.name}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div ng-if="resourceType.useAsOutput && resourceType.useAsOutput.length > 0">
+                            <label>Teenused, mis kasutavad väljundiks:</label>
+                            <ul>
+                                <li ng-repeat="service in resourceType.useAsOutput">
+                                    <a ui-sref="service-edit({serviceId: service.id})">{{service.name}}</a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
-                    <div class="form-group" ng-class="{ 'has-error' : form.splitType.$invalid && form.submitted }">
-                        <label class="col-sm-2 control-label">Tükelduse tüüp:</label>
-                        <div class="col-sm-5">
-                            <select class="form-control" ng-model="resourceType.splitType" name="splitType">
-                                <option ng-repeat="splitType in splitTypes" value="{{splitType}}">{{splitType | translate}}</option>
-                            </select>
-                        </div>
-                    </div>
+
                 </fieldset>
             </form>
         </div>

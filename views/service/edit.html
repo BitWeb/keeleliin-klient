@@ -68,6 +68,24 @@
                         </div>
                     </div>
 
+                    <div class="form-group" ng-show="servicesList">
+                        <label class="col-sm-2 control-label">Järgnevad teenused:</label>
+                        <div class="col-sm-10">
+                            <select
+                                    multiple
+                                    chosen
+                                    ng-model="service.childServices"
+                                    name="nextServices"
+                                    class="chosen-select m-t-md form-control"
+                                    style="width:100%;"
+                                    tabindex="4"
+                                    data-placeholder="Määra võimalikud teenused"
+                                    ng-options="item.id as item.name for item in servicesList"
+                                    >
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Parameetrid :</label>
                         <div class="col-sm-8">
