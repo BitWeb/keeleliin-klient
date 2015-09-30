@@ -5,8 +5,27 @@
 </div>
 <div class="modal-body">
     <div class="row">
-        <div>
+        <div class="form-group">
             {{service.description}}
+        </div>
+
+        <div class="form-group">
+            <label>Sisendressursid:</label>
+            <p>
+                <span ng-repeat="typeName in inputTypes">{{typeName}}<br nf-if="!$last" /></span>
+            </p>
+        </div>
+        <div class="form-group">
+            <label>Väljundressursid:</label>
+            <p>
+                <span ng-repeat="typeName in outputTypes">{{typeName}}<br nf-if="!$last" /></span>
+            </p>
+        </div>
+        <div class="form-group">
+            <label>Lisaparameetrid:</label>
+            <p>
+                <span ng-repeat="param in service.serviceParams">{{param.description && param.description || param.key}}<br nf-if="!$last" /></span>
+            </p>
         </div>
     </div>
 </div>
