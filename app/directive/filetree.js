@@ -34,11 +34,7 @@ define([
                         };
 
                         $scope.fileDeleteAction = function (event, id) {
-
-                            console.error(resourcesMap[id]);
-
-
-                            resourceService.openDeleteModal( resourcesMap[id].id );
+                            resourceService.openDeleteModal( resourcesMap[id] );
                         };
 
                         var updateResourcesView = function () {

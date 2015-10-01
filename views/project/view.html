@@ -66,7 +66,13 @@
                                         <span kl-status="{{workflow.status}}" />
                                     </td>
                                     <td class="project-title">
-                                        <strong>{{workflow.name || ('Töövoog ' + workflow.id)}}</strong>
+                                        <a ng-show="workflow.status == 'INIT'" ui-sref="workflow-definition-edit({workflowId: workflow.id})">
+                                            <strong>{{workflow.name || ('Töövoog ' + workflow.id)}}</strong>
+                                        </a>
+                                        <a ng-show="workflow.status != 'INIT'" ui-sref="workflow-view({workflowId: workflow.id})">
+                                            <strong>{{workflow.name || ('Töövoog ' + workflow.id)}}</strong>
+                                        </a>
+
                                         <br/>
                                         <small>Lisatud {{workflow.datetimeCreated | date : 'dd.MM.yyyy'}}</small>
                                     </td>

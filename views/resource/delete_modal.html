@@ -16,9 +16,25 @@
                 </span>
             </div>
             <div class="form-group">
+                <label class="control-label">PID:</label>
+                <span>
+                    {{resource.pid}}
+                </span>
+            </div>
+            <div class="form-group">
                 <label class="control-label">Loodud: </label>
                 <span>
                     {{resource.createdAt | date : 'dd.MM.yyyy H:mm'}}
+                </span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Suurus: </label>
+                <span kl-filesize="{{resource.fileSize}}"></span>
+            </div>
+            <div ng-if="resource.description" class="form-group">
+                <label class="control-label">Kirjeldus: </label>
+                <span>
+                    {{resource.description}}
                 </span>
             </div>
 
