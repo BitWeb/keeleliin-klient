@@ -9,6 +9,9 @@ define(['appModule', 'UserService', 'ErrorModalController'], function (app) {
 
                 $rootScope.addError = function (rejection) {
 
+                    if(rejection.status == 401 && !$rootScope.user){
+                        return;
+                    }
                     $modal.open({
                         controller: 'ErrorModalController',
                         templateUrl: '../../views/errorModal.html',
