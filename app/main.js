@@ -60,6 +60,7 @@ require.config({
         'ServiceListController'     : 'controller/service/ListController',
         'ServiceEditController'     : 'controller/service/EditController',
         'ServiceInfoModalController': 'controller/service/InfoModalController',
+        'ServiceStatisticsController': 'controller/service/StatisticsController',
 
         'ResourceTypeListController': 'controller/resource_type/ListController',
         'ResourceTypeEditController': 'controller/resource_type/EditController',
@@ -71,7 +72,7 @@ require.config({
         'UserEditController'        : 'controller/user/EditController',
         'UserListController'        : 'controller/user/ListController',
         'NotificationListController': 'controller/notification/ListController',
-
+        'StatisticsIndexController' : 'controller/statistics/IndexController',
         'ResourceTreeMapper'        : 'service/mapper/resourceTreeMapper',
         'ErrorInterceptor'          : 'service/ErrorInterceptor',
 
@@ -82,7 +83,8 @@ require.config({
         'ResourceService'           : 'service/ResourceService',
         'ServiceService'            : 'service/ServiceService',
         'ResourceTypeService'       : 'service/ResourceTypeService',
-        'NotificationService'       : 'service/NotificationService'
+        'NotificationService'       : 'service/NotificationService',
+        'StatisticsService'         : 'service/StatisticsService'
     },
     shim: {
         'angular'           : ['jquery'],

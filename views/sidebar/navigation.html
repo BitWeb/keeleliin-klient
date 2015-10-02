@@ -53,6 +53,13 @@
                     <i class="fa fa-users"></i> <span class="nav-label">Kasutajate haldus</span>
                 </a>
             </li>
+            <li ng-if="user.role == 'admin'" ng-class="{active : $state.includes('statisticsState')}">
+                <a ui-sref="statistics">
+                    <i class="fa fa-dashboard"></i> <span class="nav-label">Statistika</span>
+                </a>
+            </li>
+
+
         </ul>
     </div>
 </nav>

@@ -332,7 +332,19 @@ define(['angularAMD'], function (angularAMD) {
                     parent: 'services',
                     title: "Teenuse lisamine"
                 }
-            }));
+            })
+            ).state('service-statistics', angularAMD.route({
+                    parent: 'serviceState',
+                    url: '/{serviceId:[0-9]{1,8}}/statistics',
+                    templateUrl: 'views/service/statistics.html',
+                    controller: 'ServiceStatisticsController',
+                    breadcrumb: {
+                        parent: 'services',
+                        title: "{{serviceId}} statistika",
+                        attributes: '{serviceId: serviceId}'
+                    }
+                })
+            );
 
             $stateProvider.state('resourceTypeState', {
                 abstract: true,
@@ -411,6 +423,25 @@ define(['angularAMD'], function (angularAMD) {
                     }
                 })
             );
+
+            $stateProvider.state('statisticsState',
+                {
+                    url: '/statistics',
+                    abstract: true,
+                    template: '<ui-view/>'
+                }
+            ).state('statistics', angularAMD.route({
+                    parent: 'statisticsState',
+                    url: '',
+                    templateUrl: 'views/statistics/index.html',
+                    controller: 'StatisticsIndexController',
+                    breadcrumb: {
+                        parent: 'home',
+                        title: 'Statistika'
+                    }
+                })
+            );
+
         }
     }
 });

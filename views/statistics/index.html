@@ -1,0 +1,82 @@
+
+
+<div kl-breadcrumb></div>
+
+<div class="wrapper wrapper-content animated fadeInUp ng-scope">
+
+    <div class="row">
+
+        <div class="col-lg-4">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Serveri ressursid</h5>
+                    <button ng-click="refreshStatistics()" type="button" class="btn btn-white btn-xs pull-right"><i class="fa fa-refresh"></i> Uuenda</button>
+                </div>
+
+                <div class="ibox-content">
+
+                    <table class="table no-margins">
+                        <tr>
+                            <th valign="top">
+                                Mälukasutus
+                            </th>
+                            <td>
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th>Kasutuses</th>
+                                        <th>Kokku</th>
+                                    </tr>
+                                    <tr>
+                                        <td>{{statistics.memory.used}}</td>
+                                        <td>{{statistics.memory.total}}</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th valign="top">
+                                Protsessori hõivatus
+                            </th>
+                            <td>
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th>1 min</th>
+                                        <th>5 min</th>
+                                        <th>15min</th>
+                                        <th>CPUs</th>
+                                    </tr>
+                                    <tr>
+                                        <td>{{statistics.load[0]}}</td>
+                                        <td>{{statistics.load[1]}}</td>
+                                        <td>{{statistics.load[2]}}</td>
+                                        <td>{{statistics.load[3]}}</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th valign="top">
+                                Kettakasutus
+                            </th>
+                            <td>
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th>Nimi</th>
+                                        <th>Kasutuses</th>
+                                        <th>Kokku</th>
+                                    </tr>
+                                    <tr ng-repeat="drive in statistics.drives">
+                                        <td>{{drive.name}}</td>
+                                        <td>{{drive.used}}</td>
+                                        <td>{{drive.total}}</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
