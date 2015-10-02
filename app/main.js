@@ -72,6 +72,8 @@ require.config({
         'UserEditController'        : 'controller/user/EditController',
         'UserListController'        : 'controller/user/ListController',
         'NotificationListController': 'controller/notification/ListController',
+        'NotificationReadController': 'controller/notification/ReadController',
+
         'StatisticsIndexController' : 'controller/statistics/IndexController',
         'ResourceTreeMapper'        : 'service/mapper/resourceTreeMapper',
         'ErrorInterceptor'          : 'service/ErrorInterceptor',

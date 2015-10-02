@@ -304,20 +304,4 @@ app.directive('fullScroll', fullScroll)
         };
     }]);
 
-    app.directive('klNotification', ['$http', 'config','$rootScope','NotificationService', function ($http, config, $rootScope, notificationService) {
-
-        return {
-            restrict: 'A',
-            scope: {},
-            link: function(scope, element, attrs) {
-                element.bind('click', function () {
-                    notificationService.markNotificationAsRead(attrs.klNotification, function (err, data) {
-                        $rootScope.userService.doHeardBeat();
-                        window.location.href = attrs.klNotificationHref;
-                    });
-                });
-            }
-        };
-    }]);
-
 });

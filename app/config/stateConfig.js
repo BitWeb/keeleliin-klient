@@ -385,9 +385,19 @@ define(['angularAMD'], function (angularAMD) {
 
 
             $stateProvider.state('notification', angularAMD.route({
-                    url: '/notifications',
+                    url: '/notification',
                     templateUrl: 'views/notification/list.html',
                     controller: 'NotificationListController',
+                    breadcrumb: {
+                        parent: 'home',
+                        title: "Teavitused"
+                    }
+                })
+            );
+            $stateProvider.state('notification-read', angularAMD.route({
+                    url: '/notification/{notificationId:[0-9]{1,8}}/read',
+                    //templateUrl: 'views/notification/list.html',
+                    controller: 'NotificationReadController',
                     breadcrumb: {
                         parent: 'home',
                         title: "Teavitused"
