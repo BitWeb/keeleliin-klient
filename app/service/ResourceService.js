@@ -19,7 +19,7 @@ define(['angularAMD', 'ResourceTreeMapper', 'ResourceInfoController', 'ResourceD
             };
 
             this.downloadResourceById = function (id) {
-                window.location.href = config.API_URL + '/resource/download/' +id + '?token=' + userService.getToken();
+                window.location.href = config.API_URL + '/resource/' +id + '/download?token=' + userService.getToken();
             };
 
             this.getResourceInfo = function (resourceId, callback) {

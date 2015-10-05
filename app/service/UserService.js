@@ -164,7 +164,7 @@ define(['appModule'], function (app) {
                     $timeout.cancel(timeoutPromise);
                 }
 
-                $http.post(config.API_URL + '/user/heart-beat', {}).then(function(response) {
+                $http.put(config.API_URL + '/user/heart-beat', {}).then(function(response) {
                     $rootScope.notificationsSummary = response.data.data;
                     if(!config.hearbeat_interval){
                         return

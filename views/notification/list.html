@@ -25,7 +25,7 @@
                                     {{notification.createdAt | date: 'dd.MM.yyyy H:mm'}}
                                 </td>
                                 <td>
-                                    <a kl-notification="{{notification.id}}" kl-notification-href="{{notification.url}}">
+                                    <a ui-sref="notification-read({notificationId: notification.id})">
                                         <strong ng-if="!notification.isRead" style="color:#676a6c;">
                                             {{notification.message}}
                                         </strong>

@@ -3,7 +3,7 @@ define(['angularAMD', 'angular-utils-pagination'], function(angularAMD) {
         var timer;
 
         $scope.roles = config.user.roles;
-        $scope.totalCount = 0;
+        $scope.count = 0;
         $scope.perPage = 25;
         $scope.users = [];
         $scope.pagination = {
@@ -23,12 +23,12 @@ define(['angularAMD', 'angular-utils-pagination'], function(angularAMD) {
         };
 
         $scope.enableDisableUser = function(user) {
-            user.is_active = !user.is_active;
+            user.isActive = !user.isActive;
             userService.updateUser(user, function(err, user) {
                 if (err) {
                     $scope.errorMessage = err;
                 }
-                user.is_active = user.isActive;
+                user.isActive = user.isActive;
             });
         };
 
@@ -50,7 +50,7 @@ define(['angularAMD', 'angular-utils-pagination'], function(angularAMD) {
                     return alert(err);
                 }
                 $scope.users = data.rows;
-                $scope.totalCount = data.totalCount;
+                $scope.count = data.count;
             });
         }
 

@@ -38,26 +38,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr dir-paginate="user in users | filter: searchFilter | itemsPerPage: perPage" total-items="totalCount" current-page="pagination.current" boundary-links="true">
+                    <tr dir-paginate="user in users | filter: searchFilter | itemsPerPage: perPage" total-items="count" current-page="pagination.current" boundary-links="true">
                         <td>{{user.id}}</td>
                         <td class="project-title">
                             <a ui-sref="user-edit({userId: user.id})">{{user.name}}</a>
                         </td>
-                        <td>{{user.created_at | date : 'dd.MM.yyyy'}}</td>
-                        <td>{{user.updated_at | date : 'dd.MM.yyyy'}}</td>
+                        <td>{{user.createdAt | date : 'dd.MM.yyyy'}}</td>
+                        <td>{{user.updatedAt | date : 'dd.MM.yyyy'}}</td>
                         <td>{{user.role | translate}}</td>
                         <td>
-                            <div ng-if="user.is_active">
+                            <div ng-if="user.isActive">
                                 Aktiivne
                             </div>
-                            <div ng-if="!user.is_active">
+                            <div ng-if="!user.isActive">
                                 <span class="label label-warning">Peatatud</span>
                             </div>
                         </td>
                         <td class="text-right">
                             <div class="btn-group">
-                                <button ng_show="!user.is_active" class="btn btn-success btn-xs" ng-click="enableDisableUser(user)"><i class="fa fa-check"></i> Aktiveeri</button>
-                                <button ng-show="user.is_active" class="btn-white btn btn-xs" ng-click="enableDisableUser(user)"> <i class="fa fa-ban"></i> Peata</button>
+                                <button ng_show="!user.isActive" class="btn btn-success btn-xs" ng-click="enableDisableUser(user)"><i class="fa fa-check"></i> Aktiveeri</button>
+                                <button ng-show="user.isActive" class="btn-white btn btn-xs" ng-click="enableDisableUser(user)"> <i class="fa fa-ban"></i> Peata</button>
 
                                 <a ui-sref="user-edit({userId: user.id})" class="btn btn-white btn-xs">
                                     <i class="fa fa-folder"></i> Vaata
