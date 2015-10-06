@@ -76,23 +76,25 @@ define(['angularAMD'], function (angularAMD) {
                 );
             };
 
-            this.getServiceFromList = function (id, list) {
-                for(i in list){
-                    if(list[i].id == id){
-                        return list[i];
-                    }
-                }
-            };
-
             this.getAvailableFollowingServices = function (selectedServices, servicesList) {
                 var availableServices = [];
 
                 if(selectedServices.length == 0){
-                    availableServices = servicesList.slice();
+                    for(i in servicesList){
+                        if(servicesList[i].isActive == true){
+                            availableServices.push(servicesList[i]);
+                        }
+                    }
                     return availableServices;
                 }
+
                 for(i in selectedServices){
                     var service = self.getServiceFromList(selectedServices[i].serviceId, servicesList);
+
+                    if(!service){
+                        continue;
+                    }
+
                     for(j in service.childServices){
                         var followingService = self.getServiceFromList( service.childServices[j], servicesList );
                         availableServices.push( followingService );
@@ -102,6 +104,14 @@ define(['angularAMD'], function (angularAMD) {
                 return availableServices.filter(function(value, index, self) {
                     return self.indexOf(value) === index;
                 });
+            };
+
+            this.getServiceFromList = function (id, list) {
+                for(i in list){
+                    if(list[i].id == id){
+                        return list[i];
+                    }
+                }
             };
 
             this.filterDefinitionsList = function(definitions, type, name){

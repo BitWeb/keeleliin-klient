@@ -48,6 +48,11 @@ define([
 
                 $scope.hasEditableSettings = function( id ){
                     var service = $scope.getServiceById(id);
+
+                    if(!service){
+                        return false;
+                    }
+
                     for(i in service.serviceParams){
                         if(service.serviceParams[i].isEditable){
                             return true;

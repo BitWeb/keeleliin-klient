@@ -145,8 +145,14 @@ app.directive('fullScroll', fullScroll)
             if(status == 'INIT'){
                 return element.text('00:00:00');
             }
+
+            if(status != 'RUNNING' && !end){
+                return element.text('ERROR');
+            }
+
             var startDate = new Date(start);
             var endDate = end ? new Date(end) : new Date();
+
             var timeDiff = Math.abs(startDate.getTime() - endDate.getTime());
             //tundi
             var hour = Math.floor( timeDiff  / (1000 * 60 * 60) );

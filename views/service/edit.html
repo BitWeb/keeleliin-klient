@@ -286,7 +286,7 @@
                 <a ui-sref="services" class="btn btn-sm btn-link pull-left">
                     <i class="fa fa-caret-left"></i> Tagasi teenuste nimekirja
                 </a>
-                <a ng-if="service.id" class="btn btn-danger btn-sm m-r-lg">
+                <a ng-if="service.id" ng-click="deleteService()" class="btn btn-danger btn-sm m-r-lg">
                     <i class="fa fa-trash"></i> Kustuta teenus
                 </a>
                 <a kl-save-button

@@ -7,8 +7,8 @@ define([
     'icheck'
 ], function(angularAMD) {
 
-    angularAMD.controller('ServiceEditController', ['$scope', '$stateParams', 'ServiceService', 'ResourceService', 'ResourceTypeService' ,'$log',
-        function( $scope, $stateParams, serviceService, resourceService, resourceTypeService, $log ) {
+    angularAMD.controller('ServiceEditController', ['$scope', '$stateParams', 'ServiceService', 'ResourceService', 'ResourceTypeService' ,'$log', '$state',
+        function( $scope, $stateParams, serviceService, resourceService, resourceTypeService, $log, $state ) {
             $scope.serviceId = $stateParams.serviceId;
             $scope.errorMessage = null;
             $scope.successMessage = null;
@@ -125,7 +125,7 @@ define([
             };
 
             $scope.saveService = function (form) {
-                form.submitted = true;
+
                 if(!form.$valid){
                     $log.info(form);
                     $log.info($scope.service);
@@ -133,9 +133,13 @@ define([
                     return;
                 }
 
+                form.submitted = true;
                 $scope.savingService = true;
+
                 var saveCallback = function (err, data) {
                     $scope.savingService = false;
+                    form.submitted = false;
+                    form.$dirty = false;
 
                     if(err || !data){
                         $log.debug('Err', err);
@@ -143,10 +147,9 @@ define([
                         $scope.errorMessage = 'Salvestamisel tekkis viga';
                         return;
                     }
+
                     $scope.service = data;
                     $scope.errorMessage = null;
-                    form.submitted = false;
-                    form.$dirty = false;
                     $scope.successMessage = 'Salvestatud';
                     $scope.$broadcast('updateBreadcrumb');
                 };
@@ -156,6 +159,14 @@ define([
                 } else {
                     serviceService.saveService( $scope.service, saveCallback);
                 }
+            };
+
+            $scope.deleteService = function () {
+                serviceService.deleteService($scope.service, function (err, data) {
+                    if(!err){
+                        $state.go('services');
+                    }
+                });
             }
         }]);
 });

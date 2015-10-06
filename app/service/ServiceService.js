@@ -47,6 +47,7 @@ define(['angularAMD'], function (angularAMD) {
                 );
             };
 
+            //Ainult aktiivsed teenused
             this.getServicesSelectList = function (callback) {
                 self.getServicesList(function (err, data) {
                     if(err){
@@ -76,6 +77,15 @@ define(['angularAMD'], function (angularAMD) {
                         }
                     }
                 });
+            };
+
+            this.deleteService = function (service, callback) {
+                $http.delete(config.API_URL + '/service/' + service.id ).then(
+                    function(data) {
+                        $log.debug('Delete response: ', data);
+                        callback(data.data.errors, data.data.data);
+                    }
+                );
             }
 
         }

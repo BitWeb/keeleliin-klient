@@ -95,16 +95,16 @@
                                                 <span class="order">
                                                     {{selectedService.orderNum + 1}}.
                                                 </span>
-                                                <h5> {{service.name}}</h5>
-
+                                                <h5 ng-if="service"> {{service.name}}</h5>
+                                                <h5 ng-if="!service" > <strong><i>Teenust ei leitud</i></strong></h5>
                                                 <div class="buttons">
-                                                    <a class="pull-right text-lg icon" ng-click="deleteSelectedServicesFromIndex($index)" title="Eemalda" ng-if="workflow.workflowDefinition.editStatus != 'locked'">
+                                                    <a ng-if="workflow.workflowDefinition.editStatus != 'locked'" class="pull-right text-lg icon" ng-click="deleteSelectedServicesFromIndex($index)" title="Eemalda">
                                                         <i class="fa fa-trash error"></i>
                                                     </a>
-                                                    <a class="pull-right text-lg icon" ng-click="showServiceInfo( selectedService.serviceId )" title="Info" style="margin-right: 5px">
+                                                    <a ng-if="service" class="pull-right text-lg icon" ng-click="showServiceInfo( selectedService.serviceId )" title="Info" style="margin-right: 5px">
                                                         <i class="fa fa-info-circle"></i>
                                                     </a>
-                                                    <a ng-class="{'active': hasEditableSettings(selectedService.serviceId)}" class="pull-right text-lg icon" ng-click="showSettings( selectedService )" title="Seaded" style="margin-right: 5px" ng-if="workflow.workflowDefinition.editStatus != 'locked'">
+                                                    <a ng-if="service && workflow.workflowDefinition.editStatus != 'locked'" ng-class="{'active': hasEditableSettings(selectedService.serviceId)}" class="pull-right text-lg icon" ng-click="showSettings( selectedService )" title="Seaded" style="margin-right: 5px">
                                                         <i class="fa fa-gears"></i>
                                                     </a>
                                                 </div>
