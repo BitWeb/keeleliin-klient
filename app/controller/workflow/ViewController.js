@@ -6,7 +6,8 @@ define([
     'ResourceService',
     'footable',
     'filetree',
-    'WorkflowSettingsModalController'
+    'WorkflowSettingsModalController',
+    'ConfirmModalController'
 ], function (angularAMD) {
 
     angularAMD.controller('WorkflowViewController', [ '$scope','$rootScope', '$state', '$stateParams', '$log', 'WorkflowService', '$timeout','ResourceService',
@@ -113,6 +114,12 @@ define([
                 resourceService.downloadResourceById( resourceId );
             };
 
-
+            $scope.deleteWorkflow = function () {
+                workflowService.deleteWorkflow($scope.workflow.id, function (err, success) {
+                    if(!err && success){
+                        $state.go('project-item', {projectId: $scope.workflow.projectId});
+                    }
+                });
+            };
         }]);
 });

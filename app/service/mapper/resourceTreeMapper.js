@@ -3,6 +3,18 @@
  */
 define([], function () {
 
+    /*
+
+    'project_upload',
+    'workflow_input',
+    'workflow_output',
+    'substep_input',
+    'substep_output',
+    'shared',
+    'public'
+
+    */
+
     function includeItem(item, type, keyword ){
 
         if(type && item.context != type){
@@ -114,15 +126,19 @@ define([], function () {
                 return '#';
             };
 
-            for(fileIndex in list) {
-                var item = list[fileIndex];
+
+
+
+
+            for(i in list) {
+                var item = list[i];
                 if(!includeItem(item, type, keyword)){
                     continue;
                 }
 
-                treeMap[fileIndex] = item;
-                map[fileIndex] = {
-                    id: fileIndex,
+                treeMap[item.id] = item;
+                map[item.id] = {
+                    id: item.id,
                     parent: getResourceParentId( item ),
                     text: item.name,
                     type    : "text"

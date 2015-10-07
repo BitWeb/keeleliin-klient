@@ -26,11 +26,11 @@ define([
 
 
                         $scope.fileDownloadAction = function (event, id) {
-                            resourceService.downloadResourceById( resourcesMap[id].id );
+                            resourceService.downloadResourceById( resourcesMap[id].resourceId );
                         };
 
                         $scope.fileInfoAction = function (event, id) {
-                            resourceService.openInfoModal( resourcesMap[id].id );
+                            resourceService.openInfoModal( resourcesMap[id].resourceId );
                         };
 
                         $scope.fileDeleteAction = function (event, id) {
@@ -106,7 +106,7 @@ define([
                             var result = [];
                             for(i in selectedNodes){
                                 if(resourcesMap[selectedNodes[i]]){
-                                    result.push( resourcesMap[selectedNodes[i]].id );
+                                    result.push( resourcesMap[selectedNodes[i]].resourceId );
                                 }
                             }
                             return result;

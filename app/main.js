@@ -38,6 +38,7 @@ require.config({
         'breadcrumb'        : 'directive/breadcrumb',
         'stateConfig'       : 'config/stateConfig',
 
+        'ConfirmModalController': 'controller/ConfirmModalController',
         'AuthController'        : 'controller/AuthController',
         'HomeController'        : 'controller/HomeController',
         'ProjectListController' : 'controller/project/ListController',

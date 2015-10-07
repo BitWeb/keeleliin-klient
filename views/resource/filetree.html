@@ -4,9 +4,9 @@
     <div data-toggle="buttons" class="btn-group">
         <label ng-click="filterFiles()" class="btn btn-sm btn-white active">
             <input type="radio" id="option1" name="options"> Kõiki faile </label>
-        <label ng-click="filterFiles('input')" class="btn btn-sm btn-white">
+        <label ng-click="filterFiles('workflow_input')" class="btn btn-sm btn-white">
             <input type="radio" id="option2" name="options"> Sisendfaile </label>
-        <label ng-click="filterFiles('output')" class="btn btn-sm btn-white">
+        <label ng-click="filterFiles('workflow_output')" class="btn btn-sm btn-white">
             <input type="radio" id="option3" name="options"> Tulemeid </label>
     </div>
     <a ng-show="false" ng-click="downloadAll()" href="#" class="btn btn-sm btn-link pull-right"><i class="fa fa-download"></i> Lae kõik tulemi failid alla</a>

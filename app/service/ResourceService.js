@@ -41,9 +41,8 @@ define(['angularAMD', 'ResourceTreeMapper', 'ResourceInfoController', 'ResourceD
             };
 
 
-            this.deleteResource = function(resource, deleteData, callback) {
-
-                $http.delete(config.API_URL + '/resource/' + resource.id, {params: deleteData} ).then(
+            this.deleteResourceAssociation = function(associationId, callback) {
+                $http.delete(config.API_URL + '/resource/association/' + associationId ).then(
                     function(data) {
                         $log.log(data);
                         callback(null, data.data.data);
@@ -63,13 +62,13 @@ define(['angularAMD', 'ResourceTreeMapper', 'ResourceInfoController', 'ResourceD
                 });
             };
 
-            this.openDeleteModal = function( resource ){
+            this.openDeleteModal = function( resourceData ){
                 return $modal.open({
                     templateUrl: '../../views/resource/delete_modal.html',
                     controller: 'ResourceDeleteController',
                     resolve: {
-                        resource: function(){
-                            return resource
+                        resourceData: function(){
+                            return resourceData
                         }
                     }
                 });

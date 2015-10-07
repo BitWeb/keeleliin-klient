@@ -2,10 +2,10 @@ define([
     'angularAMD'
 ], function (angularAMD) {
 
-    angularAMD.controller('ResourceDeleteController', [ '$scope', '$rootScope', '$state', '$stateParams', '$log', 'ResourceService', 'resource',
-        function($scope, $rootScope, $state, $stateParams, $log, resourceService, resource ) {
+    angularAMD.controller('ResourceDeleteController', [ '$scope', '$rootScope', '$state', '$stateParams', '$log', 'ResourceService', 'resourceData',
+        function($scope, $rootScope, $state, $stateParams, $log, resourceService, associationData ) {
 
-            resourceService.getResourceInfo( resource.id, function (err, info) {
+            resourceService.getResourceInfo( associationData.resourceId, function (err, info) {
                 if(err){
                     alert('Err');
                     return $log.error(err);
@@ -25,14 +25,7 @@ define([
                     return;
                 }
 
-                var deleteData = {
-                    context: resource.context,
-                    projectId: resource.projectId,
-                    serviceId: resource.serviceId,
-                    workflowId: resource.workflowId
-                };
-
-                resourceService.deleteResource($scope.resource, deleteData, function (err, data) {
+                resourceService.deleteResourceAssociation(associationData.id, function (err, data) {
                     if(err){
                         alert('Err');
                         return $log.error(err);

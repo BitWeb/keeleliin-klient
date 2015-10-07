@@ -1,0 +1,18 @@
+<div class="modal-header">
+    <h4 class="modal-title">
+        Tegevuse kinnitamine
+    </h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="form-group">
+            <span>
+                {{message || "Kas olete oma tegevuses kindel?" }}
+            </span>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-white btn-sm" ng-click="$dismiss()">Katkesta</button>
+    <button type="button" class="btn btn-primary btn-sm" ng-click="confirm()" >Jah</button>
+</div>

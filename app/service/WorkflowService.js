@@ -63,6 +63,29 @@ define(['angularAMD'], function (angularAMD) {
                 );
             };
 
+            this.deleteWorkflow = function (workflowId, callback) {
+                var modalInstance = $modal.open({
+                    templateUrl: '../../views/confirm_modal.html',
+                    controller: 'ConfirmModalController',
+                    resolve: {
+                        message: function () {
+                            return 'Kas oled kindel, et soovid antud töövoo kustutada?';
+                        }
+                    }
+                });
+                modalInstance.result.then(function (confirm) {
+                    if(confirm == true){
+                        $http.delete(config.API_URL + '/workflow/' + workflowId).then(
+                            function(data) {
+                                callback(null, true);
+                            }
+                        );
+                    } else {
+                        callback(null, false);
+                    }
+                });
+            };
+
             this.getWorkflowsManagementList = function (pagination, callback) {
 
                 pagination = pagination  || {};
