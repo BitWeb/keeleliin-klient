@@ -2,16 +2,18 @@ define([
     'angularAMD',
     'ng-jstree',
     'ProjectService',
+    'WorkflowService',
     'footable',
     'WorkflowAddDefinitionModalController',
     'WorkflowAddModalController',
     'WorkflowDefinitionService',
     'filetree',
-    'controller/project/UpdateController'
+    'controller/project/UpdateController',
+    'ConfirmModalController'
 ], function (angularAMD) {
 
-    angularAMD.controller('ProjectViewController', [ '$scope', '$state', '$stateParams', 'ProjectService','$modal','WorkflowDefinitionService','ResourceService','$log',
-        function($scope, $state, $stateParams, projectService, $modal, workflowDefinitionService, resourceService, $log ) {
+    angularAMD.controller('ProjectViewController', [ '$scope', '$state', '$stateParams', 'ProjectService','$modal','WorkflowDefinitionService','ResourceService','$log','WorkflowService',
+        function($scope, $state, $stateParams, projectService, $modal, workflowDefinitionService, resourceService, $log, workflowService ) {
             $log.log('ProjectController');
 
             $scope.projectId = $stateParams.projectId;
@@ -24,13 +26,16 @@ define([
                 $scope.project = project;
             });
 
-            projectService.getProjectWorkflows($scope.projectId, function (err, workflows) {
-                if(err){
-                    console.log(err);
-                    return alert('Err');
-                }
-                $scope.workflows = workflows;
-            });
+            var updateWorkflowsList = function () {
+                projectService.getProjectWorkflows($scope.projectId, function (err, workflows) {
+                    if(err){
+                        console.log(err);
+                        return alert('Err');
+                    }
+                    $scope.workflows = workflows;
+                });
+            };
+            updateWorkflowsList();
 
             $scope.openDefineWorkflowModal = function () {
                 workflowDefinitionService.openAddDefinitionModal($scope, $scope.project);
@@ -43,5 +48,14 @@ define([
             $scope.openUpdateModal = function () {
                 projectService.openUpdateModal($scope);
             };
+
+            $scope.deleteWorkflow = function (workflow) {
+                workflowService.deleteWorkflow(workflow.id, function (err, success) {
+                    if(!err && success){
+                        updateWorkflowsList();
+                    }
+                });
+            }
+
         }]);
 });

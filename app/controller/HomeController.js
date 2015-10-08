@@ -26,6 +26,12 @@ define([
                 console.error(err);
                 return alert('Err');
             }
+
+            if(!project){
+                return;
+            }
+
+
             $scope.project = project;
             $scope.projectId = project.id;
 
