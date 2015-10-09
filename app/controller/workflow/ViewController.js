@@ -28,31 +28,45 @@ define([
                         return alert('Err');
                     }
 
-                    $scope.workflow = workflow;
-
-                    findProgress();
+                    updateScope( workflow );
                     if(workflow.status == 'RUNNING'){
                         $timeout(function () {
                             update();
-                            $scope.$broadcast('resourceUpdated');
                         }, 2500)
                     }
                 });
             };
             update();
 
-            function findProgress(){
+            function updateScope( workflow ){
 
-                if($scope.workflow.status == 'INIT'){
-                    $scope.progress = 0;
-                    return
+                var serviceProgress = 100;
+                var updateProgress = 0;
+
+                if(workflow.status == 'INIT'){
+                    serviceProgress = 0;
+                } else {
+                    if( workflow.workflowServices && workflow.workflowServices.length > 0){
+                        serviceProgress = Math.round(( workflow.workflowServices.filter(function(value){return value.status == 'FINISHED';}).length * 100) / workflow.workflowServices.length);
+
+                        for(i in workflow.workflowServices){
+                            updateProgress += workflow.workflowServices[i].status.length;
+                        }
+                    }
                 }
 
-                var progress = 100;
-                if($scope.workflow.workflowServices && $scope.workflow.workflowServices.length > 0){
-                    progress = Math.round(($scope.workflow.workflowServices.filter(function(value){return value.status == 'FINISHED';}).length * 100) / $scope.workflow.workflowServices.length);
+                if(!$scope.workflow){
+                    $scope.workflow = workflow;
+                    $scope.progress = serviceProgress;
+                    return;
                 }
-                $scope.progress = progress;
+
+                if($scope.progress != serviceProgress || $scope.updateProgress != updateProgress){
+                    $scope.updateProgress = updateProgress;
+                    $scope.workflow = workflow;
+                    $scope.progress = serviceProgress;
+                    $scope.$broadcast('resourceUpdated');
+                }
             }
 
             $scope.getServiceInputResources = function ( service ) {
@@ -95,7 +109,7 @@ define([
                         return alert('Err');
                     }
                     $scope.workflow = workflow;
-                    findProgress();
+                    updateScope(workflow);
                     $timeout(function () {
                         update();
                         $scope.$broadcast('resourceUpdated');
