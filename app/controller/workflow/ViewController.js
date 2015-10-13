@@ -48,9 +48,10 @@ define([
                 } else {
                     if( workflow.workflowServices && workflow.workflowServices.length > 0){
                         serviceProgress = Math.round(( workflow.workflowServices.filter(function(value){return value.status == 'FINISHED';}).length * 100) / workflow.workflowServices.length);
-
                         for(i in workflow.workflowServices){
-                            updateProgress += workflow.workflowServices[i].status.length;
+                            for(j in workflow.workflowServices[i].subSteps){
+                                updateProgress += workflow.workflowServices[i].subSteps[j].status.length;
+                            }
                         }
                     }
                 }
