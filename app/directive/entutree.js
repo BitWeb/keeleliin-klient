@@ -1,18 +1,15 @@
 define([
         'angularAMD',
-        'ResourceService'
+        'EntuService'
     ],
     function (angularAMD) {
 
-        angularAMD.directive('filetree', [ '$log','$rootScope', '$compile', 'ResourceService',
-            function( $log, $rootScope, $compile, resourceService) {
+        angularAMD.directive('entutree', [ '$log','$rootScope', '$compile', 'EntuService',
+            function( $log, $rootScope, $compile, entuService) {
 
                 return {
                     scope: {
-                        projectId: '@',
-                        workflowId: '@',
-                        getSelected: '=',
-                        reloadTree: '='
+                        getSelected: '='
                     },
                     restrict: 'A',
                     transclude: true,
@@ -23,35 +20,15 @@ define([
                         var resourcesMap = {};
                         var resourcesList = {};
 
-                        var resourceParams = {
-                            projectId: $scope.projectId,
-                            workflowId: $scope.workflowId
-                        };
-
-                        $log.debug('Filetree params: ', resourceParams);
-
-
-                        $scope.fileDownloadAction = function (event, id) {
-                            resourceService.downloadResourceById( resourcesMap[id].resourceId );
-                        };
-
-                        $scope.fileInfoAction = function (event, id) {
-                            resourceService.openInfoModal( resourcesMap[id].resourceId );
-                        };
-
-                        $scope.fileDeleteAction = function (event, id) {
-                            resourceService.openDeleteModal( resourcesMap[id] );
-                        };
+                        $scope.hideTabs = true;
 
                         var updateResourcesView = function () {
-                            var resourcesDto = resourceService.getJsTreeMapByWorkflow(resourcesList, $scope.filterType, $scope.searchKeyword, resourceParams);
-                            resourcesMap = resourcesDto.resourcesMap;
-                            angular.copy(resourcesDto.resources, $scope.resources);
+                            angular.copy(entuService.getJsTreeMap(resourcesList), $scope.resources);
                             $scope.treeConfig.version++;
                         };
 
                         $scope.reloadTree = function () {
-                            resourceService.getResourcesList(resourceParams, function(err, data){
+                            entuService.getResourcesList({}, function(err, data){
                                 if(err){
                                     $log.error(err);
                                     return alert('ERR');//todo
@@ -64,11 +41,9 @@ define([
 
                         $scope.reloadTree();
 
-                        $scope.$on('resourceUpdated', function(event, data) {
-                            $scope.reloadTree();
-                        });
 
-                        var plugins = [ 'types', 'actionmenu', 'conditionalselect' ];
+
+                        var plugins = [ 'types', /*'actionmenu',*/ 'conditionalselect' ];
                         if($attrs.checkbox){
                             plugins.push('checkbox');
                         }
@@ -110,8 +85,10 @@ define([
                             var selectedNodes = $scope.treeInstance.jstree(true).get_selected();
                             var result = [];
                             for(i in selectedNodes){
-                                if(resourcesMap[selectedNodes[i]]){
-                                    result.push( resourcesMap[selectedNodes[i]].resourceId );
+                                var node = selectedNodes[i];
+                                var nodeparts = node.split('-');
+                                if(nodeparts[0] == 'file'){
+                                    result.push(nodeparts[1]);
                                 }
                             }
                             return result;

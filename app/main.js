@@ -34,6 +34,7 @@ require.config({
         'directives'        : 'directive/directives',
         'sidebarDirectives' : 'directive/sidebarDirectives',
         'filetree'          : 'directive/filetree',
+        'entutree'          : 'directive/entutree',
         'drop-zone'         : 'directive/dropZone',
         'breadcrumb'        : 'directive/breadcrumb',
         'stateConfig'       : 'config/stateConfig',
@@ -84,6 +85,8 @@ require.config({
         'WorkflowService'           : 'service/WorkflowService',
         'WorkflowDefinitionService' : 'service/WorkflowDefinitionService',
         'ResourceService'           : 'service/ResourceService',
+        'EntuService'               : 'service/EntuService',
+
         'ServiceService'            : 'service/ServiceService',
         'ResourceTypeService'       : 'service/ResourceTypeService',
         'NotificationService'       : 'service/NotificationService',

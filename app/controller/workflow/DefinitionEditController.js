@@ -15,9 +15,9 @@ define([
             function ($scope, $state, $stateParams, workflowDefinitionService, serviceService, $log, workflowService, $modal) {
 
                 $scope.workflowId = $stateParams.workflowId;
-                $scope.hideFileTreeTabs = true;
 
-                $scope.hideFileTreeTabs = true;
+
+
                 $scope.avaliableServices = [];
                 $scope.selectedServices = [];
 

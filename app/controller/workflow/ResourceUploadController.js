@@ -1,18 +1,18 @@
 define([
     'angularAMD',
     'filetree',
+    'entutree',
     'drop-zone',
     'ResourceService',
+    'EntuService',
     'WorkflowService',
     'ResourceMultiselectController'
 ], function (angularAMD) {
 
-    angularAMD.controller('WorkflowResourceUploadController', [ '$scope', '$state', '$stateParams', '$log', 'ResourceService','WorkflowService',
-        function($scope, $state, $stateParams, $log, resourceService, workflowService ) {
+    angularAMD.controller('WorkflowResourceUploadController', [ '$scope', '$state', '$stateParams', '$log', 'ResourceService','WorkflowService','$rootScope','EntuService',
+        function($scope, $state, $stateParams, $log, resourceService, workflowService, $rootScope, entuService ) {
 
             $scope.workflowId = $stateParams.workflowId;
-
-            $scope.hideFileTreeTabs = true;
 
             $scope.resourceUploadParams = {
                 workflowId: $stateParams.workflowId
@@ -20,16 +20,22 @@ define([
             $scope.uploadFiles = [];
 
             $scope.fileAddedEvent = function () {
-                $scope.reloadResourcesTreeList();
+                $rootScope.$broadcast('resourceUpdated');
             };
 
-            $scope.selectExistingResources = function () {
-                var modalInstance = resourceService.openResourceMultiselectModal();
-                modalInstance.result.then(function (resourcesIds) {
-                    workflowService.addResourcesToWorkflow($stateParams.workflowId, resourcesIds, function (err, data) {
-                        $scope.fileAddedEvent();
-                    });
+            $scope.addExistingResources = function () {
+                var resourcesIds = $scope.getSelectedResources();
+                workflowService.addResourcesToWorkflow($stateParams.workflowId, resourcesIds, function (err, data) {
+                    $scope.fileAddedEvent();
                 });
             };
+
+            $scope.addExistingEntuResources = function () {
+                var resourcesIds = $scope.getSelectedEntuResources();
+                workflowService.addEntuResourcesToWorkflow($stateParams.workflowId, resourcesIds, function (err, data) {
+                    $scope.fileAddedEvent();
+                });
+            };
+
         }]);
 });

@@ -9,33 +9,84 @@
                 </div>
                 <div class="ibox-content">
                     <div class="file-manager">
-                        <div filetree ></div>
+                        <div filetree workflow-id="{{workflowId}}" project-id="{{projectId}}"></div>
                         <div class="clearfix"></div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-6 animated fadeInRight">
+
             <div class="ibox">
-                <div class="ibox-content">
-                    <form action="" class="dropzone" drop-zone="" >
-                        <div class="dz-message" data-dz-message>
-                            <span>Lohista failid siia või vali arvutist</span>
-                        </div>
-                    </form>
-                </div>
                 <div class="ibox-footer text-right ng-scope">
-                    <a ui-sref="workflow-definition-edit({workflowId: workflowId})" class="btn btn-sm btn-link pull-left">
+                    <a ui-sref="workflow-definition-edit({workflowId: workflowId})" class="btn btn-primary btn-sm pull-left">
                         <i class="fa fa-caret-left"></i> Tagasi töövoo juurde
-                    </a>
-                    <a ng-click="selectExistingResources()" class="btn btn-info btn-sm">
-                        <i class="fa fa-plus"></i> Vali olemasolevate failide hulgast
-                    </a>
-                    <a ng-click="startUpload()" class="btn btn-primary btn-sm">
-                        <i class="fa fa-upload"></i> Lae üles failid
                     </a>
                 </div>
             </div>
+
+
+        </div>
+        <div class="col-lg-6 animated fadeInRight">
+
+            <!---->
+            <div class="tabs-container">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" data-target="#tab-upload" aria-expanded="true"> Lae üles </a></li>
+                    <li class=""><a data-toggle="tab" data-target="#tab-local" aria-expanded="false">Olemasolevad</a></li>
+                    <li class=""><a data-toggle="tab" data-target="#tab-entu" aria-expanded="false">Lae Entust</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="tab-upload" class="tab-pane active">
+                        <div class="panel-body">
+
+                            <div class="form-group">
+                                <form action="" class="dropzone" drop-zone="" >
+                                    <div class="dz-message" data-dz-message>
+                                        <span>Lohista failid siia või vali arvutist</span>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="form-group text-right">
+                                <a ng-click="startUpload()" class="btn btn-primary btn-sm">
+                                    <i class="fa fa-upload"></i> Lae üles failid
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab-local" class="tab-pane">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="file-manager">
+                                    <div filetree checkbox="true" get-selected="getSelectedResources"></div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                            <div class="form-group text-right">
+                                <a ng-click="addExistingResources()" class="btn btn-primary btn-sm">
+                                    <i class="fa fa-plus"></i> Lisa valitud failid
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab-entu" class="tab-pane">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="file-manager">
+                                    <div entutree checkbox="true" get-selected="getSelectedEntuResources"></div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                            <div class="form-group text-right">
+                                <a ng-click="addExistingEntuResources()" class="btn btn-primary btn-sm">
+                                    <i class="fa fa-plus"></i> Lisa valitud failid
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!---->
+
         </div>
     </div>
 </div>

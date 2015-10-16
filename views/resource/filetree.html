@@ -1,5 +1,5 @@
-<input ng-show="!hideFileTreeTabs" ng-model="searchKeyword" ng-keyup="searchFile()" id="search-file" class="input-sm form-control" placeholder="Otsi faili">
-<div ng-show="!hideFileTreeTabs" class="m-t-sm m-b-md">
+<input ng-show="!hideTabs" ng-model="searchKeyword" ng-keyup="searchFile()" id="search-file" class="input-sm form-control" placeholder="Otsi faili">
+<div ng-show="!hideTabs" class="m-t-sm m-b-md">
     <label class="m-r-sm">Näita:</label>
     <div data-toggle="buttons" class="btn-group">
         <label ng-click="filterFiles()" class="btn btn-sm btn-white active">

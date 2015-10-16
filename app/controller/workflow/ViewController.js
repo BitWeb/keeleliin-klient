@@ -68,7 +68,7 @@ define([
                     $scope.progress = serviceProgress;
                     $scope.$broadcast('resourceUpdated');
                 }
-            }
+            } //reloadSelectedTree
 
             $scope.getServiceInputResources = function ( service ) {
                 var resources = [];

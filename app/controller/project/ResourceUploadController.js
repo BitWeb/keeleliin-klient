@@ -4,11 +4,10 @@ define([
     'drop-zone'
 ], function (angularAMD) {
 
-    angularAMD.controller('ProjectResourceUploadController', [ '$scope', '$state', '$stateParams', '$log',
-        function($scope, $state, $stateParams, $log ) {
+    angularAMD.controller('ProjectResourceUploadController', [ '$scope', '$state', '$stateParams', '$log','$rootScope',
+        function($scope, $state, $stateParams, $log, $rootScope ) {
 
             $scope.projectId = $stateParams.projectId;
-            $scope.hideFileTreeTabs = false;
 
             $scope.resourceUploadParams = {
                 projectId: $stateParams.projectId
@@ -16,7 +15,7 @@ define([
             $scope.uploadFiles = [];
 
             $scope.fileAddedEvent = function () {
-                $scope.reloadResourcesTreeList();
+                $rootScope.$broadcast('resourceUpdated');
             };
         }]);
 });
