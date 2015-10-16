@@ -30,9 +30,12 @@ define([
                 });
             };
 
+            $scope.entuLoadEnabled = true;
             $scope.addExistingEntuResources = function () {
+                $scope.entuLoadEnabled = false;
                 var resourcesIds = $scope.getSelectedEntuResources();
                 workflowService.addEntuResourcesToWorkflow($stateParams.workflowId, resourcesIds, function (err, data) {
+                    $scope.entuLoadEnabled = true;
                     $scope.fileAddedEvent();
                 });
             };

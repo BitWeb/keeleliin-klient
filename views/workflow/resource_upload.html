@@ -76,8 +76,13 @@
                                 </div>
                             </div>
                             <div class="form-group text-right">
-                                <a ng-click="addExistingEntuResources()" class="btn btn-primary btn-sm">
-                                    <i class="fa fa-plus"></i> Lisa valitud failid
+                                <a kl-save-button
+                                   processing="{{!entuLoadEnabled}}"
+                                   enabled="{{entuLoadEnabled}}"
+                                   messages="Lae:Laadimine:Laetud"
+                                   class="btn btn-primary btn-sm"
+                                   ng-click="addExistingEntuResources()">
+                                    <i class="fa fa-plus"></i>
                                 </a>
                             </div>
                         </div>
