@@ -2,7 +2,7 @@
 
 * Loo config.js fail
 
-$ cp app/config/config_dist.js app/config/config.js
+$ cp app/config/global_dist.js app/config/global.js
 
 * Muuda loodud config.js failis API_URL väärtus
 
@@ -21,6 +21,6 @@ $ docker build -t kl_client .
 
 * RUN KEELELIIN KLIENT
 
-$ docker run --name kl_client -p 127.0.0.1:8080:3000 --rm --restart=no kl_client
+$ docker run --name kl_client -p 127.0.0.1:8080:3001 --rm --restart=no kl_client
 
 

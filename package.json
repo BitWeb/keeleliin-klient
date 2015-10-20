@@ -10,6 +10,6 @@
     "shelljs": "^0.2.6"
   },
   "scripts": {
-    "start": "http-server -p 3000 -c-1"
+    "start": "http-server -p 3001 -c-1"
   }
 }
