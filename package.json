@@ -5,17 +5,11 @@
   "description": "Keeleliin klient",
   "repository": "https://github.com/bitweb/keeleliin-klient",
   "license": "MIT",
-  "devDependencies": {
+  "dependencies": {
     "http-server": "^0.6.1",
     "shelljs": "^0.2.6"
   },
   "scripts": {
-    "prestart": "npm install",
-    "start": "http-server -a localhost -p 8001 -c-1",
-    "pretest": "npm install",
-    "test-single-run": "karma start karma.conf.js  --single-run",
-    "preupdate-webdriver": "npm install",
-    "update-webdriver": "webdriver-manager update",
-    "preprotractor": "npm run update-webdriver"
+    "start": "http-server -p 3000 -c-1"
   }
 }
