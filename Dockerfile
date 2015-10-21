@@ -13,7 +13,7 @@ RUN mkdir -p /config
 
 RUN cd /src && \
 git clone 'https://github.com/BitWeb/keeleliin-klient.git' . && \
-npm install && echo "Run is Done 2"
+npm install && echo "Run is Done 23"
 
 #Expose port
 EXPOSE  3001
