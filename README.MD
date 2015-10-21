@@ -1,12 +1,10 @@
-# Projekti käivitamine dockeris
+# Keeleliin kliendi käivitamine dockeris
 
-* Loo dockeri konteinerite välised kaustad
+* Loo kliendirakenduse confi jaoks dockeri konteineri väline kaust
 
-	$ cd /
+	$ mkdir /keeleliin_klient_data
 
-	$ mkdir keeleliin_klient_data
-
-* Lae alla keeleliin-server Dockerfile
+* Lae alla keeleliin-klient Dockerfile
 
 * Loo dockeri Image fail
 
