@@ -126,6 +126,29 @@ define(['angularAMD'], function (angularAMD) {
                 );
             };
 
+            this.addResourcesToProject = function( projectId, resourcesIds, callback) {
+                var data = {
+                    resources: resourcesIds
+                };
+
+                $http.put(config.API_URL + '/project/' + projectId + '/add-resources', data).then(
+                    function(data) {
+                        callback(null, data.data.data);
+                    }
+                );
+            };
+            this.addEntuResourcesToProject = function( projectId, fileIds, callback) {
+                var data = {
+                    files: fileIds
+                };
+                $http.put(config.API_URL + '/project/' + projectId + '/add-entu-files', data).then(
+                    function(data) {
+                        callback(null, data.data.data);
+                    }
+                );
+            };
+
+
         }
     ]);
 });

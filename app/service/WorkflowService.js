@@ -110,7 +110,6 @@ define(['angularAMD'], function (angularAMD) {
                 var data = {
                     files: fileIds
                 };
-
                 $http.put(config.API_URL + '/workflow/' + workflowId + '/add-entu-files', data).then(
                     function(data) {
                         callback(null, data.data.data);

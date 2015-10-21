@@ -3,18 +3,6 @@
  */
 define([], function () {
 
-    /*
-
-    'project_upload',
-    'workflow_input',
-    'workflow_output',
-    'substep_input',
-    'substep_output',
-    'shared',
-    'public'
-
-    */
-
     function includeItem(item, type, keyword ){
 
         if(type && item.context != type){

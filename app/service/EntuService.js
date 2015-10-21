@@ -15,7 +15,7 @@ define([ 'angularAMD' ], function (angularAMD, resourceTreeMapper) {
 
             this.getJsTreeMap = function( resourcesList ){
 
-                var result = [];
+                var tree = [];
 
                 for( i in resourcesList){
                     var root = resourcesList[i];
@@ -38,9 +38,21 @@ define([ 'angularAMD' ], function (angularAMD, resourceTreeMapper) {
                     }
 
                     if( rootResult.children.length > 0 ){
-                        result.push( rootResult );
+                        tree.push( rootResult );
                     }
                 }
+
+                var result = [];
+                var topRoot = {
+                    id      : '#ENTU',
+                    text    : 'Entu',
+                    type    : "default",
+                    children: tree,
+                    state   : {
+                        opened : true
+                    }
+                };
+                result.push(topRoot);
 
                 return result;
             };

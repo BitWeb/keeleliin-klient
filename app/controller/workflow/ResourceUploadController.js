@@ -3,14 +3,12 @@ define([
     'filetree',
     'entutree',
     'drop-zone',
-    'ResourceService',
     'EntuService',
-    'WorkflowService',
-    'ResourceMultiselectController'
+    'WorkflowService'
 ], function (angularAMD) {
 
-    angularAMD.controller('WorkflowResourceUploadController', [ '$scope', '$state', '$stateParams', '$log', 'ResourceService','WorkflowService','$rootScope','EntuService',
-        function($scope, $state, $stateParams, $log, resourceService, workflowService, $rootScope, entuService ) {
+    angularAMD.controller('WorkflowResourceUploadController', [ '$scope', '$state', '$stateParams', '$log','WorkflowService','$rootScope','EntuService',
+        function($scope, $state, $stateParams, $log, workflowService, $rootScope, entuService ) {
 
             $scope.workflowId = $stateParams.workflowId;
 
