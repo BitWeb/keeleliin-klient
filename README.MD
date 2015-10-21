@@ -1,26 +1,37 @@
-# Projekti käivitamine dockeriga
+# Projekti käivitamine dockeris
 
-* Loo config.js fail
+* Loo dockeri konteinerite välised kaustad
 
-$ cp app/config/global_dist.js app/config/global.js
+	$ cd /
 
-* Muuda loodud config.js failis API_URL väärtus
+	$ mkdir keeleliin_klient_data
 
+* Lae alla keeleliin-server Dockerfile
 
-*   RUN OPTIONS
+* Loo dockeri Image fail
+
+	$  docker build -t kl_klient .
+
+* Käivita loodud image kl_server
+
+	$ docker run --name kl_klient --rm -p 3001:3001 -v /keeleliin_klient_data:/config --restart=no kl_klient
+
+* Muuda /keeleliin_klient_data/config.js failis API_URL väärtust
+
+* Uuenda konteinerit
+
+	$ docker exec <konteineri ID> /src/docker_update.sh
+
+# Koodibaasi uuendamine
+
+	$ docker exec <konteineri ID> /src/docker_update.sh
+
+#   Dockeri run parameetreid
+
 *   -d                  Jooksuta taustal
 *   --rm                Serveri sulgemisel kustuta konteiner
 *   --restart=no
 *   --restart=always
 * Konteinerit taustal jookustamiseks eemalda --rm ja kasuta --restart=always ning lisa -d
-
-
-* BUILD KLIENT
-
-$ docker build -t kl_client .
-
-* RUN KEELELIIN KLIENT
-
-$ docker run --name kl_client -p 127.0.0.1:8080:3001 --rm --restart=no kl_client
 
 
