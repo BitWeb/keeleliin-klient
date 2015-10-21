@@ -10,11 +10,10 @@ RUN apt-get update && \
 
 RUN npm install -g forever
 RUN mkdir -p /src
-RUN mkdir -p /config
 
 RUN cd /src && \
 git clone 'https://github.com/BitWeb/keeleliin-klient.git' . && \
-npm install && echo "Run is Done 2345"
+npm install && echo "Run is Done 2345 213"
 
 
 #Expose port
