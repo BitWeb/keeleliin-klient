@@ -3,4 +3,4 @@
 cd /src
 git pull
 npm install
-npm restart
+npm restart http-server
