@@ -10,26 +10,21 @@
 
 	$  docker build -t kl_klient .
 
-* Käivita loodud image kl_server
+* Käivita loodud image kl_klient
 
-	$ docker run --name kl_klient --rm -p 3001:3001 -v /keeleliin_klient_data:/config --restart=no kl_klient
+	$ docker run --name kl_klient -it --rm -p 3001:3001 -v /keeleliin_klient_data:/config --restart=no kl_klient
+
+* Kliendirakendusest väljumiseks : Ctrl + P Q
+
 
 * Muuda /keeleliin_klient_data/config.js failis API_URL väärtust
 
 * Uuenda konteinerit
 
-	$ docker exec <konteineri ID> /src/docker_update.sh
+	$ docker exec kl_klient /src/docker_update.sh
 
 # Koodibaasi uuendamine
 
-	$ docker exec <konteineri ID> /src/docker_update.sh
-
-#   Dockeri run parameetreid
-
-*   -d                  Jooksuta taustal
-*   --rm                Serveri sulgemisel kustuta konteiner
-*   --restart=no
-*   --restart=always
-* Konteinerit taustal jookustamiseks eemalda --rm ja kasuta --restart=always ning lisa -d
+	$ docker exec kl_klient /src/docker_update.sh
 
 
