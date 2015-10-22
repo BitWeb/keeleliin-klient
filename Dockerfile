@@ -21,4 +21,4 @@ EXPOSE  3001
 
 VOLUME ["/config"]
 
-CMD /./src/docker_start.sh && /bin/bash
+CMD /./src/docker_start.sh

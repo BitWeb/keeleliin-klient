@@ -11,5 +11,4 @@ if [ ! -f /src/app/config/global.js ]; then
 fi
 
 cd /src
-forever start ./node_modules/http-server/bin/http-server -p 3001 -c-1
-forever list
+forever ./node_modules/http-server/bin/http-server -p 3001 -c-1
