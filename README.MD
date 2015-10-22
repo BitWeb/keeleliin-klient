@@ -12,7 +12,7 @@
 
 * Käivita loodud image kl_klient
 
-	$ docker run --name kl_klient -d --rm -p 3001:3001 -v /keeleliin_klient_data:/config --restart=no kl_klient
+	$ docker run --name kl_klient -d -p 3001:3001 -v /keeleliin_klient_data:/config --restart=no kl_klient
 
 
 * Muuda /keeleliin_klient_data/config.js failis API_URL väärtust
