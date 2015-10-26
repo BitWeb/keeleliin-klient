@@ -52,7 +52,7 @@ define([
             $scope.deleteWorkflow = function (workflow) {
                 workflowService.deleteWorkflow(workflow.id, function (err, success) {
                     if(!err && success){
-                        $scope.reloadResourcesTreeList();
+                        $scope.$broadcast('resourceUpdated');
                         updateWorkflowsList();
                     }
                 });
