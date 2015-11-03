@@ -116,6 +116,12 @@ define(['angularAMD'], function (angularAMD) {
                     }
                 );
             };
+
+            this.getWorkflowFromWorkflow = function (workflowId, callback) {
+                $http.get(config.API_URL + '/workflow/'+ workflowId +'/copy').then(function (response) {
+                    callback(null, response.data.data);
+                });
+            };
         }
     ]);
 });
