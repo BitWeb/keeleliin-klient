@@ -37,7 +37,6 @@ define([
 
         $rootScope.isInitFinished = false;
 
-
         $rootScope.$state = $state;
         $rootScope.userService = userService;
 
@@ -117,9 +116,9 @@ define([
             }
 
             if(!userService.isAuthenticated()){
-                $log.debug('Not authenticated. Go auth ');
+                $log.debug('Not authenticated. Go auth from ' + $state.current.name);
                 userService.setLandingPath($location.path());
-                $state.go('auth');
+               // $state.go('auth');
                 return;
             }
         });

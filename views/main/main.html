@@ -1,8 +1,8 @@
 <div id="wrapper">
-    <div ng-if="isInitFinished && $state.current.role != 'all'" ng-include="'views/sidebar/navigation.html'"></div>
-    <div ng-attr-id="{{(isInitFinished && $state.current.role != 'all') && 'page-wrapper' || 'container'}}" class="gray-bg {{$state.current.name}}">
-        <div ng-if="isInitFinished && $state.current.role != 'all'" ng-include="'views/sidebar/topnavbar.html'"></div>
+    <div ng-cloak ng-include="'views/sidebar/navigation.html'"></div>
+    <div ng-cloak ng-attr-id="{{(isInitFinished && $state.current.role != 'all' && user) && 'page-wrapper' || 'container'}}" class="gray-bg {{$state.current.name}}">
+        <div ng-cloak ng-include="'views/sidebar/topnavbar.html'"></div>
         <div ui-view></div>
-        <div ng-if="isInitFinished && $state.current.role != 'all'" ng-include="'views/sidebar/footer.html'"></div>
+        <div ng-cloak ng-include="'views/sidebar/footer.html'"></div>
     </div>
 </div>

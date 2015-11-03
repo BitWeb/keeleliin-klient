@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Keeleliin klient</title>
+  <link href="assets/app.css" rel="stylesheet">
   <link href="assets/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet">
   <link href="assets/css/animate.css" rel="stylesheet">
@@ -12,6 +13,7 @@
   <link href="assets/css/style.css" rel="stylesheet" id="loadBefore">
   <script data-main="app/main.js" src="app/lib/require.js"></script>
 </head>
-<body  ng-controller="MainController" class="{{$state.current.data.specialClass}}" landing-scrollspy id="page-top" ng-include="'views/main/main.html'">
+<body ng-cloak ng-controller="MainController" class="{{$state.current.data.specialClass}}" landing-scrollspy id="page-top">
+  <ng-include src="'views/main/main.html'"></ng-include>
 </body>
 </html>
