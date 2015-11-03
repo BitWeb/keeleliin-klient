@@ -116,7 +116,7 @@ define(['appModule'], function (app) {
             this.setLandingPath = function (landingPath) {
 
                 if(landingPath == '/auth' || landingPath == '/err404'){
-                    return;
+                    landingPath = '/home'
                 }
 
                 $log.debug('setLandingPath: ', landingPath);

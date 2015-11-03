@@ -101,6 +101,7 @@ define([
 
         userService.init(function () {
             $rootScope.isInitFinished = true;
+
             console.log('Ready');
 
             if(initState){
