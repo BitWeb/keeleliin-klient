@@ -27,6 +27,7 @@
                     <li class="active"><a data-toggle="tab" data-target="#tab-upload" aria-expanded="true"> Lae üles </a></li>
                     <li class=""><a data-toggle="tab" data-target="#tab-local" aria-expanded="false">Olemasolevad</a></li>
                     <li class=""><a data-toggle="tab" data-target="#tab-entu" aria-expanded="false">Lae Entust</a></li>
+                    <li class=""><a data-toggle="tab" data-target="#tab-url" aria-expanded="false">Lae URL-lt</a></li>
                 </ul>
                 <div class="tab-content">
                     <div id="tab-upload" class="tab-pane active">
@@ -76,6 +77,32 @@
                                    messages="Lae:Laadimine:Laetud"
                                    class="btn btn-primary btn-sm"
                                    ng-click="addExistingEntuResources()">
+                                    <i class="fa fa-plus"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab-url" class="tab-pane">
+                        <div class="panel-body">
+                            <form name="urlForm" role="form" novalidate>
+                                <div ng-class="{'has-error': urlForm.name.$invalid && urlForm.submitted,  'form-group': true}">
+                                    <input type="text" ng-model="download.name" name="name" class="form-control" placeholder="Ressursi nimi" required/>
+                                    <i ng-show="urlForm.name.$error.required && urlForm.submitted">Väli on nõutud</i>
+                                </div>
+                                <div ng-class="{'has-error': urlForm.url.$invalid && urlForm.submitted,  'form-group': true}">
+                                    <input type="url" ng-model="download.url" name="url" class="form-control" placeholder="Sisesta ressursi URL" required/>
+                                    <i ng-show="urlForm.url.$error.required && urlForm.submitted">Väli on nõutud</i>
+                                    <i ng-show="urlForm.url.$error.url && urlForm.submitted">Väärtus peab olema url</i>
+                                </div>
+                            </form>
+
+                            <div class="text-right">
+                                <a kl-save-button
+                                   enabled="{{urlForm.$dirty}}"
+                                   processing="{{loadingFromUrl}}"
+                                   messages="Lae:Laadimine:Laetud"
+                                   class="btn btn-primary btn-sm"
+                                   ng-click="loadFromUrl( urlForm )">
                                     <i class="fa fa-plus"></i>
                                 </a>
                             </div>

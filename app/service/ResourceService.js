@@ -40,6 +40,14 @@ define(['angularAMD', 'ResourceTreeMapper', 'ResourceInfoController', 'ResourceD
                 );
             };
 
+            this.loadFromUrl = function (urlData, callback) {
+                $http.post(config.API_URL + '/resource/upload-url', urlData).then(
+                    function(data) {
+                        $log.log(data);
+                        callback(null, data.data.data);
+                    }
+                );
+            };
 
             this.deleteResourceAssociation = function(associationId, callback) {
                 $http.delete(config.API_URL + '/resource/association/' + associationId ).then(

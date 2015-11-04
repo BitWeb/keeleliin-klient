@@ -4,11 +4,12 @@ define([
     'entutree',
     'drop-zone',
     'EntuService',
-    'ProjectService'
+    'ProjectService',
+    'ResourceService'
 ], function (angularAMD) {
 
-    angularAMD.controller('ProjectResourceUploadController', [ '$scope', '$state', '$stateParams', '$log','$rootScope', 'ProjectService',
-        function($scope, $state, $stateParams, $log, $rootScope, projectService ) {
+    angularAMD.controller('ProjectResourceUploadController', [ '$scope', '$state', '$stateParams', '$log','$rootScope', 'ProjectService','ResourceService',
+        function($scope, $state, $stateParams, $log, $rootScope, projectService, resourceService ) {
 
             $scope.projectId = $stateParams.projectId;
 
@@ -38,5 +39,32 @@ define([
                 });
             };
 
+            $scope.download = {
+                name: '',
+                url: '',
+                projectId: $stateParams.projectId
+            };
+
+            $scope.loadingFromUrl = false;
+            $scope.loadFromUrl = function ( urlForm ) {
+                urlForm.submitted = true;
+                if(!urlForm.$valid){
+                    return;
+                }
+
+                $scope.loadingFromUrl = true;
+                resourceService.loadFromUrl($scope.download, function (err, resource) {
+                    if(err){
+                        console.log(err);
+                        return;
+                    }
+                    console.log('Uploaded');
+                    $scope.loadingFromUrl = false;
+                    urlForm.submitted = false;
+                    $scope.fileAddedEvent();
+                    $scope.download.name = '';
+                    $scope.download.url = '';
+                });
+            };
         }]);
 });
