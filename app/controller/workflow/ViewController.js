@@ -140,7 +140,7 @@ define([
             $scope.copyWorkflow = function(){
                 workflowService.getWorkflowFromWorkflow($scope.workflow.id, function (err, workflow) {
                     if(!err){
-                        $state.go('workflow-definition-edit', {workflowId: workflow.id});
+                        $state.go('workflow-resource-upload', {workflowId: workflow.id});
                     }
                 });
             };
