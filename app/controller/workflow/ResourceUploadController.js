@@ -4,11 +4,12 @@ define([
     'entutree',
     'drop-zone',
     'EntuService',
-    'WorkflowService'
+    'WorkflowService',
+    'ResourceService'
 ], function (angularAMD) {
 
-    angularAMD.controller('WorkflowResourceUploadController', [ '$scope', '$state', '$stateParams', '$log','WorkflowService','$rootScope','EntuService',
-        function($scope, $state, $stateParams, $log, workflowService, $rootScope, entuService ) {
+    angularAMD.controller('WorkflowResourceUploadController', [ '$scope', '$state', '$stateParams', '$log','WorkflowService','$rootScope','EntuService','ResourceService',
+        function($scope, $state, $stateParams, $log, workflowService, $rootScope, entuService, resourceService ) {
 
             $scope.workflowId = $stateParams.workflowId;
 
@@ -37,6 +38,38 @@ define([
                     $scope.fileAddedEvent();
                 });
             };
+
+
+            $scope.download = {
+                name: '',
+                url: '',
+                projectId: $stateParams.projectId,
+                workflowId: $stateParams.workflowId
+            };
+
+            $scope.loadingFromUrl = false;
+            $scope.loadFromUrl = function ( urlForm ) {
+                urlForm.submitted = true;
+                if(!urlForm.$valid){
+                    return;
+                }
+
+                $scope.loadingFromUrl = true;
+                resourceService.loadFromUrl($scope.download, function (err, resource) {
+                    if(err){
+                        console.log(err);
+                        return;
+                    }
+                    console.log('Uploaded');
+                    $scope.loadingFromUrl = false;
+                    urlForm.submitted = false;
+                    $scope.fileAddedEvent();
+                    $scope.download.name = '';
+                    $scope.download.url = '';
+                });
+            };
+
+
 
         }]);
 });
