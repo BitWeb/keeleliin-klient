@@ -27,7 +27,7 @@ define(['angularAMD'], function (angularAMD) {
                 $scope.addWorkflow = function () {
                     $scope.errorMessage = null;
                     if(!$scope.workflow.workflowDefinitionId){
-                        $scope.errorMessage = 'Töövoog peab olema valutud';
+                        $scope.errorMessage = 'Töövoog peab olema valitud';
                         return;
                     }
 
