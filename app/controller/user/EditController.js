@@ -25,7 +25,6 @@ define(['angularAMD'], function(angularAMD) {
 
         $scope.update = function(user, form) {
             $scope.master = angular.copy(user);
-
             $scope.savingUser = true;
             userService.updateUser($scope.master, function(err, user) {
                 $scope.savingUser = false;

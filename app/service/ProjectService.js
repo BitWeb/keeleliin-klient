@@ -144,6 +144,9 @@ define(['angularAMD'], function (angularAMD) {
                 $http.put(config.API_URL + '/project/' + projectId + '/add-entu-files', data).then(
                     function(data) {
                         callback(null, data.data.data);
+                    },
+                    function(err) {
+                        callback(err);
                     }
                 );
             };

@@ -145,6 +145,7 @@ define(['appModule'], function (app) {
             this.updateUser = function(user, callback) {
                 var userData = {
                     role: user.role,
+                    discMax: user.discMax,
                     isActive: user.is_active
                 };
                 $http.put(config.API_URL + '/user/' + user.id + '/details', userData).then(function(response) {

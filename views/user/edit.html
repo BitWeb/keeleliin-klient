@@ -3,11 +3,7 @@
 <div class="wrapper wrapper-content animated fadeInUp ng-scope">
     <div class="ibox">
         <div class="ibox-content">
-
             <div ng-show="message" class="alert alert-success">{{message}}</div>
-
-            {{user}}
-
             <form class="form-horizontal" id="userForm" name="userForm">
                 <fieldset>
                     <div class="form-group">
@@ -31,6 +27,18 @@
                             <div ng-show="form.$submitted || form.uEmail.$touched">
                                 <span ng-show="userForm.role.$error.required">Role is required.</span>
                             </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Ketta mahu piirang:</label>
+                        <div class="col-sm-5">
+                            <input ng-model="user.discMax" class="form-control" name="discMax" placeholder="Ketta mahu piirang baitides" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Ketast kasutuses:</label>
+                        <div class="col-sm-5">
+                            <input ng-model="user.discCurrent" class="form-control" name="discCurrent" placeholder="Ketta mahu piirang baitides" disabled="disabled" type="text">
                         </div>
                     </div>
                 </fieldset>
