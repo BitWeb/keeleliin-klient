@@ -185,6 +185,9 @@
                                             <th>
                                                 Ressursi tüüp
                                             </th>
+                                            <th>
+                                                Suuruse piirang (baiti, 0 - puudub)
+                                            </th>
                                             <th width="30"></th>
                                         </tr>
                                     </thead>
@@ -209,18 +212,12 @@
                                                     <div class="col-md-12 m-b-sm">
                                                         <input name="doParallel" ng-model="inputType.doParallel" icheck type="checkbox" /> Tee paraleelseks
                                                     </div>
-                                                    <div ng-if="inputType.doParallel">
-                                                        <div class="col-md-6 p-r-none" ng-class="{ 'has-error' : inputTypeForm.sizeLimit.$invalid && serviceForm.submitted }">
-                                                            <input name="sizeLimit" ng-model="inputType.sizeLimit" type="text" ngPattern pattern="^[0-9]*$" placeholder="Suuruse piir" class="form-control input-sm" required>
-                                                            <i ng-if="inputTypeForm.sizeLimit.$error.pattern && serviceForm.submitted">Tegemist ei ole numbrilise väärtusega</i>
-                                                        </div>
-                                                        <div class="col-md-6" ng-class="{ 'has-error' : inputTypeForm.sizeUnit.$invalid && serviceForm.submitted }">
-                                                            <select name="sizeUnit" ng-model="inputType.sizeUnit" class="form-control input-sm" required>
-                                                                <option value="byte">Baiti</option>
-                                                                <option value="line">Rida</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div ng-class="{ 'has-error' : inputTypeForm.sizeLimit.$invalid && serviceForm.submitted }">
+                                                    <input name="sizeLimit" ng-model="inputType.sizeLimit" type="text" ngPattern pattern="^[0-9]*$" placeholder="Suuruse piir" class="form-control input-sm" required>
+                                                    <i ng-if="inputTypeForm.sizeLimit.$error.pattern && serviceForm.submitted">Tegemist ei ole numbrilise väärtusega</i>
                                                 </div>
                                             </td>
                                             <td>

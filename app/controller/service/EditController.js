@@ -106,7 +106,7 @@ define([
 
             $scope.canDoParallel = function( inputType ){
                 var resourceType = getResourceTypeById( inputType.resourceTypeId );
-                if(resourceType && resourceType.splitType == 'NONE'){
+                if(!resourceType || resourceType && resourceType.splitType == 'NONE'){
                     return false;
                 }
                 return true;
