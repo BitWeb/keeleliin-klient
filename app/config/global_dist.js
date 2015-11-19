@@ -13,7 +13,7 @@ define([], function () {
             userRoles: ['editor', 'viewer']
         },
         resource_type: {
-            split_types: ['NONE', 'LINE', 'BYTE']
+            split_types: ['NONE', 'LINE']
         },
         workflow_statuses: ['INIT', 'RUNNING', 'FINISHED', 'ERROR', 'CANCELLED'],
         hearbeat_interval: 3600
