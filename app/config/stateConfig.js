@@ -21,7 +21,7 @@ define(['angularAMD'], function (angularAMD) {
                         title: 'Lehekülge ei leitud'
                     },
                     data: {
-                        specialClass: 'gray-bg pace-done'
+                        specialClass: 'gray-bg'
                     },
                     role: 'all'
                 }));
@@ -46,7 +46,7 @@ define(['angularAMD'], function (angularAMD) {
                         title: 'Sisselogimine'
                     },
                     data: {
-                        specialClass: 'gray-bg pace-done'
+                        specialClass: 'gray-bg'
                     },
                     role: 'all'
                 }));

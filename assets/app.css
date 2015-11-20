@@ -32,3 +32,8 @@
 [ng\:cloak], [ng-cloak], .ng-cloak {
   display: none !important;
 }
+
+.body-bg {
+  background-color: #2f4050;
+}
+
