@@ -1,3 +1,6 @@
+
+<div ui-view="authview"></div>
+
 <div id="wrapper">
     <div ng-cloak ng-include="'views/sidebar/navigation.html'"></div>
     <div ng-cloak ng-attr-id="{{(isInitFinished && $state.current.role != 'all' && user) && 'page-wrapper' || 'container'}}" class="gray-bg {{$state.current.name}}">

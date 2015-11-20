@@ -40,8 +40,12 @@ define(['angularAMD'], function (angularAMD) {
             $stateProvider.state(
                 'auth', angularAMD.route({
                     url: "/auth",
-                    templateUrl: "views/auth/auth.html",
-                    controller: 'AuthController',
+                    views: {
+                          "authview": {
+                              templateUrl: "views/auth/auth.html",
+                              controller: 'AuthController'
+                          }
+                    },
                     breadcrumb: {
                         title: 'Sisselogimine'
                     },
@@ -50,8 +54,6 @@ define(['angularAMD'], function (angularAMD) {
                     },
                     role: 'all'
                 }));
-
-
 
             $stateProvider.state('projectState', {
                 url: "/project",

@@ -8,6 +8,7 @@ define([
     'ErrorInterceptor',
     'UserService',
     'MainController',
+    'AuthController',
     'jquery',
     'jquery-ui',
     'bootstrap',
