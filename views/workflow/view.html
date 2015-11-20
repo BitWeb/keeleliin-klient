@@ -30,6 +30,19 @@
                                 </dd>
                             </dl>
                         </div>
+
+
+                        <div ng-if="topErrors.length > 0" class="col-lg-12">
+                            <dl class="dl-horizontal">
+                                <dt></dt>
+                                <dd class="alert alert-danger">
+                                    <div ng-repeat="topError in topErrors">
+                                        {{topError}}
+                                    </div>
+                                </dd>
+                            </dl>
+                        </div>
+
                     </div>
                     <div class="row">
                         <div class="col-lg-5">

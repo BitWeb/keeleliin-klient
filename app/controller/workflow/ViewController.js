@@ -59,6 +59,7 @@ define([
                 if(!$scope.workflow){
                     $scope.workflow = workflow;
                     $scope.progress = serviceProgress;
+                    $scope.updateTopErrors();
                     return;
                 }
 
@@ -66,6 +67,7 @@ define([
                     $scope.updateProgress = updateProgress;
                     $scope.workflow = workflow;
                     $scope.progress = serviceProgress;
+                    $scope.updateTopErrors();
                     $scope.$broadcast('resourceUpdated');
                 }
             } //reloadSelectedTree
@@ -101,6 +103,16 @@ define([
                     logs.push(service.log);
                 }
                 return logs;
+            };
+
+            $scope.updateTopErrors = function () {
+                var result = [];
+                for(i in $scope.workflow.workflowServices){
+                    if($scope.workflow.workflowServices[i].status == 'ERROR'){
+                        result.push('Teenuses ' + $scope.workflow.workflowServices[i].service.name + ' tekkis viga.');
+                    }
+                }
+                $scope.topErrors = result;
             };
 
             $scope.cancelWorkflow = function () {

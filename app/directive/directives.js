@@ -40,11 +40,8 @@ function footableNgRow(){
             var parentTable = angular.element(element).closest('table');
             var isLoaded = parentTable.hasClass('footable-loaded');
             if (scope.$last && !isLoaded) {
-                //console.log('Creating Footable Something ?!?! ');
                 parentTable.footable();
             } else if (scope.$last && isLoaded) {
-                //console.log('Updating Footable Something ?!?! ');
-                //console.log(parentTable.data('footable'));
                 parentTable.data('footable').redraw();
             }
 
