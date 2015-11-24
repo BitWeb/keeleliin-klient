@@ -7,17 +7,28 @@ define([
     'icheck'
 ], function(angularAMD) {
 
-    angularAMD.controller('ServiceEditController', ['$scope', '$stateParams', 'ServiceService', 'ResourceService', 'ResourceTypeService' ,'$log', '$state',
-        function( $scope, $stateParams, serviceService, resourceService, resourceTypeService, $log, $state ) {
+    angularAMD.controller('ServiceEditController', ['$scope', '$stateParams', 'ServiceService', 'ResourceService', 'ResourceTypeService' ,'$log', '$state', '$timeout',
+        function( $scope, $stateParams, serviceService, resourceService, resourceTypeService, $log, $state, $timeout ) {
             $scope.serviceId = $stateParams.serviceId;
             $scope.errorMessage = null;
             $scope.successMessage = null;
 
-            $scope.service = {
-                serviceParams: [],
-                serviceInputTypes: [],
-                serviceOutputTypes: []
-            };
+            if($state.parentService){
+                $scope.service = serviceService.getServiceCopy($state.parentService);
+
+
+                $timeout(function () {
+                    $scope.serviceForm.$dirty = true;
+                }, 100);
+
+
+            } else {
+                $scope.service = {
+                    serviceParams: [],
+                    serviceInputTypes: [],
+                    serviceOutputTypes: []
+                };
+            }
 
             var loadServiceFromServer = function () {
                 serviceService.getService( $stateParams.serviceId, function (err, data) {
@@ -126,6 +137,8 @@ define([
 
             $scope.saveService = function (form) {
 
+                form.submitted = true;
+
                 if(!form.$valid){
                     $log.info(form);
                     $log.info($scope.service);
@@ -148,6 +161,10 @@ define([
                         return;
                     }
 
+                    if(!$scope.service.id && data.id){
+                        return $state.go('service-edit', {serviceId: data.id}, {reload:true});
+                    }
+
                     $scope.service = data;
                     $scope.errorMessage = null;
                     $scope.successMessage = 'Salvestatud';
@@ -167,6 +184,11 @@ define([
                         $state.go('services');
                     }
                 });
-            }
+            };
+
+            $scope.copyService = function () {
+                $state.go('service-insert');
+                $state.parentService = $scope.service;
+            };
         }]);
 });

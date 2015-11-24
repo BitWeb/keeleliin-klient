@@ -15,9 +15,6 @@ define([
             function ($scope, $state, $stateParams, workflowDefinitionService, serviceService, $log, workflowService, $modal) {
 
                 $scope.workflowId = $stateParams.workflowId;
-
-
-
                 $scope.avaliableServices = [];
                 $scope.selectedServices = [];
 
@@ -28,7 +25,9 @@ define([
                         console.log(err);
                         return alert('Err');
                     }
-                    servicesList = services;
+
+                    servicesList = workflowDefinitionService.getMappedServices( services );
+
                     workflowDefinitionService.getWorkflowsDefinition($stateParams.workflowId, function (err, workflow) {
                         if(err){
                             console.log(err);
@@ -38,13 +37,13 @@ define([
                         $scope.workflow = workflow;
                         $scope.selectedServices = $scope.workflow.workflowDefinition.definitionServices;
                         $scope.updateAvailableServices();
+                        $scope.updateSelectedServicesView();
                     });
                 });
 
                 $scope.getServiceById = function (id) {
                     return workflowDefinitionService.getServiceFromList(id, servicesList);
                 };
-
 
                 $scope.hasEditableSettings = function( id ){
                     var service = $scope.getServiceById(id);
@@ -112,20 +111,35 @@ define([
                     }
                 };
 
-                $scope.showSettings = function( selectedService ){
+                $scope.showSettings = function( index ){
                     $modal.open({
                         templateUrl: '../../views/workflow/definition_service_settings_modal.html',
                         controller: 'WorkflowDefinitionServiceSettingsModalController',
                         resolve: {
                             selectedService: function(){
-                                return selectedService;
+                                return $scope.selectedServices[index];
                             },
                             service: function(){
-                                return $scope.getServiceById(selectedService.serviceId);
+                                return $scope.getServiceById($scope.selectedServices[index].serviceId);
+                            },
+                            serviceVersions: function () {
+                                return workflowDefinitionService.getSelectedServiceVersions( index, $scope.selectedServices, servicesList );
+                            },
+                            willBeCorrectFlowFlow: function () {
+                                return function (serviceId) {
+                                    return workflowDefinitionService.willBeCorrectFlowFlow( index, serviceId, $scope.selectedServices, servicesList );
+                                }
                             }
                         }
                     }).result.then(function (updatedSelectedService) {
-                        $scope.updateDefinitionServices();
+
+                            if(!workflowDefinitionService.willBeCorrectFlowFlow( index, updatedSelectedService.serviceId, $scope.selectedServices, servicesList )){
+                                removeFromIndex(index + 1);
+                            }
+
+                            $scope.selectedServices[index] = updatedSelectedService;
+                            $scope.updateAvailableServices();
+                            $scope.updateDefinitionServices();
                     }, function () {
                         $log.info('Dismissed');
                     });
@@ -139,6 +153,7 @@ define([
                         }
                         $log.debug( data);
                     });
+                    $scope.updateSelectedServicesView();
                 };
 
                 $scope.openWorkflowSettingsModal = function(){
@@ -153,6 +168,12 @@ define([
                     serviceService.openServiceInfoModal( serviceId );
                 };
 
+                var removeFromIndex = function (index) {
+                    $scope.selectedServices = $scope.selectedServices.slice(0, index);
+                    $scope.updateAvailableServices();
+                    $scope.updateDefinitionServices();
+                };
+
                 $scope.deleteSelectedServicesFromIndex = function ( index ) {
                     var deleteModal = $modal.open({
                         templateUrl: '../../views/workflow/remove_from_flow_modal.html',
@@ -160,9 +181,7 @@ define([
                     });
                     $scope.deleteConfirmed = function () {
                         deleteModal.close();
-                        $scope.selectedServices = $scope.selectedServices.slice(0, index);
-                        $scope.updateAvailableServices();
-                        $scope.updateDefinitionServices();
+                        removeFromIndex( index );
                     };
                 };
 
@@ -176,5 +195,23 @@ define([
                     });
                 };
 
+
+                $scope.updateSelectedServicesView = function () {
+                    var mapping = [];
+                    for(var i = 0; i < $scope.selectedServices.length; i++){
+                        var selectedService = $scope.selectedServices[i];
+                        var service = $scope.getServiceById(selectedService.serviceId);
+                        var mappingObject = {
+                            index: i,
+                            orderNum: selectedService.orderNum,
+                            serviceId: service.id,
+                            name: service.name,
+                            canDelete: $scope.workflow.workflowDefinition.editStatus != 'locked',
+                            canEditSettings: service && $scope.workflow.workflowDefinition.editStatus != 'locked'
+                        };
+                        mapping.push(mappingObject);
+                    }
+                    $scope.selectedMap = mapping;
+                }
             }]);
 });

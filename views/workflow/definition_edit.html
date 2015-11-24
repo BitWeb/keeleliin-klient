@@ -89,22 +89,22 @@
                                     <div ng-repeat="item in droppedServices track by $index"></div>
                                 </div>
                                 <div class="sortable-list selectedServices clearfix">
-                                    <div class="col-sm-3 not-sortable" ng-repeat="selectedService in selectedServices track by $index" ng-init=" service = getServiceById( selectedService.serviceId ) ">
+                                    <div class="col-sm-3 not-sortable" ng-repeat="selectedService in selectedMap">
                                         <div class="ibox available-service">
                                             <div class="ibox-title">
                                                 <span class="order">
                                                     {{selectedService.orderNum + 1}}.
                                                 </span>
-                                                <h5 ng-if="service"> {{service.name}}</h5>
-                                                <h5 ng-if="!service" > <strong><i>Teenust ei leitud</i></strong></h5>
+                                                <h5 ng-if="selectedService.name"> {{selectedService.name}}</h5>
+                                                <h5 ng-if="!selectedService.name" > <strong><i>Teenust ei leitud</i></strong></h5>
                                                 <div class="buttons">
-                                                    <a ng-if="workflow.workflowDefinition.editStatus != 'locked'" class="pull-right text-lg icon" ng-click="deleteSelectedServicesFromIndex($index)" title="Eemalda">
+                                                    <a ng-if="selectedService.canDelete" class="pull-right text-lg icon" ng-click="deleteSelectedServicesFromIndex(selectedService.index)" title="Eemalda">
                                                         <i class="fa fa-trash error"></i>
                                                     </a>
-                                                    <a ng-if="service" class="pull-right text-lg icon" ng-click="showServiceInfo( selectedService.serviceId )" title="Info" style="margin-right: 5px">
+                                                    <a ng-if="selectedService.serviceId" class="pull-right text-lg icon" ng-click="showServiceInfo( selectedService.serviceId )" title="Info" style="margin-right: 5px">
                                                         <i class="fa fa-info-circle"></i>
                                                     </a>
-                                                    <a ng-if="service && workflow.workflowDefinition.editStatus != 'locked'" ng-class="{'active': hasEditableSettings(selectedService.serviceId)}" class="pull-right text-lg icon" ng-click="showSettings( selectedService )" title="Seaded" style="margin-right: 5px">
+                                                    <a ng-if="selectedService.canEditSettings" ng-class="{'active': hasEditableSettings(selectedService.serviceId)}" class="pull-right text-lg icon" ng-click="showSettings( selectedService.index )" title="Seaded" style="margin-right: 5px">
                                                         <i class="fa fa-gears"></i>
                                                     </a>
                                                 </div>

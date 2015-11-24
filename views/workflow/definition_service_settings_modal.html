@@ -4,22 +4,40 @@
 <div class="modal-body">
     <div class="row">
         <form name="form" role="form" novalidate>
+
+            <div ng-if="serviceVersions.length  > 0" class="form-group">
+                <label>Versioon</label>
+                <select
+                        name="serviceId"
+                        ng-model="selectedService.serviceId"
+                        ng-change="versionChanged()"
+                        class="form-control"
+                        ng-options="serviceVersion.id as serviceVersion.name for serviceVersion in serviceVersions" ></select>
+            </div>
+
+            <div ng-if="willBeCorrectFlowFlow == false" class="alert alert-danger">
+                Valitud versioon tühistab järgneva töövoo
+            </div>
+
+
+
+
             <div class="form-group">
                 {{service.description}}
             </div>
             <div ng-if="service.serviceParams.length > 0" ng-repeat="param in service.serviceParams" class="form-group">
                 <label class="control-label">{{param.description && param.description || param.key }}</label>
-                <input ng-if="param.type == 'text'" name="{{param.key}}" type="text" ng-model="serviceParamsValues[param.key]" placeholder="{{param.description}}" class="form-control" ng-disabled="!param.isEditable">
+                <input ng-if="param.type == 'text'" name="{{param.key}}" type="text" ng-model="selectedService.serviceParamsValues[param.key]" placeholder="{{param.description}}" class="form-control" ng-disabled="!param.isEditable">
                 <select
                         ng-if="param.type == 'select'"
                         name="{{param.key}}"
-                        ng-model="serviceParamsValues[param.key]"
+                        ng-model="selectedService.serviceParamsValues[param.key]"
                         class="form-control"
                         ng-disabled="!param.isEditable"
                         ng-options="item.value as item.label for item in param.paramOptions" ></select>
             </div>
             <div ng-if="service.serviceParams.length == 0" class="form-group">
-                <i>Parameetrid puduvad</i>
+                <i>Parameetrid puuduvad</i>
             </div>
         </form>
     </div>

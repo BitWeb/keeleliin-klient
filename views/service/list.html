@@ -11,7 +11,7 @@
             <div class="ibox">
                 <div class="ibox-content">
                     <div class="project-list">
-                        <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="15">
+                        <table class="table table-stripped toggle-arrow-tiny" data-page-size="15">
                             <thead>
                             <tr>
                                 <th data-toggle="true">Nimetus</th>
@@ -24,8 +24,12 @@
                             </thead>
                             <tbody>
 
-                            <tr ng-repeat="service in services">
+                            <tr ng-repeat-start="service in services">
                                 <td>
+                                    <a ng-if="service.parentVersions.length > 0" ng-click="tofggleShowParentServices($index)">
+                                        <i ng-if="!service.isVisible" class="fa fa-chevron-down"></i>
+                                        <i ng-if="service.isVisible == true" class="fa fa-chevron-up"></i>
+                                    </a>
                                     {{service.name}}
                                 </td>
                                 <td>
@@ -35,13 +39,10 @@
                                     {{service.updatedAt | date : 'dd.MM.yyyy H:mm'}}
                                 </td>
                                 <td>
-                                    {{service.description}}
-                                </td>
-                                <td>
                                     <span ng-if="service.isActive" class="label label-success">Aktiveeritud</span>
                                     <span ng-if="!service.isActive" class="label label-danger">Deaktiveeritud</span>
                                 </td>
-                                <td class="text-right" footable-ng-row>
+                                <td class="text-right">
                                     <a ui-sref="service-statistics({serviceId: service.id})" class="btn btn-primary btn-xs"><i class="fa fa-dashboard"></i> Statistika </a>
 
                                     <a ng-if="service.isActive" ng-click="toggleStatus(service)" class="btn btn-white btn-xs"><i class="fa fa-ban"></i> Deaktiveeri </a>
@@ -49,6 +50,35 @@
                                     <a ui-sref="service-edit({serviceId: service.id})" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Muuda </a>
                                 </td>
                             </tr>
+
+                            <tr ng-if="service.isVisible == true" ng-repeat="parentService in service.parentVersions" class="border-left">
+                                <td>
+                                    {{parentService.name}}
+                                </td>
+                                <td>
+                                    {{parentService.createdAt | date : 'dd.MM.yyyy H:mm'}}
+                                </td>
+                                <td>
+                                    {{parentService.updatedAt | date : 'dd.MM.yyyy H:mm'}}
+                                </td>
+                                <td>
+                                    <span ng-if="parentService.isActive" class="label label-success">Aktiveeritud</span>
+                                    <span ng-if="!parentService.isActive" class="label label-danger">Deaktiveeritud</span>
+                                </td>
+                                <td class="text-right">
+                                    <a ui-sref="service-statistics({serviceId: parentService.id})" class="btn btn-primary btn-xs"><i class="fa fa-dashboard"></i> Statistika </a>
+
+                                    <a ng-if="parentService.isActive" ng-click="toggleStatus(parentService)" class="btn btn-white btn-xs"><i class="fa fa-ban"></i> Deaktiveeri </a>
+                                    <a ng-if="!parentService.isActive" ng-click="toggleStatus(parentService)" class="btn btn-white btn-xs"><i class="fa fa-check"></i> Aktiveeri </a>
+                                    <a ui-sref="service-edit({serviceId: parentService.id})" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Muuda </a>
+                                </td>
+                            </tr>
+
+                            <tr ng-repeat-end></tr>
+
+                            </ng-repeat>
+
+
                             </tbody>
                         </table>
                     </div>

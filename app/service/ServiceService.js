@@ -12,6 +12,61 @@ define(['angularAMD'], function (angularAMD) {
                 );
             };
 
+            this.getServicesGridList = function (callback) {
+                $http.get(config.API_URL + '/service/grid' ).then(
+                    function(data) {
+                        callback(null, self.mapGrid( data.data.data ));
+                    }
+                );
+            };
+
+            self.mapGrid = function (list) {
+
+                for( var i = 0; i < list.length; i++ ){
+                    var service = list[i];
+                    if( service.parentVersionId != null){
+                        for( var j = 0; j < list.length; j++ ){
+                            if(service.parentVersionId == list[j].id){
+                                var parentService = list[j];
+                                if(parentService.childVersions == undefined){
+                                    parentService.childVersions = [];
+                                }
+                                parentService.childVersions.push(service);
+                            }
+                        }
+                    }
+                }
+
+                var leavesList = [];
+                for( var i = 0; i < list.length; i++ ) {
+                    var service = list[i];
+                    if(service.childVersions == undefined){
+                        service.parentVersions = [];
+                        if( service.parentVersionId ){
+                            var parentVersion = self.getFromListById(service.parentVersionId, list);
+                            while(parentVersion){
+                                service.parentVersions.push(parentVersion);
+                                if(parentVersion.parentVersionId){
+                                    parentVersion = self.getFromListById(parentVersion.parentVersionId, list);
+                                } else {
+                                    parentVersion = null;
+                                }
+                            }
+                        }
+                        leavesList.push(service);
+                    }
+                }
+                return leavesList;
+            };
+
+            self.getFromListById = function (id, list) {
+                for(var i = 0; i < list.length; i++){
+                    if(list[i].id == id){
+                        return list[i];
+                    }
+                }
+            };
+
             this.toggleServiceStatus = function (service, callback) {
 
                 $http.put(config.API_URL + '/service/' + service.id + '/toggle-status' ).then(
@@ -86,8 +141,33 @@ define(['angularAMD'], function (angularAMD) {
                         callback(data.data.errors, data.data.data);
                     }
                 );
-            }
+            };
 
+            this.getServiceCopy = function (parentService) {
+
+
+                var service = parentService;
+                service.name = service.name + ' (uus)';
+                service.parentVersionId = parentService.id;
+                service.id = null;
+
+                for(i in service.serviceInputTypes){
+                    service.serviceInputTypes[i].id = null;
+                }
+
+                for(i in service.serviceOutputTypes){
+                    service.serviceOutputTypes[i].id = null;
+                }
+
+                for(i in service.serviceParams){
+                    service.serviceParams[i].id = null;
+                    for(j in service.serviceParams[i].paramOptions ){
+                        service.serviceParams[i].paramOptions[j].id = null;
+                    }
+                }
+
+                return service;
+            };
         }
     ]);
 });
