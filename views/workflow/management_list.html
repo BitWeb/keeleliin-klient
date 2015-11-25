@@ -7,16 +7,16 @@
             <div class="ibox">
                 <div class="ibox-content">
                     <div class="row m-b-sm m-t-sm">
-                        <div class="col-md-1">
+                        <div class="col-sm-2 m-b-sm">
                             <button ng-click="refreshList()" type="button" id="loading-example-btn" class="btn btn-white btn-sm"><i class="fa fa-refresh"></i> Uuenda</button>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-2 m-b-sm">
                             <select ng-model="pagination.status" ng-change="refreshList()" class="form-control">
                                 <option value="">- Olek -</option>
                                 <option ng-repeat="status in statuses" value="{{status}}">{{status | translate}}</option>
                             </select>
                         </div>
-                        <div class="col-md-9">
+                        <div class="col-md-8 m-b-sm">
                             <div class="input-group">
                                 <input ng-model="pagination.name" type="text" placeholder="Otsi" class="input-sm form-control">
                                 <span class="input-group-btn">
@@ -27,7 +27,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="project-list">
+                    <div class="project-list overflow-scroll">
                         <table class="table table-hover">
                             <tbody>
                                 <tr dir-paginate="workflow in workflows | filter: searchFilter | itemsPerPage: pagination.perPage" total-items="totalCount" current-page="pagination.page" boundary-links="true">

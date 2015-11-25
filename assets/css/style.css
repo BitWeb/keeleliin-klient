@@ -3612,6 +3612,9 @@ code {
   background-color: #f3f6fb;
   padding: 10px 15px;
 }
+.ibox-footer .btn {
+  margin: 3px;
+}
 table.table-mail tr td {
   padding: 12px;
 }
@@ -7588,6 +7591,9 @@ body.skin-3 {
 .dropzone .dz-message {
   margin: 8em 0 !important;
 }
+.project-tree {
+  margin-bottom: 20px;
+}
 .project-tree LI {
   position: relative;
 }
@@ -7598,9 +7604,18 @@ body.skin-3 {
   cursor: pointer;
   font-size: 16px;
   color: #C4C4C1;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 0 5px;
 }
 .project-tree .jstree-clicked .action-buttons {
   display: inline-block;
+}
+
+.project-tree .jstree-anchor {
+  max-width: 90%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .checkbox-inline input[type=checkbox] {
@@ -7685,4 +7700,12 @@ Custom styles
   font-size: 160px;
 }
 
+.overflow-scroll {
+  width: 100%;
+  overflow-x: scroll;
 
+}
+
+.table.table-stripped td.text-right .btn {
+  margin: 2px 0;
+}
