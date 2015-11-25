@@ -162,6 +162,7 @@ define([
 
                 $scope.editDefinitionServices = function () {
                     $scope.workflow.workflowDefinition.editStatus = 'edit';
+                    $scope.updateSelectedServicesView();
                 };
 
                 $scope.showServiceInfo = function ( serviceId ) {
