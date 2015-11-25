@@ -56,7 +56,7 @@
                             <div class="row pre-scrollable">
 
                                 <div ng-hide="avaliableServices.length == 0" ui-sortable="draggable" ng-model="avaliableServices" class="sortable-list clearfix">
-                                    <div class="col-sm-3 serviceItem" ng-repeat="service in avaliableServices track by $index" ng-dblclick="addSelectedService(service)">
+                                    <div class="col-md-3 col-sm-6 sol-xs-12 serviceItem" ng-repeat="service in avaliableServices track by $index" ng-dblclick="addSelectedService(service)">
                                         <div class="ibox available-service">
                                             <div class="ibox-title">
                                                 <h5> {{service.name}}</h5>
@@ -89,7 +89,7 @@
                                     <div ng-repeat="item in droppedServices track by $index"></div>
                                 </div>
                                 <div class="sortable-list selectedServices clearfix">
-                                    <div class="col-sm-3 not-sortable" ng-repeat="selectedService in selectedMap">
+                                    <div class="col-md-3 col-sm-6 sol-xs-12 not-sortable" ng-repeat="selectedService in selectedMap">
                                         <div class="ibox available-service">
                                             <div class="ibox-title">
                                                 <span class="order">
