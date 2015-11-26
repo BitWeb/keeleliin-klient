@@ -123,13 +123,17 @@ define(['angularAMD'], function (angularAMD) {
                         config = {};
                         angular.copy(jsTreeSettings, config);
                         var result = JSON.stringify(config);
-                        if (config.core) {
+
+                        if(config.core && config.core.data){
+                            return result;
+                        } else if (config.core) {
                             config.core.data = scope.treeData;
+                            return result;
                         }
                         else {
                             config.core = { data: scope.treeData };
+                            return result;
                         }
-                        return result;
                     }
 
                     scope.destroy = function () {

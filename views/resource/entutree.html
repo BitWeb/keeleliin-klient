@@ -1,0 +1,16 @@
+<input ng-model="searchKeyword" ng-keyup="reloadTree()" id="search-file" class="input-sm form-control" placeholder="Otsi ressurssi">
+
+<div class="project-tree"
+     js-tree="treeConfig"
+     tree="treeInstance"
+     tree-events="ready:readyCB;create_node:createNodeCB;delete_node:deleteNodeCB;downloadAction:fileDownloadAction;infoAction:fileInfoAction;deleteAction:fileDeleteAction">
+</div>
+
+<style>
+    .jstree-open > .jstree-anchor > .fa-folder:before {
+        content: "\f07c";
+    }
+    .jstree-default .jstree-icon.none {
+        width: 0;
+    }
+</style>

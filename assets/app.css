@@ -37,3 +37,10 @@
   background-color: #2f4050;
 }
 
+.project-tree {
+
+  max-height: 500px;
+  min-height: 200px;
+  overflow-y: auto;
+  overflow-x: auto;
+}

@@ -4,8 +4,8 @@ define([
     ],
     function (angularAMD) {
 
-        angularAMD.directive('entutree', [ '$log','$rootScope', '$compile', 'EntuService',
-            function( $log, $rootScope, $compile, entuService) {
+        angularAMD.directive('entutree', [ '$log','$rootScope', '$compile', 'EntuService', '$timeout',
+            function( $log, $rootScope, $compile, entuService, $timeout) {
 
                 return {
                     scope: {
@@ -13,40 +13,23 @@ define([
                     },
                     restrict: 'A',
                     transclude: true,
-                    templateUrl: 'views/resource/filetree.html',
+                    templateUrl: 'views/resource/entutree.html',
                     link: function( $scope, $element, $attrs ){
-                        console.log("jsFileTreeDir");
-                        $scope.resources = [];
-                        var resourcesMap = {};
-                        var resourcesList = {};
 
-                        $scope.hideTabs = true;
+                        $scope.searchKeyword = '';
 
-                        var updateResourcesView = function () {
-                            angular.copy(entuService.getJsTreeMap(resourcesList), $scope.resources);
-                            $scope.treeConfig.version++;
-                        };
+                        var reloadTimeout = null;
 
                         $scope.reloadTree = function () {
-                            entuService.getResourcesList({}, function(err, data){
-                                if(err){
-                                    $log.error(err);
-                                    return alert('ERR');//todo
-                                }
-                                resourcesList = data;
-                                updateResourcesView();
+                            if( reloadTimeout !== null ){
+                                $timeout.cancel( reloadTimeout );
+                            }
+                            reloadTimeout = $timeout(function () {
                                 $scope.treeConfig.version++;
-                            });
+                            }, 400);
                         };
 
-                        $scope.reloadTree();
-
-
-
-                        var plugins = [ 'types', /*'actionmenu',*/ 'conditionalselect' ];
-                        if($attrs.checkbox){
-                            plugins.push('checkbox');
-                        }
+                        var plugins = [ 'types', 'checkbox', 'conditionalselect' ];
 
                         $scope.treeConfig = {
                             core : {
@@ -55,11 +38,29 @@ define([
                                 error : function(error) {
                                     //$log.error('treeCtrl: error from js tree - ' + angular.toJson(error));
                                 },
-                                worker : true
+                                worker : true,
+                                'data' : function (node, cb) {
+                                    console.log('GET NODE ', node);
+
+                                    var params = {
+                                        query: $scope.searchKeyword
+                                    };
+
+                                    entuService.getEntuNodeChildren(node, params, function (err, children) {
+                                        cb( children );
+                                    });
+                                }
                             },
                             'plugins' : plugins,
                             'conditionalselect' : function (node, event) {
-                                //return node.type != 'default';
+                                if(node.data && node.data.scope != 'file'){
+                                    if(node.state.opened == true && node.children && node.children.length > 0 && node.id != 'root'){
+                                        return true;
+                                    }
+                                    event.preventDefault();
+                                    event.stopPropagation();
+                                    return false;
+                                }
                                 return true;
                             },
                             'types' : {
@@ -73,16 +74,11 @@ define([
                             version : 1
                         };
 
-                        $scope.filterFiles = function (type) {
-                            $scope.filterType = type;
-                            updateResourcesView();
-                        };
-                        $scope.searchFile = function () {
-                            updateResourcesView();
-                        };
-
                         $scope.getSelected = function(){
                             var selectedNodes = $scope.treeInstance.jstree(true).get_selected();
+
+                            console.log('SelectedNodes: ', selectedNodes);
+
                             var result = [];
                             for(i in selectedNodes){
                                 var node = selectedNodes[i];

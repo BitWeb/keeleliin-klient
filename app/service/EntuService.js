@@ -13,49 +13,79 @@ define([ 'angularAMD' ], function (angularAMD, resourceTreeMapper) {
                 );
             };
 
-            this.getJsTreeMap = function( resourcesList ){
-
-                var tree = [];
-
-                for( i in resourcesList){
-                    var root = resourcesList[i];
-
-                    var rootResult = {
-                        id: root.scope + '-' + root.id,
-                        text: root.name,
-                        type    : "default",
-                        children: []
-                    };
-
-                    for( j in root.children){
-                        var child = root.children[j];
-
-                        rootResult.children.push({
-                            id: child.scope + '-' + child.id,
-                            text: child.name,
-                            type    : "text"
-                        });
+            this.getResourceFilesList = function (entityId, callback) {
+                $http.get(config.API_URL + '/entu/resource-files-list/' + entityId, {params: {}}).then(
+                    function(data) {
+                        $log.log(data);
+                        callback(null, data.data.data);
                     }
+                );
+            };
 
-                    if( rootResult.children.length > 0 ){
-                        tree.push( rootResult );
-                    }
+            this.getEntuNodeChildren = function (node, params, callback) {
+
+                if(node.id === "#"){
+                    return callback(null, [
+                        {
+                            "text" : "Entu",
+                            "id" : "root",
+                            "data": {
+                                "scope": "root"
+                            },
+                            'state' : {
+                                'opened' : true
+                            },
+                            "children" : true
+                        }]);
                 }
 
-                var result = [];
-                var topRoot = {
-                    id      : '#ENTU',
-                    text    : 'Entu',
-                    type    : "default",
-                    children: tree,
-                    state   : {
-                        opened : true
-                    }
-                };
-                result.push(topRoot);
+                if(node.data && node.data.scope == 'root'){
 
-                return result;
+                    self.getResourcesList( params, function (err, data) {
+                        var nodes = [];
+                        for( var i = 0, length = data.length; i < length; i++){
+                            var item = data[i];
+                            nodes.push({
+                               text: item.name,
+                                id: item.id,
+                                data: {
+                                    scope: item.scope
+                                },
+                                children : true
+
+                            });
+                        }
+                        callback(null, nodes);
+                    });
+                    return;
+                }
+
+                if(node.data && node.data.scope == 'entity'){
+
+                    self.getResourceFilesList(node.id, function (err, data) {
+                        var nodes = [];
+                        for( var i = 0, length = data.length; i < length; i++){
+                            var item = data[i];
+                            nodes.push({
+                                text: item.name,
+                                id: 'file-' + item.id,
+                                data: {
+                                    scope: item.scope
+                                },
+                                type    : 'text',
+                                children : false
+
+                            });
+                        }
+                        callback(null, nodes);
+                    });
+                    return;
+                }
+
+                console.error('');
+                callback(null, []);
             };
+
         }
     ]);
 });
