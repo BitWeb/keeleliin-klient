@@ -9,6 +9,7 @@ define([
     'WorkflowDefinitionService',
     'filetree',
     'controller/project/UpdateController',
+    'WorkflowSettingsModalController',
     'ConfirmModalController'
 ], function (angularAMD) {
 
@@ -56,7 +57,12 @@ define([
                         updateWorkflowsList();
                     }
                 });
-            }
+            };
 
+            $scope.editWorkflowSettings = function (workflow) {
+                workflowService.openWorkflowSettingsModal($scope, workflow, function (err, updatedWorkflow) {
+                    $scope.workflow = updatedWorkflow;
+                });
+            };
         }]);
 });

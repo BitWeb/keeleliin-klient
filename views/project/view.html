@@ -97,8 +97,9 @@
                                     </td>
                                     <td class="project-actions">
                                         <a ng-if="workflow.status != 'RUNNING'" ng-click="deleteWorkflow(workflow)" class="btn btn-white btn-xs"><i class="fa fa-trash"></i> Kustuta </a>
-                                        <a ng-show="workflow.status == 'INIT'" ui-sref="workflow-definition-edit({workflowId: workflow.id})" class="btn btn-white btn-xs"><i class="fa fa-pencil"></i> Muuda </a>
+                                        <a ng-show="workflow.status == 'INIT'" ui-sref="workflow-definition-edit({workflowId: workflow.id})" class="btn btn-white btn-xs"><i class="fa fa-pencil"></i> Seadista </a>
                                         <a ng-show="workflow.status != 'INIT'" ui-sref="workflow-view({workflowId: workflow.id})" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Vaata </a>
+                                        <a ng-click="editWorkflowSettings(workflow)" class="btn btn-white btn-xs"><i class="fa fa-pencil"></i> Sätted </a>
                                     </td>
                                 </tr>
                             </tbody>

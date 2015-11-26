@@ -29,7 +29,7 @@ define(['angularAMD'], function (angularAMD) {
                 );
             };
 
-            this.openWorkflowSettingsModal = function ($scope, workflow) {
+            this.openWorkflowSettingsModal = function ($scope, workflow, cb) {
                 var modalInstance = $modal.open({
                     templateUrl: '../../views/workflow/settings_modal.html',
                     controller: 'WorkflowSettingsModalController',
@@ -40,10 +40,11 @@ define(['angularAMD'], function (angularAMD) {
                     }
                 });
                 modalInstance.result.then(function (data) {
-                    $scope.workflow.name = data.name;
-                    $scope.workflow.description = data.description;
-                    $scope.workflow.purpose = data.purpose;
+                    workflow.name = data.name;
+                    workflow.description = data.description;
+                    workflow.purpose = data.purpose;
                     $scope.$broadcast('updateBreadcrumb');
+                    cb(null, workflow);
                 });
             };
 

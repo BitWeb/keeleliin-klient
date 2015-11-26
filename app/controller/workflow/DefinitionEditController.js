@@ -157,7 +157,9 @@ define([
                 };
 
                 $scope.openWorkflowSettingsModal = function(){
-                    workflowService.openWorkflowSettingsModal($scope, $scope.workflow);
+                    workflowService.openWorkflowSettingsModal($scope, $scope.workflow, function (err, workflow) {
+                        $scope.workflow = workflow;
+                    });
                 };
 
                 $scope.editDefinitionServices = function () {
