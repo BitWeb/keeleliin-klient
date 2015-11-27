@@ -69,7 +69,15 @@ define([
                 });
             };
 
-
+            $scope.runWorkflow = function () {
+                workflowService.runWorkflow($scope.workflowId, function (err, response) {
+                    if(err){
+                        $log.debug(err);
+                        return alert('Err');
+                    }
+                    $state.go('workflow-view', { workflowId: $scope.workflowId });
+                });
+            };
 
         }]);
 });

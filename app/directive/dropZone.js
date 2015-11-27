@@ -15,11 +15,16 @@ define(['angularAMD','jq-dropzone', 'jquery'], function (angularAMD) {
                     maxFilesize: 2048,
                     paramName: "resourceFile",
                     maxThumbnailFilesize: 5,
-                    parallelUploads: 5,
+                    parallelUploads: 10,
                     method: 'POST',
                     uploadMultiple: false,
                     headers: $http.defaults.headers.common,
                     addRemoveLinks: true,
+                    dictDefaultMessage: 'Lohista failid siia või klõpsa faili valimiseks',
+                    dictFallbackMessage: 'Veebilehitseja ei ole toetatud.',
+                    dictFileTooBig: 'Valitud fail on liiga suur({{filesize}}, lubatud {{maxFilesize}})',
+                    dictResponseError: 'Server tagastas vea: {{statusCode}}',
+                    dictCancelUpload: 'Katkesta',
                     dictRemoveFile: 'Loobu',
                     //previewsContainer: null
                     init: function () {
