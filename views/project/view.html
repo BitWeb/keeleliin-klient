@@ -27,7 +27,7 @@
                                 <dt>Nähtav:</dt>
                                 <dd ng-if="project.accessStatus == 'shared'" class="project-people">
                                     <a ng-repeat="projectUser in project.projectUsers" href="">
-                                        <img alt="{{projectUser.name}}" class="img-circle" ng-src="{{projectUser.displaypicture}}" title="{{projectUser.name}}">
+                                        <img alt="{{projectUser.name}}" class="img-circle" ng-src="{{projectUser.displaypicture}}" title="{{projectUser.name}}">&nbsp;
                                     </a>
                                 </dd>
                                 <dd ng-if="project.accessStatus == 'private'" class="project-people">
