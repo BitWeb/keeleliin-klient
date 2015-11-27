@@ -92,7 +92,13 @@ define(['angularAMD'], function (angularAMD) {
                     if (type && item.accessStatus != type) {
                         continue;
                     }
-                    if (name && !(item.name.indexOf(name) > -1 || item.description.indexOf(name) > -1 || item.purpose.indexOf(name) > -1)) {
+
+                    var upSearchName = name ? name.toUpperCase() : null;
+                    var upName = item.name.toUpperCase();
+                    var upDescription = item.description.toUpperCase();
+                    var upPurpose = item.purpose.toUpperCase();
+
+                    if (upSearchName && !(upName.indexOf(upSearchName) > -1 || upDescription.indexOf(upSearchName) > -1 || upPurpose.indexOf(upSearchName) > -1)) {
                         continue;
                     }
                     map[item.id] = item.id;
