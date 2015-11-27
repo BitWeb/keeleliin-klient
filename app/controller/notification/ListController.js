@@ -35,8 +35,24 @@ define(['angularAMD', 'angular-utils-pagination', 'NotificationService'], functi
                     alert(err);
                 }
             });
+        };
 
+        $scope.markAllAsRead = function () {
+            notificationService.markAllNotificationAsRead(function (err) {
+                if(err){
+                    alert(err);
+                }
+                getNotifications();
+            });
+        };
 
-        }
+        $scope.deleteNotification = function (notification) {
+            notificationService.deleteNotification(notification.id, function (err) {
+                if(err){
+                    return alert(err);
+                }
+                getNotifications()
+            });
+        };
     }]);
 });

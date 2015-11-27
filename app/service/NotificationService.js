@@ -20,6 +20,21 @@ define(['angularAMD'], function (angularAMD) {
                 );
             };
 
+            this.markAllNotificationAsRead = function (callback) {
+                $http.put( config.API_URL + '/notification/read-all' ).then(
+                    function (data) {
+                        callback(null, data.data.data);
+                    }
+                );
+            };
+
+            this.deleteNotification = function (notificationId, callback) {
+                $http.delete( config.API_URL + '/notification/' + notificationId ).then(
+                    function (data) {
+                        callback(null);
+                    }
+                );
+            };
         }
     ]);
 });

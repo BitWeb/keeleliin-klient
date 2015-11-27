@@ -15,7 +15,9 @@
                                     <th>
                                         Teade
                                     </th>
-                                    <th class="col-md-1"></th>
+                                    <th class="col-md-2">
+                                        <button ng-click="markAllAsRead()" class="btn btn-primary btn-xs"> Märgi kõik loetuks </button>
+                                    </th>
                                 </tr>
                             </thead>
 
@@ -35,6 +37,7 @@
                                     </a>
                                 </td>
                                 <td>
+                                    <button ng-click="deleteNotification(notification)" class="btn btn-white btn-xs"> Kustuta </button>
                                     <button ng-if="!notification.isRead" ng-click="markAsRead(notification)" class="btn btn-primary btn-xs"> Märgi loetuks </button>
                                 </td>
                             </tr>
