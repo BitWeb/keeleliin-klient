@@ -1,6 +1,6 @@
 <div kl-breadcrumb></div>
 
-<div class="wrapper wrapper-content">
+<div ng-if="workflow" class="wrapper wrapper-content">
     <div class="row animated fadeInDown">
         <div class="col-lg-3">
             <div class="ibox float-e-margins">
@@ -119,7 +119,7 @@
                             <a ui-sref="project-item({projectId: workflow.projectId})" class="btn btn-sm btn-link pull-left"><i class="fa fa-caret-left"></i> Tagasi projekti vaatesse</a>
                             <a ng-if="workflow.workflowDefinition.editStatus == 'locked'" ng-click="editDefinitionServices()" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Muuda teenuseid</a>
                             <a ng-click="runWorkflow()" class="btn btn-info btn-sm"><i class="fa fa-play"></i> Käivita töövoog</a>
-                            <a ng-if="workflow.workflowDefinition.editStatus != 'locked'" ng-click="updateDefinitionServices()" class="btn btn-primary btn-sm"><i class="fa fa-run"></i> Salvesta töövoog</a>
+                            <a ng-if="workflow && workflow.workflowDefinition.editStatus != 'locked'" ng-click="updateDefinitionServices()" class="btn btn-primary btn-sm"><i class="fa fa-run"></i> Salvesta töövoog</a>
                         </div>
                     </div>
                 </div>

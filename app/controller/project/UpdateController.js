@@ -1,8 +1,8 @@
 
 define(["angularAMD"], function (angularAMD) {
     angularAMD.controller('ProjectUpdateController',
-        [ "$scope", "$modalInstance", "ProjectService", "UserService", "config", "project",
-            function ($scope, $modalInstance, projectService, userService, config, project) {
+        [ "$scope", "$modalInstance", "ProjectService", "UserService", "config", "project","$log",
+            function ($scope, $modalInstance, projectService, userService, config, project, $log) {
 
                 $scope.selectedUsers = [];
 
@@ -14,13 +14,16 @@ define(["angularAMD"], function (angularAMD) {
                 };
 
                 project.projectUsers.forEach(function (item) {
-                    if(item.id == project.user.id){
+
+                    if(item.role == 'owner'){
                         return;
                     }
+
                     $scope.selectedUsers.push(item.id);
+
                     updateProject.users.push({
                         userId: item.id,
-                        role: item.projectUser.role
+                        role: item.role
                     });
                 });
 

@@ -1,6 +1,6 @@
 <div kl-breadcrumb></div>
 
-<div class="row">
+<div ng-if="workflow" class="row">
     <div class="col-md-4">
         <div class="wrapper wrapper-content project-manager">
             <h3>Töövoo ressursid</h3>
@@ -30,8 +30,6 @@
                                 </dd>
                             </dl>
                         </div>
-
-
                         <div ng-if="topErrors.length > 0" class="col-lg-12">
                             <dl class="dl-horizontal">
                                 <dt></dt>
@@ -42,7 +40,6 @@
                                 </dd>
                             </dl>
                         </div>
-
                     </div>
                     <div class="row">
                         <div class="col-lg-5">
@@ -165,17 +162,26 @@
                         </div>
                     </div>
                 </div>
-                <div class="ibox-footer text-right">
-                    <a ng-if="projectId" ui-sref="project-item({projectId: workflow.projectId})" class="btn btn-sm btn-link pull-left"><i class="fa fa-caret-left"></i> Tagasi projekti vaatesse</a>
-                    <a ng-if="!projectId" ui-sref="workflow-management-list" class="btn btn-sm btn-link pull-left"><i class="fa fa-caret-left"></i> Tagasi</a>
-                    <a ng-if="workflow.status != 'RUNNING' && projectId" ng-click="deleteWorkflow()" class="btn btn-danger btn-sm m-r-lg">
-                        <i class="fa fa-trash"></i> Kustuta töövoog
+                <div class="ibox-footer">
+                    <a ng-if="projectId" ui-sref="project-item({projectId: workflow.projectId})" class="btn btn-link btn-sm m-r-lg">
+                        <i class="fa fa-caret-left"></i> Tagasi projekti vaatesse
                     </a>
-                    <a ng-click="openWorkflowSettingsModal()" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Muuda töövoo sätteid</a>
-                    <a ng-if="workflow.status == 'RUNNING'" class="btn btn-danger btn-sm" ng-click="cancelWorkflow()">
+                    <a ng-if="!projectId" ui-sref="workflow-management-list" class="btn btn-sm btn-link pull-left m-r-lg">
+                        <i class="fa fa-caret-left"></i> Tagasi
+                    </a>
+
+                    <a ng-if="workflow && workflow.canEdit && projectId" ng-click="copyWorkflow()" class="btn btn-primary btn-sm pull-right">
+                        <i class="fa fa-copy"></i> Uus sisend
+                    </a>
+                    <a ng-if="workflow && workflow.canEdit && workflow.status == 'RUNNING'" class="btn btn-danger btn-sm pull-right" ng-click="cancelWorkflow()">
                         <i class="fa fa-stop"></i> Katkesta käimasolev töövoog
                     </a>
-                    <a ng-if="projectId" ng-click="copyWorkflow()" class="btn btn-primary btn-sm"><i class="fa fa-copy"></i> Uus sisend</a>
+                    <a ng-if="workflow && workflow.canEdit" ng-click="openWorkflowSettingsModal()" class="btn btn-white btn-sm pull-right">
+                        <i class="fa fa-pencil"></i> Muuda töövoo sätteid
+                    </a>
+                    <a ng-if="workflow && workflow.canEdit && workflow.status != 'RUNNING' && projectId" ng-click="deleteWorkflow()" class="btn btn-danger btn-sm m-r-lg pull-right">
+                        <i class="fa fa-trash"></i> Kustuta töövoog
+                    </a>
                 </div>
             </div>
         </div>

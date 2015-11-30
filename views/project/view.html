@@ -1,9 +1,9 @@
 <div kl-breadcrumb></div>
 
-<div class="row">
+<div ng-if="project" class="row">
     <div class="wrapper wrapper-content animated fadeInUp">
         <div class="col-md-4">
-            <a class="btn btn-block btn-primary m-b-sm" ui-sref="project-resource-upload({projectId:projectId})">
+            <a ng-if="canEditProject" class="btn btn-block btn-primary m-b-sm" ui-sref="project-resource-upload({projectId:projectId})">
                 <i class="fa fa-edit"></i> Muuda projekti ressursse
             </a>
             <div filetree project-id="{{projectId}}"></div>
@@ -67,10 +67,16 @@
                                         <span kl-status="{{workflow.status}}" />
                                     </td>
                                     <td class="project-title">
-                                        <a ng-show="workflow.status == 'INIT'" ui-sref="workflow-definition-edit({workflowId: workflow.id})">
+                                        <a ng-if="canEditProject && workflow.status == 'INIT'" ui-sref="workflow-definition-edit({workflowId: workflow.id})">
                                             <strong>{{workflow.name || ('Töövoog ' + workflow.id)}}</strong>
                                         </a>
-                                        <a ng-show="workflow.status != 'INIT'" ui-sref="workflow-view({workflowId: workflow.id})">
+
+                                        <span ng-if="!canEditProject && workflow.status == 'INIT'">
+                                            <strong>{{workflow.name || ('Töövoog ' + workflow.id)}}</strong>
+                                        </span>
+
+
+                                        <a ng-if="workflow.status != 'INIT'" ui-sref="workflow-view({workflowId: workflow.id})">
                                             <strong>{{workflow.name || ('Töövoog ' + workflow.id)}}</strong>
                                         </a>
 
@@ -96,28 +102,29 @@
 
                                     </td>
                                     <td class="project-actions">
-                                        <a ng-if="workflow.status != 'RUNNING'" ng-click="deleteWorkflow(workflow)" class="btn btn-white btn-xs"><i class="fa fa-trash"></i> Kustuta </a>
-                                        <a ng-show="workflow.status == 'INIT'" ui-sref="workflow-definition-edit({workflowId: workflow.id})" class="btn btn-white btn-xs"><i class="fa fa-pencil"></i> Seadista </a>
+                                        <a ng-if="canEditProject && workflow.status != 'RUNNING'" ng-click="deleteWorkflow(workflow)" class="btn btn-white btn-xs"><i class="fa fa-trash"></i> Kustuta </a>
+                                        <a ng-show="canEditProject && workflow.status == 'INIT'" ui-sref="workflow-definition-edit({workflowId: workflow.id})" class="btn btn-white btn-xs"><i class="fa fa-pencil"></i> Seadista </a>
                                         <a ng-show="workflow.status != 'INIT'" ui-sref="workflow-view({workflowId: workflow.id})" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Vaata </a>
-                                        <a ng-click="editWorkflowSettings(workflow)" class="btn btn-white btn-xs"><i class="fa fa-pencil"></i> Sätted </a>
+                                        <a ng-if="canEditProject" ng-click="editWorkflowSettings(workflow)" class="btn btn-white btn-xs"><i class="fa fa-pencil"></i> Sätted </a>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
-                <div class="ibox-footer text-right">
-                    <a ui-sref="projects" class="btn btn-sm btn-link pull-left">
+                <div class="ibox-footer">
+                    <a ui-sref="projects" class="btn btn-sm btn-link">
                         <i class="fa fa-caret-left"></i> Tagasi projektide nimekirja
                     </a>
-                    <a ng-click="openUpdateModal()" href="" class="btn btn-white btn-sm">
-                        <i class="fa fa-pencil"></i> Muuda projekti sätteid
-                    </a>
-                    <a ng-click="openDefineWorkflowModal()" href="" class="btn btn-primary btn-sm">
+
+                    <a ng-if="canEditProject" ng-click="openDefineWorkflowModal()" href="" class="btn btn-primary btn-sm pull-right">
                         <i class="fa fa-edit"></i> Defineeri uus töövoog
                     </a>
-                    <a ng-click="openAddWorkflowModal()" href="" class="btn btn-info btn-sm">
+                    <a ng-if="canEditProject" ng-click="openAddWorkflowModal()" href="" class="btn btn-info btn-sm pull-right">
                         <i class="fa fa-plus"></i> Lisa uus töövoog
+                    </a>
+                    <a ng-if="canEditProject" ng-click="openUpdateModal()" href="" class="btn btn-white btn-sm pull-right">
+                        <i class="fa fa-pencil"></i> Muuda projekti sätteid
                     </a>
                 </div>
             </div>

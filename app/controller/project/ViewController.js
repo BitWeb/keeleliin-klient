@@ -19,12 +19,26 @@ define([
 
             $scope.projectId = $stateParams.projectId;
 
+            $scope.canEditProject = false;
+
+            $scope.setProject = function (project) {
+                var requiredUserId = $scope.user.id;
+                for(var i = 0, length = project.projectUsers.length; i < length; i++){
+                    if(project.projectUsers[i].id == requiredUserId && ( project.projectUsers[i].role == 'owner' || project.projectUsers[i].role == 'editor')){
+                        $scope.canEditProject = true;
+                    }
+                }
+                $scope.project = project;
+            };
+
+
             projectService.getProject($scope.projectId, function (err, project) {
                 if(err){
                    console.log(err);
                    return alert('Err');
                 }
-                $scope.project = project;
+
+                $scope.setProject(project);
             });
 
             var updateWorkflowsList = function () {
