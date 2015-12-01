@@ -1,7 +1,7 @@
 define(['angularAMD'], function (angularAMD) {
 
-    angularAMD.service('WorkflowService', [ '$http', 'config', '$modal',
-        function( $http, config, $modal ) {
+    angularAMD.service('WorkflowService', [ '$http', 'config', '$modal', 'UserService', '$log',
+        function( $http, config, $modal, userService, $log ) {
             var self = this;
 
             this.getWorkflow = function (workflowId, callback) {
@@ -122,6 +122,12 @@ define(['angularAMD'], function (angularAMD) {
                 $http.get(config.API_URL + '/workflow/'+ workflowId +'/copy').then(function (response) {
                     callback(null, response.data.data);
                 });
+            };
+
+            this.downloadLog = function( workflowId ){
+                var url = config.API_URL + '/workflow/' + workflowId + '/log?token=' + userService.getToken();
+                $log.debug( url );
+                window.location.href = url;
             };
         }
     ]);

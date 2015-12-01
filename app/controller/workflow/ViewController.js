@@ -95,8 +95,8 @@ define([
             $scope.getServiceLogs = function (service) {
                 var logs = [];
                 service.subSteps.forEach(function (substep) {
-                    if(substep.log){
-                        logs.push(substep.log);
+                    if(substep.errorLog){
+                        logs.push(substep.errorLog);
                     }
                 });
                 if(service.log){
@@ -158,5 +158,10 @@ define([
                     }
                 });
             };
+
+            $scope.downloadLog = function(){
+                workflowService.downloadLog( $scope.workflow.id );
+            };
+
         }]);
 });

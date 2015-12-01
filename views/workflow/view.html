@@ -170,14 +170,17 @@
                         <i class="fa fa-caret-left"></i> Tagasi
                     </a>
 
+                    <a ng-if="workflow && workflow.canEdit" ng-click="openWorkflowSettingsModal()" class="btn btn-white btn-sm pull-right">
+                        <i class="fa fa-pencil"></i> Muuda töövoo sätteid
+                    </a>
                     <a ng-if="workflow && workflow.canEdit && projectId" ng-click="copyWorkflow()" class="btn btn-primary btn-sm pull-right">
                         <i class="fa fa-copy"></i> Uus sisend
                     </a>
                     <a ng-if="workflow && workflow.canEdit && workflow.status == 'RUNNING'" class="btn btn-danger btn-sm pull-right" ng-click="cancelWorkflow()">
                         <i class="fa fa-stop"></i> Katkesta käimasolev töövoog
                     </a>
-                    <a ng-if="workflow && workflow.canEdit" ng-click="openWorkflowSettingsModal()" class="btn btn-white btn-sm pull-right">
-                        <i class="fa fa-pencil"></i> Muuda töövoo sätteid
+                    <a ng-if="workflow && projectId" ng-click="downloadLog()" class="btn btn-primary btn-sm pull-right">
+                        <i class="fa fa-download"></i> Logi
                     </a>
                     <a ng-if="workflow && workflow.canEdit && workflow.status != 'RUNNING' && projectId" ng-click="deleteWorkflow()" class="btn btn-danger btn-sm m-r-lg pull-right">
                         <i class="fa fa-trash"></i> Kustuta töövoog
