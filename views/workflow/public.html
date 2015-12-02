@@ -1,31 +1,66 @@
 <div kl-breadcrumb></div>
 
-<div ng-if="definition" class="row middle-box">
-    <div class="col-lg-12">
-        <div class="wrapper wrapper-content animated fadeInUp">
-
-            <div class="ibox">
+<div ng-if="definition" class="wrapper wrapper-content">
+    <div class="row animated fadeInDown">
+        <div class="col-lg-3">
+            <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Töövoog: {{definition.name}}</h5>
                 </div>
                 <div class="ibox-content">
-                    <div ng-if="definition.description">
-                        <label>Kirjeldus:</label>
-                        {{definition.description}}
+                    <div>
+                        <strong>Kirjeldus</strong>
+                        <p>
+                            {{definition.description}}
+                        </p>
                     </div>
-                    <div ng-if="definition.purpose">
-                        <label>Eesmärk:</label>
-                        {{definition.purpose}}
+                    <div>
+                        <strong>Eesmärk</strong>
+                        <p>
+                            {{definition.purpose}}
+                        </p>
                     </div>
-                    <div ng-if="definition.user">
-                        <label>Autor:</label>
-                        {{definition.user.name}}
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-9">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox">
+                        <div class="ibox-title">
+                            <h5>Valitud teenused</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row" style="position:relative; overflow: hidden; min-height: 200px;">
+
+                                <div class="sortable-list selectedServices clearfix">
+                                    <div class="col-md-3 col-sm-6 sol-xs-12 not-sortable" ng-repeat="selectedService in definition.definitionServices">
+                                        <div class="ibox available-service">
+                                            <div class="ibox-title">
+                                                <span class="order">
+                                                    {{selectedService.orderNum + 1}}.
+                                                </span>
+                                                <h5 ng-if="selectedService.service.name"> {{selectedService.service.name}}</h5>
+                                                <h5 ng-if="!selectedService.service.name" > <strong><i>Teenust ei leitud</i></strong></h5>
+                                                <div class="buttons">
+                                                    <a ng-if="selectedService.service.id" class="pull-right text-lg icon" ng-click="showServiceInfo( selectedService.service.id )" title="Info" style="margin-right: 5px">
+                                                        <i class="fa fa-info-circle"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ibox-footer text-right">
+                            <a ng-click="editServices()" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Lisa töövoog </a>
+                            <a ng-click="addResources()" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Määra sisend </a>
+                        </div>
                     </div>
-                    <hr />
-                    <a ng-click="createWorkflow()" class="btn btn-primary btn-block">Määra sisend</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
-

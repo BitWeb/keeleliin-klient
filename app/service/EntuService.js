@@ -5,7 +5,7 @@ define([ 'angularAMD' ], function (angularAMD, resourceTreeMapper) {
             var self = this;
 
             this.getResourcesList = function (params, callback) {
-                $http.get(config.API_URL + '/entu/resource-list', {params: params}).then(
+                $http.get(config.API_URL + '/entu/resource', {params: params}).then(
                     function(data) {
                         $log.log(data);
                         callback(null, data.data.data);
@@ -14,7 +14,7 @@ define([ 'angularAMD' ], function (angularAMD, resourceTreeMapper) {
             };
 
             this.getResourceFilesList = function (entityId, callback) {
-                $http.get(config.API_URL + '/entu/resource-files-list/' + entityId, {params: {}}).then(
+                $http.get(config.API_URL + '/entu/resource/' + entityId + '/files', {params: {}}).then(
                     function(data) {
                         $log.log(data);
                         callback(null, data.data.data);
