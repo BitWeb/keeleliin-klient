@@ -454,6 +454,23 @@ define(['angularAMD'], function (angularAMD) {
                 })
             );
 
+            $stateProvider.state('publicState',
+                {
+                    url: '/public',
+                    abstract: true,
+                    template: '<ui-view/>'
+                }
+            ).state('public-definition', angularAMD.route({
+                    parent: 'publicState',
+                    url: '/definition/{definitionId:[0-9]{1,8}}',
+                    templateUrl: 'views/workflow/public.html',
+                    controller: 'WorkflowPublicController',
+                    breadcrumb: {
+                        parent: 'home',
+                        title: 'Avalik töövoog'
+                    }
+                })
+            );
         }
     }
 });

@@ -1,8 +1,10 @@
 
 define(['angularAMD'], function (angularAMD) {
     angularAMD.controller('WorkflowAddModalController',
-        [ '$scope', '$state', '$stateParams', 'WorkflowDefinitionService', 'project','$log',
-            function ($scope, $state, $stateParams, workflowDefinitionService, project, $log) {
+        [ '$scope', '$state', '$stateParams', 'WorkflowDefinitionService', 'project','$log','config',
+            function ($scope, $state, $stateParams, workflowDefinitionService, project, $log, config) {
+
+                $scope.config = config;
 
                 $scope.definitionFilterName = null;
 

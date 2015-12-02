@@ -72,6 +72,16 @@ define(['angularAMD'], function (angularAMD) {
                 );
             };
 
+            this.getDefinitionOverview = function (definitionId, callback) {
+
+                $http.get( config.API_URL + '/workflow-definition/' + definitionId ).then(
+                    function (data, status) {
+                        console.log(data.data);
+                        callback(null, data.data.data);
+                    }
+                );
+            };
+
             this.getWorkflowsDefinitionsList = function (params, callback) {
                 $http.get(config.API_URL + '/workflow-definition', {}).then(
                     function (data, status) {

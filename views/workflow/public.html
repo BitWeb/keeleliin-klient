@@ -1,0 +1,31 @@
+<div kl-breadcrumb></div>
+
+<div ng-if="definition" class="row middle-box">
+    <div class="col-lg-12">
+        <div class="wrapper wrapper-content animated fadeInUp">
+
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>Töövoog: {{definition.name}}</h5>
+                </div>
+                <div class="ibox-content">
+                    <div ng-if="definition.description">
+                        <label>Kirjeldus:</label>
+                        {{definition.description}}
+                    </div>
+                    <div ng-if="definition.purpose">
+                        <label>Eesmärk:</label>
+                        {{definition.purpose}}
+                    </div>
+                    <div ng-if="definition.user">
+                        <label>Autor:</label>
+                        {{definition.user.name}}
+                    </div>
+                    <hr />
+                    <a ng-click="createWorkflow()" class="btn btn-primary btn-block">Määra sisend</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

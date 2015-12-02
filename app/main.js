@@ -56,6 +56,7 @@ require.config({
         'WorkflowViewController'    : 'controller/workflow/ViewController',
         'WorkflowResourceUploadController' : 'controller/workflow/ResourceUploadController',
         'WorkflowManagementListController': 'controller/workflow/ManagementListController',
+        'WorkflowPublicController': 'controller/workflow/PublicController',
 
         'WorkflowDefinitionServiceSettingsModalController': 'controller/workflow/DefinitionServiceSettingsModalController',
 

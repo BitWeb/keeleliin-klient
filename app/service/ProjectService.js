@@ -20,7 +20,8 @@ define(['angularAMD'], function (angularAMD) {
                     sort: 'updated_at',
                     order: 'DESC',
                     page: 1,
-                    perPage: 1
+                    perPage: 1,
+                    canEdit: 1
                 };
 
                 self.getList(params, function (err, data) {

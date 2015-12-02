@@ -48,6 +48,10 @@
                         <hr ng-if="definition.purpose">
                         <h4 ng-if="definition.owner">Omanik:</h4>
                         <p>{{definition.owner}}</p>
+                        <h4 ng-if="definition.publicUrl">Avalik url:</h4>
+                        <p ng-if="definition.publicUrl">
+                            <a ng-click="$dismiss()" href="{{definition.publicUrl}}">{{definition.publicUrl}}</a>
+                        </p>
                     </div>
                 </div>
             </div>
