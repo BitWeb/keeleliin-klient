@@ -23,17 +23,23 @@ define([
             };
 
             $scope.addExistingResources = function () {
-                var resourcesIds = $scope.getSelectedResources();
-                projectService.addResourcesToProject($stateParams.projectId, resourcesIds, function (err, data) {
+                var data = {
+                    resourceIds: $scope.getSelectedResources(),
+                    projectId: $stateParams.projectId
+                };
+                resourceService.addAssociations(data, function (err, data) {
                     $scope.fileAddedEvent();
                 });
             };
 
             $scope.entuLoadEnabled = true;
             $scope.addExistingEntuResources = function () {
-                $scope.entuLoadEnabled = false;
-                var resourcesIds = $scope.getSelectedEntuResources();
-                projectService.addEntuResourcesToProject($stateParams.projectId, resourcesIds, function (err, data) {
+                var data = {
+                    files: $scope.getSelectedEntuResources(),
+                    projectId: $stateParams.projectId,
+                    workflowId: $stateParams.workflowId
+                };
+                resourceService.loadFromEntu(data, function (err, data) {
                     $scope.entuLoadEnabled = true;
                     $scope.fileAddedEvent();
                 });

@@ -49,6 +49,24 @@ define(['angularAMD', 'ResourceTreeMapper', 'ResourceInfoController', 'ResourceD
                 );
             };
 
+            this.loadFromEntu = function (data, callback) {
+                $http.post(config.API_URL + '/resource/load-entu-files', data).then(
+                    function(data) {
+                        $log.log(data);
+                        callback(null, data.data.data);
+                    }
+                );
+            };
+
+            this.addAssociations = function (data, callback) {
+                $http.post(config.API_URL + '/resource/association', data).then(
+                    function(data) {
+                        $log.log(data);
+                        callback(null, data.data.data);
+                    }
+                );
+            };
+
             this.deleteResourceAssociation = function(associationId, callback) {
                 $http.delete(config.API_URL + '/resource/association/' + associationId ).then(
                     function(data) {
