@@ -15,11 +15,30 @@ define([
 
     angularAMD.controller('ProjectViewController', [ '$scope', '$state', '$stateParams', 'ProjectService','$modal','WorkflowDefinitionService','ResourceService','$log','WorkflowService',
         function($scope, $state, $stateParams, projectService, $modal, workflowDefinitionService, resourceService, $log, workflowService ) {
-            $log.log('ProjectController');
-
             $scope.projectId = $stateParams.projectId;
-
             $scope.canEditProject = false;
+
+            var updateWorkflowsList = function () {
+                projectService.getProjectWorkflows($scope.projectId, function (err, workflows) {
+                    if(err){
+                        console.log(err);
+                        return alert('Err');
+                    }
+                    $scope.workflows = workflows;
+                });
+            };
+
+            var updateDefinitionsList = function () {
+                projectService.getProjectDefinitions($scope.projectId, function (err, definitions) {
+                    if(err){
+                        return alert('Err');
+                    }
+                    $scope.definitions = definitions;
+                });
+            };
+
+
+
 
             $scope.setProject = function (project) {
                 var requiredUserId = $scope.user.id;
@@ -34,23 +53,13 @@ define([
 
             projectService.getProject($scope.projectId, function (err, project) {
                 if(err){
-                   console.log(err);
                    return alert('Err');
                 }
-
                 $scope.setProject(project);
-            });
 
-            var updateWorkflowsList = function () {
-                projectService.getProjectWorkflows($scope.projectId, function (err, workflows) {
-                    if(err){
-                        console.log(err);
-                        return alert('Err');
-                    }
-                    $scope.workflows = workflows;
-                });
-            };
-            updateWorkflowsList();
+                updateWorkflowsList();
+                updateDefinitionsList();
+            });
 
             $scope.openDefineWorkflowModal = function () {
                 workflowDefinitionService.openAddDefinitionModal($scope, $scope.project);
@@ -70,12 +79,6 @@ define([
                         $scope.$broadcast('resourceUpdated');
                         updateWorkflowsList();
                     }
-                });
-            };
-
-            $scope.editWorkflowSettings = function (workflow) {
-                workflowService.openWorkflowSettingsModal($scope, workflow, function (err, updatedWorkflow) {
-                    $scope.workflow = updatedWorkflow;
                 });
             };
         }]);

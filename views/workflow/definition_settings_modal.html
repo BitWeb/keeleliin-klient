@@ -1,6 +1,7 @@
 
 <div class="modal-header">
-    <h4 class="modal-title">Uus töövoog</h4>
+    <h4 ng-if="definition.id" class="modal-title">Töövoo kirjelduse seaded</h4>
+    <h4 ng-if="!definition.id" class="modal-title">Uus töövoog</h4>
 </div>
 <div class="modal-body">
     <div class="row">

@@ -1,5 +1,5 @@
-define(['angularAMD', 'angular-utils-pagination', 'WorkflowService'], function(angularAMD) {
-    angularAMD.controller('WorkflowManagementListController', ['$scope', 'WorkflowService', 'config', '$timeout', function($scope, workflowService, config, $timeout) {
+define(['angularAMD', 'angular-utils-pagination', 'WorkflowService', 'WorkflowDefinitionService'], function(angularAMD) {
+    angularAMD.controller('WorkflowManagementListController', ['$scope', 'WorkflowService','WorkflowDefinitionService', 'config', '$timeout', function($scope, workflowService, workflowDefinitionService, config, $timeout) {
         var timer;
 
         $scope.statuses = config.workflow_statuses;
@@ -11,24 +11,9 @@ define(['angularAMD', 'angular-utils-pagination', 'WorkflowService'], function(a
             name: '',
             perPage: 25
         };
-        $scope.name = '';
         $scope.errorMessage = null;
-        $scope.searchWorkflows = function() {
-            $timeout.cancel(timer);
-            timer = $timeout(function() {
-                getWorkflows();
-            }, 500);
-        };
-
-        getWorkflows();
-
-        $scope.changePage = function(pageNumber) {
-            $scope.pagination.page = pageNumber;
-            getWorkflows()
-        };
 
         function getWorkflows() {
-
             workflowService.getWorkflowsManagementList($scope.pagination, function(err, data) {
                 if (err) {
                     return alert(err);
@@ -38,6 +23,17 @@ define(['angularAMD', 'angular-utils-pagination', 'WorkflowService'], function(a
             });
         }
 
+        $scope.searchWorkflows = function() {
+            $timeout.cancel(timer);
+            timer = $timeout(function() {
+                getWorkflows();
+            }, 500);
+        };
+        getWorkflows();
+        $scope.changePage = function(pageNumber) {
+            $scope.pagination.page = pageNumber;
+            getWorkflows()
+        };
         $scope.refreshList = function () {
             getWorkflows();
         };
@@ -51,5 +47,38 @@ define(['angularAMD', 'angular-utils-pagination', 'WorkflowService'], function(a
                 getWorkflows();
             });
         };
+
+/////
+        $scope.accessStatuses = ['private','public','shared'];
+
+        $scope.definitionsTotalCount = 0;
+        $scope.definitions = [];
+        $scope.definitionPagination = {
+            page: 1,
+            name: '',
+            perPage: 25,
+            accessStatus: 'public'
+        };
+
+        function getDefinitions() {
+            workflowDefinitionService.getWorkflowDefinitionsManagementList($scope.definitionPagination, function(err, data) {
+                if (err) {
+                    return alert(err);
+                }
+                $scope.definitions = data.rows;
+                $scope.definitionsTotalCount = data.count;
+            });
+        }
+
+        $scope.searchDefinitions = function() {
+            getDefinitions();
+        };
+        getDefinitions();
+
+        $scope.changeDefinitionsPage = function(pageNumber) {
+            $scope.definitionPagination.page = pageNumber;
+            getDefinitions()
+        };
+
     }]);
 });

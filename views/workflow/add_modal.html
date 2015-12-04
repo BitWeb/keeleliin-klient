@@ -52,6 +52,11 @@
                         <p ng-if="definition.publicUrl">
                             <a ng-click="$dismiss()" href="{{definition.publicUrl}}">{{definition.publicUrl}}</a>
                         </p>
+
+                        <h4 ng-if="definition.publicUrl && definition.publishedAt">Avalikustatud:</h4>
+                        <p ng-if="definition.publicUrl">
+                            {{definition.publishedAt | date: 'dd.MM.yyyy H:mm'}}
+                        </p>
                     </div>
                 </div>
             </div>
@@ -61,10 +66,4 @@
 <div class="modal-footer">
     <a href="" class="btn btn-white btn-sm" ng-click="$dismiss()">Katkesta</a>
     <a href="" class="btn btn-primary btn-sm" ng-click="addWorkflow()">Lisa töövoog</a>
-
-
-
-
-
-
 </div>

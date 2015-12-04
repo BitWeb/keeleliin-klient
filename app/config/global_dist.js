@@ -16,7 +16,8 @@ define([], function () {
             split_types: ['NONE', 'LINE']
         },
         workflow_statuses: ['INIT', 'RUNNING', 'FINISHED', 'ERROR', 'CANCELLED'],
-        hearbeat_interval: 3600
+        hearbeat_interval: 3600,
+        admin_email: 'info@keeleliin.ee'
     };
 
 });

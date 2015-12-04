@@ -203,7 +203,7 @@ define(['angularAMD'], function (angularAMD) {
                         loadPlugin: function ($ocLazyLoad) {
                             return $ocLazyLoad.load([
                                 {
-                                    files: ['assets/css/plugins/dropzone/basic.css', 'assets/css/plugins/dropzone/dropzone.css',]
+                                    files: ['assets/css/plugins/dropzone/basic.css', 'assets/css/plugins/dropzone/dropzone.css']
                                 }
                             ]);
                         }
@@ -216,6 +216,35 @@ define(['angularAMD'], function (angularAMD) {
                 })
             );
 
+            $stateProvider.state('workflowDefinitionItemState', {
+                parent: 'projectItemState',
+                url: "/definition/{definitionId:[0-9]{1,8}}",
+                abstract: true,
+                template: '<ui-view/>'
+            }).state('workflow-definition-view',
+                angularAMD.route({
+                    parent: 'workflowDefinitionItemState',
+                    url: "/view", //
+                    templateUrl: "views/workflow/definition_view.html",
+                    controller: 'WorkflowDefinitionViewController',
+                    resolve: {
+                        loadPlugin: function ($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                {
+                                    insertBefore: '#loadBefore',
+                                    name: 'localytics.directives',
+                                    files: ['assets/css/plugins/chosen/chosen.css']
+                                }
+                            ]);
+                        }
+                    },
+                    breadcrumb: {
+                        parent: 'project-item',
+                        title: 'Töövoo {{definitionId}} definitsioon',
+                        attributes: '{definitionId: definitionId}'
+                    }
+                })
+            );
 
             $stateProvider.state('workflowManagementState', {
                 url: "/workflow-management",
@@ -267,7 +296,35 @@ define(['angularAMD'], function (angularAMD) {
                         attributes: '{workflowId: workflowId}'
                     }
                 })
+            ).state( 'workflow-definition-management-item',
+                angularAMD.route({
+                    parent: 'workflowManagementState',
+                    url: "/workflow-definition/{definitionId:[0-9]{1,8}}",
+                    templateUrl: "views/workflow/definition_view.html",
+                    controller: 'WorkflowDefinitionViewController',
+                    resolve: {
+                        loadPlugin: function ($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                {
+                                    insertBefore: '#loadBefore',
+                                    name: 'localytics.directives',
+                                    files: ['assets/css/plugins/chosen/chosen.css']
+                                }
+                            ]);
+                        }
+                    },
+                    breadcrumb: {
+                        parent: 'workflow-management-list',
+                        title: "{{definitionId}}",
+                        attributes: '{definitionId: definitionId}'
+                    }
+                })
             );
+
+
+
+
+
             ///
 
 
@@ -463,7 +520,7 @@ define(['angularAMD'], function (angularAMD) {
             ).state('public-definition', angularAMD.route({
                     parent: 'publicState',
                     url: '/definition/{definitionId:[0-9]{1,8}}',
-                    templateUrl: 'views/workflow/public.html',
+                    templateUrl: 'views/workflow/definition_view.html',
                     controller: 'WorkflowPublicController',
                     breadcrumb: {
                         parent: 'home',

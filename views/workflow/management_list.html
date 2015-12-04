@@ -4,74 +4,187 @@
     <div class="col-lg-12">
         <div class="wrapper wrapper-content animated fadeInUp">
 
+
             <div class="ibox">
                 <div class="ibox-content">
-                    <div class="row m-b-sm m-t-sm">
-                        <div class="col-sm-2 m-b-sm">
-                            <button ng-click="refreshList()" type="button" id="loading-example-btn" class="btn btn-white btn-sm"><i class="fa fa-refresh"></i> Uuenda</button>
-                        </div>
-                        <div class="col-md-2 m-b-sm">
-                            <select ng-model="pagination.status" ng-change="refreshList()" class="form-control">
-                                <option value="">- Olek -</option>
-                                <option ng-repeat="status in statuses" value="{{status}}">{{status | translate}}</option>
-                            </select>
-                        </div>
-                        <div class="col-md-8 m-b-sm">
-                            <div class="input-group">
-                                <input ng-model="pagination.name" type="text" placeholder="Otsi" class="input-sm form-control">
+
+
+                    <div class="tabs-container">
+                        <ul class="nav nav-tabs">
+                            <li class="active">
+                                <a data-toggle="tab" data-target="#tab-workflows" aria-expanded="true">
+                                    <h3>Töövood</h3>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a data-toggle="tab" data-target="#tab-definitions" aria-expanded="false">
+                                    <h3>Kirjeldused</h3>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div id="tab-workflows" class="tab-pane active">
+
+
+                                <div class="row m-b-sm m-t-sm">
+                                    <div class="col-sm-2 m-b-sm">
+                                        <button ng-click="refreshList()" type="button" id="loading-example-btn"
+                                                class="btn btn-white btn-sm"><i class="fa fa-refresh"></i> Uuenda
+                                        </button>
+                                    </div>
+                                    <div class="col-md-2 m-b-sm">
+                                        <select ng-model="pagination.status" ng-change="refreshList()" class="form-control">
+                                            <option value="">- Olek -</option>
+                                            <option ng-repeat="status in statuses" value="{{status}}">{{status |
+                                                translate}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-8 m-b-sm">
+                                        <div class="input-group">
+                                            <input ng-model="pagination.name" type="text" placeholder="Otsi"
+                                                   class="input-sm form-control">
                                 <span class="input-group-btn">
                                     <button ng-click="searchWorkflows()" type="button" class="btn btn-sm btn-primary">
                                         Otsi!
                                     </button>
                                 </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="project-list overflow-scroll">
+                                    <table class="table table-hover">
+                                        <tbody>
+                                        <tr dir-paginate="workflow in workflows | filter: searchFilter | itemsPerPage: pagination.perPage"
+                                            total-items="totalCount"
+                                            current-page="pagination.page"
+                                            boundary-links="true"
+                                            pagination-id="workflow">
+                                            <td class="project-status">
+                                                <span kl-workflow-runtime status="{{workflow.status}}"
+                                                      start="{{workflow.datetimeStart}}"
+                                                      end="{{workflow.datetimeEnd}}"></span>
+                                            </td>
+                                            <td class="project-title">
+                                                <a ui-sref="workflow-management-item({workflowId: workflow.id})">{{workflow.name}}
+                                                    {{workflow.id}}</a>
+                                                <br/>
+                                                <small>Käivitatud {{workflow.datetimeStart | date: 'dd.MM.yyyy H:mm'}}
+                                                </small>
+                                            </td>
+                                            <td class="project-completion">
+                                                <small>Progress: {{workflow.progress}}%</small>
+                                                <div class="progress progress-mini">
+                                                    <div style="width: {{workflow.progress}}%;"
+                                                         class="progress-bar"></div>
+                                                </div>
+                                            </td>
+                                            <td class="project-people">
+                                                {{workflow.user.name}}
+                                            </td>
+                                            <td class="project-actions">
+                                                <a ui-sref="workflow-management-item({workflowId: workflow.id})"
+                                                   class="btn btn-white btn-sm">
+                                                    <i class="fa fa-folder"></i> Vaata
+                                                </a>
+                                                <a ng-if="workflow.status == 'RUNNING'"
+                                                   ng-click="cancelWorkflow(workflow)" href=""
+                                                   class="btn btn-danger btn-sm">
+                                                    <i class="fa fa-stop"></i> Peata
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="text-right">
+                                        <dir-pagination-controls
+                                                on-page-change="changePage(newPageNumber)"
+                                                template-url="views/templates/pagination.html"
+                                                pagination-id="workflow">
+                                        </dir-pagination-controls>
+                                    </div>
+                                </div>
+                                <div ng-if="!workflows.length || workflows.length == 0">
+                                    <i>Töövooge ei leitud</i>
+                                </div>
+                            </div>
+
+                            <div id="tab-definitions" class="tab-pane">
+                                <div class="row m-b-sm m-t-sm">
+                                    <div class="col-md-2 m-b-sm">
+                                        <select ng-model="definitionPagination.accessStatus" ng-change="searchDefinitions()"
+                                                data-ng-options="accessStatus as (accessStatus |translate) for accessStatus in accessStatuses" class="form-control">
+                                            <option value="">- Jagamise staatus -</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-8 m-b-sm">
+                                        <div class="input-group">
+                                            <input ng-model="definitionPagination.name" type="text" placeholder="Otsi" class="input-sm form-control">
+                                            <span class="input-group-btn">
+                                                <button ng-click="searchDefinitions()" type="button" class="btn btn-sm btn-primary">
+                                                    Otsi!
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="project-list overflow-scroll">
+                                    <table class="table table-hover">
+                                        <tbody>
+                                        <tr dir-paginate="definition in definitions | filter: searchDefinitionFilter | itemsPerPage: definitionPagination.perPage"
+                                            total-items="definitionTotalCount"
+                                            current-page="definitionPagination.page"
+                                            boundary-links="true"
+                                            pagination-id="definition">
+                                            <td class="project-title">
+                                                <a ui-sref="workflow-definition-management-item({definitionId: definition.id})">{{definition.name}}
+                                                    {{definition.id}}</a>
+                                                <br/>
+                                                <small>Loodud {{definition.createdAt | date: 'dd.MM.yyyy H:mm'}}
+                                                </small>
+                                            </td>
+                                            <td class="project-title">
+                                                <label>{{ definition.accessStatus | translate }}</label>
+                                                <br/>
+                                                <small ng-if="definition.accessStatus == 'public' && definition.publishedAt">
+                                                    Avalikustatud {{definition.publishedAt | date: 'dd.MM.yyyy H:mm'}}
+                                                </small>
+                                            </td>
+                                            <td class="project-title">
+                                                <label>Kasutatud</label>
+                                                <br/>
+                                                <small>{{definition.usageCount}}
+                                                    <span ng-if="definition.usageCount == 1"> kord</span>
+                                                    <span ng-if="definition.usageCount != 1"> korda</span>
+                                                </small>
+                                            </td>
+                                            <td class="project-actions">
+                                                <a ui-sref="workflow-definition-management-item({definitionId: definition.id})"
+                                                   class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Vaata
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="text-right">
+                                        <dir-pagination-controls
+                                                on-page-change="changeDefinitionsPage(newPageNumber)"
+                                                template-url="views/templates/pagination.html"
+                                                pagination-id="definition">
+                                        </dir-pagination-controls>
+                                    </div>
+                                    <div ng-if="!definitions.length || definitions.length == 0">
+                                        <i>Töövoo kirjeldusi ei leitud</i>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
-                    <div class="project-list overflow-scroll">
-                        <table class="table table-hover">
-                            <tbody>
-                                <tr dir-paginate="workflow in workflows | filter: searchFilter | itemsPerPage: pagination.perPage" total-items="totalCount" current-page="pagination.page" boundary-links="true">
-                                    <td class="project-status">
-                                        <span kl-workflow-runtime status="{{workflow.status}}" start="{{workflow.datetimeStart}}" end="{{workflow.datetimeEnd}}"></span>
-                                    </td>
-                                    <td class="project-title">
-                                        <a ui-sref="workflow-management-item({workflowId: workflow.id})">{{workflow.name}} {{workflow.id}}</a>
-                                        <br/>
-                                        <small>Käivitatud {{workflow.datetimeStart | date: 'dd.MM.yyyy H:mm'}}</small>
-                                    </td>
-                                    <td class="project-completion">
-                                        <small>Progress: {{workflow.progress}}%</small>
-                                        <div class="progress progress-mini">
-                                            <div style="width: {{workflow.progress}}%;" class="progress-bar"></div>
-                                        </div>
-                                    </td>
-                                    <td class="project-people">
-                                        {{workflow.user.name}}
-                                    </td>
-                                    <td class="project-actions">
-                                        <a ui-sref="workflow-management-item({workflowId: workflow.id})" class="btn btn-white btn-sm">
-                                            <i class="fa fa-folder"></i> Vaata
-                                        </a>
-                                        <a ng-if="workflow.status == 'RUNNING'" ng-click="cancelWorkflow(workflow)" href="" class="btn btn-danger btn-sm">
-                                            <i class="fa fa-stop"></i> Peata
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="text-right">
-                            <dir-pagination-controls on-page-change="changePage(newPageNumber)" template-url="views/templates/pagination.html"></dir-pagination-controls>
-                        </div>
-                    </div>
-
-                    <div ng-if="!workflows.length || workflows.length == 0">
-                        <i>Töövooge ei leitud</i>
-                    </div>
-
                 </div>
+
             </div>
         </div>
     </div>
-</div>
 
 

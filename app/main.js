@@ -52,11 +52,13 @@ require.config({
         'WorkflowAddModalController': 'controller/workflow/AddModalController',
         'WorkflowAddDefinitionModalController': 'controller/workflow/AddDefinitionModalController',
         'WorkflowSettingsModalController' : 'controller/workflow/SettingsModalController',
+        'WorkflowDefinitionSettingsModalController' : 'controller/workflow/DefinitionSettingsModalController',
         'WorkflowDefinitionEditController' : 'controller/workflow/DefinitionEditController',
         'WorkflowViewController'    : 'controller/workflow/ViewController',
         'WorkflowResourceUploadController' : 'controller/workflow/ResourceUploadController',
         'WorkflowManagementListController': 'controller/workflow/ManagementListController',
         'WorkflowPublicController': 'controller/workflow/PublicController',
+        'WorkflowDefinitionViewController': 'controller/workflow/DefinitionViewController',
 
         'WorkflowDefinitionServiceSettingsModalController': 'controller/workflow/DefinitionServiceSettingsModalController',
 

@@ -6,6 +6,7 @@ define([], function () {
     return {
         'private'   : 'Privaatne',
         'shared'    : 'Jagatud',
+        'public'    : 'Avalik',
 
         'INIT'      : 'Lisatud',
         'RUNNING'   : 'Töös',

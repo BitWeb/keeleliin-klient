@@ -4,34 +4,24 @@ define([
     'WorkflowService',
     'WorkflowDefinitionService',
     'ServiceService',
-    'ServiceInfoModalController'
+    'ServiceInfoModalController',
+    'WorkflowDefinitionSettingsModalController'
 ], function (angularAMD) {
 
-    angularAMD.controller('WorkflowPublicController', [ '$scope','$rootScope', '$state', '$stateParams', '$log', 'WorkflowService', 'WorkflowDefinitionService','ProjectService','ServiceService',
+    angularAMD.controller('WorkflowDefinitionViewController', [ '$scope','$rootScope', '$state', '$stateParams', '$log', 'WorkflowService', 'WorkflowDefinitionService','ProjectService','ServiceService',
         function($scope, $rootScope, $state, $stateParams, $log, workflowService, workflowDefinitionService, projectService, serviceService ) {
 
             $scope.definitionId = $stateParams.definitionId;
+            $scope.projectId = $stateParams.projectId;
 
-            projectService.getHomeProject( function (err, project) {
-                if (err) {
-                    console.error(err);
+            workflowDefinitionService.getDefinitionOverview($stateParams.definitionId, function (err, data) {
+                if(err){
+                    $log.error(err);
                     return alert('Err');
                 }
-                if (!project) {
-                    return;
-                }
-
-                $scope.project = project;
-                $scope.projectId = project.id;
-
-                workflowDefinitionService.getDefinitionOverview($stateParams.definitionId, function (err, data) {
-                    if(err){
-                        $log.error(err);
-                        return alert('Err');
-                    }
-                    $scope.definition = data;
-                });
+                $scope.definition = data;
             });
+
 
             $scope.addResources = function () {
                 workflowDefinitionService.createWorkflowFromDefinition( $scope.definition.id, $scope.projectId, function (err, workflow) {
@@ -49,6 +39,12 @@ define([
                 serviceService.openServiceInfoModal( serviceId );
             };
 
+            $scope.openDefinitionSettingsModal = function () {
+                workflowDefinitionService.openDefinitionSettingsModal($scope, $scope.definition, function (err, definition) {
+                    $scope.definition = definition;
+                });
+            };
+
             $scope.getOwner = function( definition ){
                 for(var i = 0; i< definition.sharedUsers.length; i++){
                     if(definition.sharedUsers[i].role == 'owner'){
@@ -57,7 +53,6 @@ define([
                 }
                 return '';
             };
-
 
         }]);
 });

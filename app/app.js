@@ -37,7 +37,7 @@ define([
     app.run(['$rootScope', '$state', '$stateParams', 'UserService','$log','$location','$window','$timeout', function ($rootScope, $state, $stateParams, userService, $log, $location, $window, $timeout) {
 
         $rootScope.isInitFinished = false;
-
+        $rootScope.admin_email = globalConf.admin_email;
         $rootScope.$state = $state;
         $rootScope.userService = userService;
 

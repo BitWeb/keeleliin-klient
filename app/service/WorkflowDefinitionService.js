@@ -6,7 +6,7 @@ define(['angularAMD'], function (angularAMD) {
 
             this.openAddDefinitionModal = function ($scope, project) {
                 return $modal.open({
-                    templateUrl: '../../views/workflow/add_definition_modal.html',
+                    templateUrl: '../../views/workflow/definition_settings_modal.html',
                     scope: $scope,
                     controller: 'AddDefinitionModalController',
                     resolve: {
@@ -83,7 +83,7 @@ define(['angularAMD'], function (angularAMD) {
             };
 
             this.getWorkflowsDefinitionsList = function (params, callback) {
-                $http.get(config.API_URL + '/workflow-definition', {}).then(
+                $http.get(config.API_URL + '/workflow-definition', params).then(
                     function (data, status) {
                         callback(null, data.data.data);
                     }
@@ -354,6 +354,74 @@ define(['angularAMD'], function (angularAMD) {
 
                 return true;
             };
+
+            this.openDefinitionSettingsModal = function ($scope, definition, cb) {
+                var modalInstance = $modal.open({
+                    templateUrl: '../../views/workflow/definition_settings_modal.html',
+                    controller: 'WorkflowDefinitionSettingsModalController',
+                    resolve: {
+                        definitionId: function(){
+                            return definition.id;
+                        }
+                    }
+                });
+                modalInstance.result.then(function (data) {
+
+                    definition.name = data.name;
+                    definition.description = data.description;
+                    definition.purpose = data.purpose;
+                    definition.accessStatus = data.accessStatus;
+                    definition.publicUrl = data.publicUrl;
+
+                    $scope.$broadcast('updateBreadcrumb');
+                    cb(null, definition);
+                });
+            };
+
+            this.getDefinitionSettings = function (definitionId, cb) {
+
+                self.getDefinitionOverview(definitionId, function (err, overview) {
+                    if(err){
+                       return cb(err);
+                    }
+
+                    var settings = {
+                        id: overview.id,
+                        name: overview.name,
+                        description: overview.description,
+                        purpose: overview.purpose,
+                        accessStatus: overview.accessStatus,
+                        users: []
+                    };
+
+                    for(var i = 0, l = overview.sharedUsers.length; i < l; i++){
+                        if(overview.sharedUsers[i].role != 'owner'){
+                            settings.users.push(overview.sharedUsers[i].user.id);
+                        }
+                    }
+                    return cb(null, settings);
+                });
+            };
+
+            this.updateDefinitionSettings = function (definition, callback) {
+
+                $http.put(config.API_URL + '/workflow-definition/' + definition.id , definition).then(
+                    function (data, status) {
+                        $log.debug(data.data);
+                        callback(null, data.data.data);
+                    }
+                );
+            };
+
+            this.getWorkflowDefinitionsManagementList = function (params, callback) {
+                $http.get(config.API_URL + '/workflow-definition/management-list', { params: params } ).then(
+                    function (data, status) {
+                        callback(null, data.data.data);
+                    }
+                );
+            }
+
+
 
         }
     ]);

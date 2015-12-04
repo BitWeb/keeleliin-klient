@@ -8,7 +8,7 @@ define(['angularAMD'], function (angularAMD) {
 
                 $http.get(config.API_URL + '/project', {params: params }).then(
                     function(data) {
-                        console.log(data);
+                        $log.debug(data);
                         callback(null, data.data.data);
                     }
                 );
@@ -36,7 +36,7 @@ define(['angularAMD'], function (angularAMD) {
 
                 $http.delete(config.API_URL + '/project/' + project.id).then(
                     function(data, status) {
-                        console.log(data.data);
+                        $log.debug(data.data);
                         callback(null, true);
                     }
                 );
@@ -63,10 +63,10 @@ define(['angularAMD'], function (angularAMD) {
                 });
 
                 modalInstance.result.then(function (project) {
-                    $log.info('Project updated');
+                    $log.debug('Project updated');
                     $scope.project = project;
                 }, function () {
-                    $log.info('Modal dismissed at: ' + new Date());
+                    $log.debug('Modal dismissed at: ' + new Date());
                 });
 
                 return modalInstance;
@@ -91,7 +91,7 @@ define(['angularAMD'], function (angularAMD) {
 
                 $http.post(config.API_URL + '/project', project).then(
                     function(data, status) {
-                        console.log(data.data);
+                        $log.debug(data.data);
                         callback(null, data.data.data);
                     }
                 );
@@ -101,7 +101,7 @@ define(['angularAMD'], function (angularAMD) {
 
                 $http.put(config.API_URL + '/project/' + project.id, updateProject).then(
                     function(data, status) {
-                        console.log(data.data);
+                        $log.debug(data.data);
                         callback(null, data.data.data);
                     }
                 );
@@ -111,7 +111,7 @@ define(['angularAMD'], function (angularAMD) {
 
                 $http.get(config.API_URL + '/project/' + id).then(
                     function(data) {
-                        console.log(data);
+                        $log.debug(data);
                         callback(null, data.data.data);
                     }
                 );
@@ -121,11 +121,23 @@ define(['angularAMD'], function (angularAMD) {
 
                 $http.get(config.API_URL + '/project/' + id + '/workflows').then(
                     function(data) {
-                        console.log(data);
+                        $log.debug(data);
                         callback(null, data.data.data);
                     }
                 );
             };
+
+            this.getProjectDefinitions = function (id, callback) {
+
+                $http.get(config.API_URL + '/project/' + id + '/definitions').then(
+                    function(data) {
+                        $log.debug(data);
+                        callback(null, data.data.data);
+                    }
+                );
+            };
+
+
 
         }
     ]);

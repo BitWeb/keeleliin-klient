@@ -5,7 +5,10 @@
         <div class="col-lg-3">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Töövoog: {{definition.name}}</h5>
+                    <h5>{{definition.name}}</h5>
+                    <a ng-if="openDefinitionSettingsModal" ng-click="openDefinitionSettingsModal()" class="btn btn-white btn-xs pull-right" href="" title="Muuda sätteid">
+                        <i class="fa fa-pencil"></i> Sätted
+                    </a>
                 </div>
                 <div class="ibox-content">
                     <div>
@@ -18,6 +21,38 @@
                         <strong>Eesmärk</strong>
                         <p>
                             {{definition.purpose}}
+                        </p>
+                    </div>
+                    <div>
+                        <strong>Jagamise staatus</strong>
+                        <p>
+                            {{definition.accessStatus | translate}}
+                        </p>
+                    </div>
+                    <div ng-if="definition.publicUrl">
+                        <strong>Avalik url</strong>
+                        <p>
+                            <a href="{{ definition.publicUrl }}">{{ definition.publicUrl }}</a>
+                        </p>
+                    </div>
+                    <div>
+                        <strong>Loodud</strong>
+                        <p>
+                            {{definition.createdAt | date: 'dd.MM.yyyy H:mm' }}
+                        </p>
+                    </div>
+                    <div ng-if="definition.publishedAt && definition.accessStatus == 'public'">
+                        <strong>Avalikustatud</strong>
+                        <p>
+                            {{definition.publishedAt | date: 'dd.MM.yyyy H:mm' }}
+                        </p>
+                    </div>
+
+
+                    <div>
+                        <strong>Omanik</strong>
+                        <p>
+                            {{getOwner(definition)}}
                         </p>
                     </div>
                 </div>
@@ -54,7 +89,7 @@
                             </div>
                         </div>
 
-                        <div class="ibox-footer text-right">
+                        <div ng-if="projectId" class="ibox-footer text-right">
                             <a ng-click="editServices()" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Lisa töövoog </a>
                             <a ng-click="addResources()" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Määra sisend </a>
                         </div>
