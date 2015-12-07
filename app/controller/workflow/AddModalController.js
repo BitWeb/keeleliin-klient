@@ -8,10 +8,6 @@ define(['angularAMD'], function (angularAMD) {
 
                 $scope.definitionFilterName = null;
 
-                $scope.workflow = {
-                    workflowDefinitionId: null
-                };
-
                 $scope.selectedDefinitionId = null;
 
                 var definitions = [];
@@ -26,14 +22,9 @@ define(['angularAMD'], function (angularAMD) {
                     $scope.updateList(null);
                 });
 
-                $scope.addWorkflow = function () {
-                    $scope.errorMessage = null;
-                    if(!$scope.workflow.workflowDefinitionId){
-                        $scope.errorMessage = 'Töövoog peab olema valitud';
-                        return;
-                    }
+                $scope.addWorkflow = function (definitionId) {
 
-                    workflowDefinitionService.createWorkflowFromDefinition($scope.workflow.workflowDefinitionId, project.id, function (err, workflow) {
+                    workflowDefinitionService.createWorkflowFromDefinition(definitionId, project.id, function (err, workflow) {
                         $scope.$dismiss();
                         $state.go('workflow-definition-edit', {workflowId: workflow.id, projectId: project.id});
                     });
@@ -42,9 +33,6 @@ define(['angularAMD'], function (angularAMD) {
                 $scope.bookmarkCb = function (definitionId, status) {
                     for(var i = 0, l = definitions.length; i < l; i++){
                         if(definitions[i].id == definitionId){
-
-                            console.log('Update status');
-
                             definitions[i].isBookmarked = status;
                         }
                     }

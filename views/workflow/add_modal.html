@@ -4,11 +4,6 @@
 </div>
 <div class="modal-body">
     <div class="row">
-
-        <div ng-if="errorMessage" class="alert alert-danger">
-            {{errorMessage}}
-        </div>
-
         <div class="input-group">
             <input ng-keyup="updateList()" ng-model="definitionFilterName" type="text" placeholder="Sisesta töövoo nimetus või märksõna" class="input-sm form-control">
             <span class="input-group-btn">
@@ -32,11 +27,8 @@
             </div>
             <div ng-repeat="definition in definitions" class="panel panel-default">
                 <div class="panel-heading">
-                    <h5 class="panel-title">
-                        <a data-toggle="collapse" data-target="#flow-{{$index}}">{{definition.name}}</a>
-                        <label class="radio-inline pull-right">
-                            <input ng-model="workflow.workflowDefinitionId" type="radio" value="{{definition.id}}" name="definition"> Vali
-                        </label>
+                    <h5 class="panel-title cursor-pointer" data-toggle="collapse" data-target="#flow-{{$index}}">
+                        {{definition.name}}
                     </h5>
                 </div>
                 <div id="flow-{{$index}}" class="panel-collapse collapse">
@@ -60,6 +52,10 @@
                         <p ng-if="definition.publicUrl">
                             {{definition.publishedAt | date: 'dd.MM.yyyy H:mm'}}
                         </p>
+
+                        <div class="text-right">
+                            <a href="" class="btn btn-primary btn-sm" ng-click="addWorkflow(definition.id)">Lisa töövoog</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -68,5 +64,4 @@
 </div>
 <div class="modal-footer">
     <a href="" class="btn btn-white btn-sm" ng-click="$dismiss()">Katkesta</a>
-    <a href="" class="btn btn-primary btn-sm" ng-click="addWorkflow()">Lisa töövoog</a>
 </div>
