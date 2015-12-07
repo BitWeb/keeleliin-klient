@@ -22,6 +22,7 @@
                 <label ng-click="updateList('public')" class="btn btn-sm btn-white"> <input type="radio" id="option2" name="type"> Avalikud</label>
                 <label ng-click="updateList('private')" class="btn btn-sm btn-white"> <input type="radio" id="option3" name="type"> Isiklikud</label>
                 <label ng-click="updateList('shared')" class="btn btn-sm btn-white"> <input type="radio" id="option4" name="type"> Minule jagatud</label>
+                <label ng-click="updateList('bookmarked')" class="btn btn-sm btn-white"> <input type="radio" id="option5" name="type"> Lemmikud</label>
             </div>
         </div>
 
@@ -40,6 +41,8 @@
                 </div>
                 <div id="flow-{{$index}}" class="panel-collapse collapse">
                     <div class="panel-body">
+                        <div bookmark-definition is-bookmarked="definition.isBookmarked" definition-id="definition.id" update-cb="bookmarkCb" class="pull-right"></div>
+
                         <h4 ng-if="definition.description">Kirjeldus:</h4>
                         <p>{{definition.description}}</p>
                         <hr ng-if="definition.description">

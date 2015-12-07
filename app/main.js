@@ -32,6 +32,7 @@ require.config({
         'jq-dropzone'       : 'lib/plugins/dropzone/dropzone',
 
         'directives'        : 'directive/directives',
+        'bookmarkDefinition'        : 'directive/bookmarkDefinition',
         'sidebarDirectives' : 'directive/sidebarDirectives',
         'filetree'          : 'directive/filetree',
         'entutree'          : 'directive/entutree',

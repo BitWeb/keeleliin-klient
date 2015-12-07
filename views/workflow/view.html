@@ -14,7 +14,11 @@
             <div class="ibox">
                 <div class="ibox-content">
                     <div class="row">
+
                         <div class="col-lg-12">
+
+                            <div ng-if="workflow.workflowDefinition" bookmark-definition is-bookmarked="workflow.workflowDefinition.isBookmarked" definition-id="workflow.workflowDefinition.id" class="pull-right"></div>
+
                             <dl class="dl-horizontal">
                                 <dt>Staatus:</dt>
                                 <dd>

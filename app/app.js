@@ -16,6 +16,7 @@ define([
     'inspinia',
     'angular-translate',
     'directives',
+    'bookmarkDefinition',
     'breadcrumb',
     'sidebarDirectives',
     'ui-bootstrap',

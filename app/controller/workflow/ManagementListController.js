@@ -57,7 +57,7 @@ define(['angularAMD', 'angular-utils-pagination', 'WorkflowService', 'WorkflowDe
             page: 1,
             name: '',
             perPage: 25,
-            accessStatus: 'public'
+            accessStatus: ''
         };
 
         function getDefinitions() {

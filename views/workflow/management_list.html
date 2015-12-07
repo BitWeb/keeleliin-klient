@@ -158,6 +158,14 @@
                                                     <span ng-if="definition.usageCount != 1"> korda</span>
                                                 </small>
                                             </td>
+                                            <td class="project-title">
+                                                <label>Lemmikuks lisatud</label>
+                                                <br/>
+                                                <small>{{definition.bookmarkedCount}}
+                                                    <span ng-if="definition.bookmarkedCount == 1"> kord</span>
+                                                    <span ng-if="definition.bookmarkedCount != 1"> korda</span>
+                                                </small>
+                                            </td>
                                             <td class="project-actions">
                                                 <a ui-sref="workflow-definition-management-item({definitionId: definition.id})"
                                                    class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Vaata

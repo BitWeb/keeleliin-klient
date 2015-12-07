@@ -93,16 +93,19 @@ define(['angularAMD'], function (angularAMD) {
             this.filterDefinitionsList = function (definitions, type, name) {
                 var map = {};
                 var updated = [];
-
                 for (i in definitions) {
                     var item = definitions[i];
                     if (map[item.id] == item.id) {
                         continue;
                     }
-                    if (type && item.accessStatus != type) {
+                    if(type == 'bookmarked'){
+                        if(item.isBookmarked != true){
+                            continue;
+                        }
+
+                    } else if (type && item.accessStatus != type) {
                         continue;
                     }
-
                     var upSearchName = name ? name.toUpperCase() : null;
                     var upName = item.name.toUpperCase();
                     var upDescription = item.description.toUpperCase();
@@ -419,9 +422,16 @@ define(['angularAMD'], function (angularAMD) {
                         callback(null, data.data.data);
                     }
                 );
+            };
+
+            this.toggleDefinitionBookmark = function (definitionId, cb) {
+                $http.put(config.API_URL + '/workflow-definition/' + definitionId + '/toggle-bookmark' ).then(
+                    function (data, status) {
+                        $log.debug(data.data);
+                        cb(null, data.data.data);
+                    }
+                );
             }
-
-
 
         }
     ]);

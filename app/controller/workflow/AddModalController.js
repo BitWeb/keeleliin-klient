@@ -38,5 +38,17 @@ define(['angularAMD'], function (angularAMD) {
                         $state.go('workflow-definition-edit', {workflowId: workflow.id, projectId: project.id});
                     });
                 };
+
+                $scope.bookmarkCb = function (definitionId, status) {
+                    for(var i = 0, l = definitions.length; i < l; i++){
+                        if(definitions[i].id == definitionId){
+
+                            console.log('Update status');
+
+                            definitions[i].isBookmarked = status;
+                        }
+                    }
+                };
+
             }])
 });
