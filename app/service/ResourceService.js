@@ -100,13 +100,15 @@ define(['angularAMD', 'ResourceTreeMapper', 'ResourceInfoController', 'ResourceD
                 });
             };
 
-            this.openResourceMultiselectModal = function(callback){
-                return $modal.open({
-                    templateUrl: '../../views/resource/multiselect_modal.html',
-                    controller: 'ResourceMultiselectController',
-                    resolve: {}
-                });
-            };
+            this.loadPublicUrl = function( resourceId, callback){
+                $http.get(config.API_URL + '/resource/' + resourceId + '/public-url' ).then(
+                    function(data) {
+                        $log.log(data);
+                        callback(null, data.data.data);
+                    }
+                );
+            }
+
         }
     ]);
 });

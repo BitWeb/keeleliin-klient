@@ -41,6 +41,13 @@
                         required >
                 </select>
             </div>
+            <div class="form-group">
+                <label class="control-label">Avalik viide: </label>
+                <button ng-if="!publicUrl" ng-click="loadPublicUrl()" class="btn btn-xs btn-white">Näita <i class="fa fa-caret-down"></i></button>
+                <div>
+                    <a href="{{publicUrl}}" target="_blank">{{publicUrl}}</a>
+                </div>
+            </div>
         </form>
     </div>
 </div>

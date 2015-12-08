@@ -43,5 +43,11 @@ define([
                     $scope.$dismiss();
                 });
             };
+
+            $scope.loadPublicUrl = function () {
+                resourceService.loadPublicUrl( $scope.resource.id, function (err, data) {
+                    $scope.publicUrl = data.url;
+                });
+            };
         }]);
 });
