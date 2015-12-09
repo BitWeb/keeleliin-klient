@@ -83,42 +83,13 @@ define(['angularAMD'], function (angularAMD) {
             };
 
             this.getWorkflowsDefinitionsList = function (params, callback) {
-                $http.get(config.API_URL + '/workflow-definition', params).then(
+                $http.get(config.API_URL + '/workflow-definition', { params: params }).then(
                     function (data, status) {
                         callback(null, data.data.data);
                     }
                 );
             };
 
-            this.filterDefinitionsList = function (definitions, type, name) {
-                var map = {};
-                var updated = [];
-                for (i in definitions) {
-                    var item = definitions[i];
-                    if (map[item.id] == item.id) {
-                        continue;
-                    }
-                    if(type == 'bookmarked'){
-                        if(item.isBookmarked != true){
-                            continue;
-                        }
-
-                    } else if (type && item.accessStatus != type) {
-                        continue;
-                    }
-                    var upSearchName = name ? name.toUpperCase() : null;
-                    var upName = item.name.toUpperCase();
-                    var upDescription = item.description.toUpperCase();
-                    var upPurpose = item.purpose.toUpperCase();
-
-                    if (upSearchName && !(upName.indexOf(upSearchName) > -1 || upDescription.indexOf(upSearchName) > -1 || upPurpose.indexOf(upSearchName) > -1)) {
-                        continue;
-                    }
-                    map[item.id] = item.id;
-                    updated.push(item);
-                }
-                return updated;
-            };
 
             this.updateDefinitionServices = function (workflow, selectedServices, callback) {
                 $http.put(config.API_URL + '/workflow/' + workflow.id + '/definition/services', selectedServices).then(

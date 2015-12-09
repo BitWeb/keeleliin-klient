@@ -6,6 +6,10 @@ define(['angularAMD', 'angular-utils-pagination', 'WorkflowService', 'WorkflowDe
 
         $scope.totalCount = 0;
         $scope.workflows = [];
+
+        $scope.workflowOrderByOptions = ['name_asc','name_desc','created_at_asc','created_at_desc'];
+
+
         $scope.pagination = {
             page: 1,
             name: '',
@@ -49,15 +53,17 @@ define(['angularAMD', 'angular-utils-pagination', 'WorkflowService', 'WorkflowDe
         };
 
 /////
-        $scope.accessStatuses = ['private','public','shared'];
 
+        $scope.definitionOrderByOptions = ['name_asc','name_desc','created_at_asc','created_at_desc', 'used_asc', 'used_desc', 'bookmarked_asc', 'bookmarked_desc'];
+        $scope.accessStatuses = ['private','public','shared'];
         $scope.definitionsTotalCount = 0;
         $scope.definitions = [];
         $scope.definitionPagination = {
             page: 1,
             name: '',
             perPage: 25,
-            accessStatus: ''
+            accessStatus: '',
+            order: ''
         };
 
         function getDefinitions() {

@@ -4,8 +4,14 @@
 </div>
 <div class="modal-body">
     <div class="row">
+        <div class="pull-left">
+            <select ng-model="filter.order" ng-change="updateList()"
+                    data-ng-options="orderByOption as (orderByOption |translate) for orderByOption in definitionOrderByOptions" class="input-sm form-control col-md-1 no-padding">
+                <option value="">- Järjesta -</option>
+            </select>
+        </div>
         <div class="input-group">
-            <input ng-keyup="updateList()" ng-model="definitionFilterName" type="text" placeholder="Sisesta töövoo nimetus või märksõna" class="input-sm form-control">
+            <input ng-keyup="updateList()" ng-model="filter.name" type="text" placeholder="Sisesta töövoo nimetus või märksõna" class="input-sm form-control">
             <span class="input-group-btn">
                 <button type="button" class="btn btn-sm btn-primary"> Otsi</button>
             </span>
@@ -13,11 +19,22 @@
         <div class="m-t-sm m-b-md">
             <label class="m-r-sm">Filtreeri:</label>
             <div data-toggle="buttons" class="btn-group">
-                <label ng-click="updateList()" class="btn btn-sm btn-white active"> <input type="radio" id="option1" name="type"> Kõik </label>
-                <label ng-click="updateList('public')" class="btn btn-sm btn-white"> <input type="radio" id="option2" name="type"> Avalikud</label>
-                <label ng-click="updateList('private')" class="btn btn-sm btn-white"> <input type="radio" id="option3" name="type"> Isiklikud</label>
-                <label ng-click="updateList('shared')" class="btn btn-sm btn-white"> <input type="radio" id="option4" name="type"> Minule jagatud</label>
-                <label ng-click="updateList('bookmarked')" class="btn btn-sm btn-white"> <input type="radio" id="option5" name="type"> Lemmikud</label>
+                <label ng-click="updateType()" class="btn btn-sm btn-white active">
+                    <input type="radio" id="option1" name="type"> Kõik
+                </label>
+                <label ng-click="updateType('public')" class="btn btn-sm btn-white">
+                    <input type="radio" id="option2" name="type"> Avalikud
+                </label>
+                <label ng-click="updateType('private')" class="btn btn-sm btn-white">
+                    <input type="radio" id="option3" name="type"> Isiklikud
+                </label>
+                <label ng-click="updateType('shared')" class="btn btn-sm btn-white">
+                    <input type="radio" id="option4" name="type"> Minule jagatud
+                </label>
+                <label ng-click="updateType('bookmarked')" class="btn btn-sm btn-white">
+                    <input type="radio" id="option5" name="type"> Lemmikud
+                </label>
+
             </div>
         </div>
 
@@ -28,12 +45,12 @@
             <div ng-repeat="definition in definitions" class="panel panel-default">
                 <div class="panel-heading">
                     <h5 class="panel-title cursor-pointer" data-toggle="collapse" data-target="#flow-{{$index}}">
-                        {{definition.name}}
+                        {{definition.name}} - {{definition.id}}
                     </h5>
                 </div>
                 <div id="flow-{{$index}}" class="panel-collapse collapse">
                     <div class="panel-body">
-                        <div bookmark-definition is-bookmarked="definition.isBookmarked" definition-id="definition.id" update-cb="bookmarkCb" class="pull-right"></div>
+                        <div bookmark-definition is-bookmarked="definition.isBookmarked" definition-id="definition.id" class="pull-right"></div>
 
                         <h4 ng-if="definition.description">Kirjeldus:</h4>
                         <p>{{definition.description}}</p>

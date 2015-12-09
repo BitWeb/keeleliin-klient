@@ -27,7 +27,7 @@
 
 
                                 <div class="row m-b-sm m-t-sm">
-                                    <div class="col-sm-2 m-b-sm">
+                                    <div class="col-sm-1 m-b-sm">
                                         <button ng-click="refreshList()" type="button" id="loading-example-btn"
                                                 class="btn btn-white btn-sm"><i class="fa fa-refresh"></i> Uuenda
                                         </button>
@@ -40,15 +40,23 @@
                                             </option>
                                         </select>
                                     </div>
-                                    <div class="col-md-8 m-b-sm">
+
+                                    <div class="col-md-2 m-b-sm">
+                                        <select ng-model="pagination.order" ng-change="refreshList()"
+                                                data-ng-options="orderByOption as (orderByOption |translate) for orderByOption in workflowOrderByOptions" class="form-control">
+                                            <option value="">- Järjesta -</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-7 m-b-sm">
                                         <div class="input-group">
                                             <input ng-model="pagination.name" type="text" placeholder="Otsi"
                                                    class="input-sm form-control">
-                                <span class="input-group-btn">
-                                    <button ng-click="searchWorkflows()" type="button" class="btn btn-sm btn-primary">
-                                        Otsi!
-                                    </button>
-                                </span>
+                                                <span class="input-group-btn">
+                                                    <button ng-click="searchWorkflows()" type="button" class="btn btn-sm btn-primary">
+                                                        Otsi!
+                                                    </button>
+                                                </span>
                                         </div>
                                     </div>
                                 </div>
@@ -80,7 +88,7 @@
                                                 </div>
                                             </td>
                                             <td class="project-people">
-                                                {{workflow.user.name}}
+                                                <a href="mailto:{{workflow.userEmail}}">{{workflow.userName}}</a>
                                             </td>
                                             <td class="project-actions">
                                                 <a ui-sref="workflow-management-item({workflowId: workflow.id})"
@@ -117,6 +125,14 @@
                                             <option value="">- Jagamise staatus -</option>
                                         </select>
                                     </div>
+
+                                    <div class="col-md-2 m-b-sm">
+                                        <select ng-model="definitionPagination.order" ng-change="searchDefinitions()"
+                                                data-ng-options="orderByOption as (orderByOption |translate) for orderByOption in definitionOrderByOptions" class="form-control">
+                                            <option value="">- Järjesta -</option>
+                                        </select>
+                                    </div>
+
                                     <div class="col-md-8 m-b-sm">
                                         <div class="input-group">
                                             <input ng-model="definitionPagination.name" type="text" placeholder="Otsi" class="input-sm form-control">

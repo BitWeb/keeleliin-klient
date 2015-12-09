@@ -4,23 +4,31 @@ define(['angularAMD'], function (angularAMD) {
         [ '$scope', '$state', '$stateParams', 'WorkflowDefinitionService', 'project','$log','config',
             function ($scope, $state, $stateParams, workflowDefinitionService, project, $log, config) {
 
+                $scope.filter = {
+                    name: '',
+                    order: 'name_asc',
+                    type: null
+                };
+
+                $scope.definitionOrderByOptions = ['name_asc','name_desc','created_at_asc','created_at_desc', 'used_asc', 'used_desc', 'bookmarked_asc', 'bookmarked_desc'];
+
                 $scope.config = config;
-
-                $scope.definitionFilterName = null;
-
-                $scope.selectedDefinitionId = null;
 
                 var definitions = [];
 
-                $scope.updateList = function (type) {
-                    $scope.definitions = workflowDefinitionService.filterDefinitionsList(definitions, type, $scope.definitionFilterName);
+                $scope.updateType = function(type){
+                    $scope.filter.type = type;
+                    $scope.updateList();
                 };
 
-                workflowDefinitionService.getWorkflowsDefinitionsList({}, function (err, data) {
-                    $log.debug(data);
-                    definitions = data;
-                    $scope.updateList(null);
-                });
+                $scope.updateList = function () {
+                    workflowDefinitionService.getWorkflowsDefinitionsList( $scope.filter, function (err, data) {
+                        $log.debug(data);
+                        definitions = data;
+                        $scope.definitions = definitions;
+                    });
+                };
+                $scope.updateList();
 
                 $scope.addWorkflow = function (definitionId) {
 
@@ -29,14 +37,5 @@ define(['angularAMD'], function (angularAMD) {
                         $state.go('workflow-definition-edit', {workflowId: workflow.id, projectId: project.id});
                     });
                 };
-
-                $scope.bookmarkCb = function (definitionId, status) {
-                    for(var i = 0, l = definitions.length; i < l; i++){
-                        if(definitions[i].id == definitionId){
-                            definitions[i].isBookmarked = status;
-                        }
-                    }
-                };
-
             }])
 });
