@@ -166,7 +166,7 @@ define(['angularAMD'], function (angularAMD) {
                     },
                     breadcrumb: {
                         parent: 'project-item',
-                        title: 'Töövoo {{workflowId}} definitsioon',
+                        title: 'Töövoo {{workflowId}} kirjeldus',
                         attributes: '{workflowId: workflowId}'
                     }
                 })
@@ -240,7 +240,7 @@ define(['angularAMD'], function (angularAMD) {
                     },
                     breadcrumb: {
                         parent: 'project-item',
-                        title: 'Töövoo {{definitionId}} definitsioon',
+                        title: 'Töövoo {{definitionId}} kirjeldus',
                         attributes: '{definitionId: definitionId}'
                     }
                 })
