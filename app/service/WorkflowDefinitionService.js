@@ -402,7 +402,30 @@ define(['angularAMD'], function (angularAMD) {
                         cb(null, data.data.data);
                     }
                 );
-            }
+            };
+
+            this.deleteWorkflowDefinition = function (definitionId, callback) {
+                var modalInstance = $modal.open({
+                    templateUrl: '../../views/confirm_modal.html',
+                    controller: 'ConfirmModalController',
+                    resolve: {
+                        message: function () {
+                            return 'Kas oled kindel, et soovid antud töövookirjelduse kustutada?';
+                        }
+                    }
+                });
+                modalInstance.result.then(function (confirm) {
+                    if(confirm == true){
+                        $http.delete(config.API_URL + '/workflow-definition/' + definitionId).then(
+                            function(data) {
+                                callback(null, true);
+                            }
+                        );
+                    } else {
+                        callback(null, false);
+                    }
+                });
+            };
 
         }
     ]);

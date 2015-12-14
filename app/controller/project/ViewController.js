@@ -81,5 +81,13 @@ define([
                     }
                 });
             };
+
+            $scope.deleteWorkflowDefinition = function( definition ){
+                workflowDefinitionService.deleteWorkflowDefinition( definition.id, function (err, success) {
+                    if(!err && success){
+                        updateDefinitionsList();
+                    }
+                });
+            };
         }]);
 });

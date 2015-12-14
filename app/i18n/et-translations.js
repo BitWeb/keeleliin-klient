@@ -28,10 +28,10 @@ define([], function () {
         'name_desc'         : 'Nimi z-a',
         'created_at_asc'    : 'Loomise aeg vanemad',
         'created_at_desc'   : 'Loomise aeg uuemad',
-        'used_asc'          : 'Enimkasutatud',
-        'used_desc'         : 'Vähemkasutatud',
-        'bookmarked_asc'    : 'Lemmikud',
-        'bookmarked_desc'   : 'Vähemlemmikud'
+        'used_asc'          : 'Vähemkasutatud',
+        'used_desc'         : 'Enimkasutatud',
+        'bookmarked_asc'    : 'Vähemlemmikud',
+        'bookmarked_desc'   : 'Lemmikud'
 
     };
 });
