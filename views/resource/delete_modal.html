@@ -33,8 +33,11 @@
             </div>
             <div ng-if="resource.description" class="form-group">
                 <label class="control-label">Kirjeldus: </label>
-                <span>
+                <span ng-if="resource.description">
                     {{resource.description}}
+                </span>
+                <span ng-if="!resource.description">
+                    <i>Puudub</i>
                 </span>
             </div>
 

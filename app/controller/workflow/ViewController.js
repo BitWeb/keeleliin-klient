@@ -108,8 +108,11 @@ define([
             $scope.updateTopErrors = function () {
                 var result = [];
                 for(i in $scope.workflow.workflowServices){
-                    if($scope.workflow.workflowServices[i].status == 'ERROR'){
-                        result.push('Teenuses ' + $scope.workflow.workflowServices[i].service.name + ' tekkis viga.');
+                    var workflowService = $scope.workflow.workflowServices[i];
+                    if(workflowService.status == 'ERROR'){
+                        result.push('Teenuses ' + workflowService.service.name + ' tekkis viga.');
+                        var serviceLogs = $scope.getServiceLogs( workflowService );
+                        result = result.concat( serviceLogs );
                     }
                 }
                 $scope.topErrors = result;
