@@ -69,16 +69,22 @@
                         <div class="col-lg-12">
                             <dl class="dl-horizontal">
                                 <dt>Kirjeldus:</dt>
-                                <dd>
+                                <dd ng-if="workflow.description">
                                     {{workflow.description}}
+                                </dd>
+                                <dd ng-if="!workflow.description">
+                                    <i>Puudub</i>
                                 </dd>
                             </dl>
                         </div>
                         <div class="col-lg-12">
                             <dl class="dl-horizontal">
                                 <dt>Eesmärk:</dt>
-                                <dd>
+                                <dd ng-if="workflow.purpose">
                                     {{workflow.purpose}}
+                                </dd>
+                                <dd ng-if="!workflow.purpose">
+                                    <i>Puudub</i>
                                 </dd>
                             </dl>
                         </div>

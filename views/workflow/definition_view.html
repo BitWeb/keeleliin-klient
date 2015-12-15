@@ -13,14 +13,20 @@
                 <div class="ibox-content">
                     <div>
                         <strong>Kirjeldus</strong>
-                        <p>
+                        <p ng-if="definition.description">
                             {{definition.description}}
+                        </p>
+                        <p ng-if="!definition.description">
+                            <i>Puudub</i>
                         </p>
                     </div>
                     <div>
                         <strong>Eesmärk</strong>
-                        <p>
+                        <p ng-if="definition.purpose">
                             {{definition.purpose}}
+                        </p>
+                        <p ng-if="!definition.purpose">
+                            <i>Puudub</i>
                         </p>
                     </div>
                     <div>
@@ -47,8 +53,6 @@
                             {{definition.publishedAt | date: 'dd.MM.yyyy H:mm' }}
                         </p>
                     </div>
-
-
                     <div>
                         <strong>Omanik</strong>
                         <p>
