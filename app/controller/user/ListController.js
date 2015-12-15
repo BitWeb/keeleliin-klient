@@ -31,7 +31,6 @@ define(['angularAMD', 'angular-utils-pagination'], function(angularAMD) {
                 if (err) {
                     $scope.errorMessage = err;
                 }
-                user.isActive = user.isActive;
             });
         };
 
