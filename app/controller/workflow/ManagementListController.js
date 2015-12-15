@@ -1,24 +1,60 @@
 define(['angularAMD', 'angular-utils-pagination', 'WorkflowService', 'WorkflowDefinitionService'], function(angularAMD) {
-    angularAMD.controller('WorkflowManagementListController', ['$scope', 'WorkflowService','WorkflowDefinitionService', 'config', '$timeout', function($scope, workflowService, workflowDefinitionService, config, $timeout) {
+    angularAMD.controller('WorkflowManagementListController', ['$scope', 'WorkflowService','WorkflowDefinitionService', 'config', '$timeout','$location', function($scope, workflowService, workflowDefinitionService, config, $timeout, $location) {
         var timer;
 
-        $scope.statuses = config.workflow_statuses;
+        $scope.pagination = $location.search();
+        if($scope.pagination.tab == undefined){
 
+            $scope.pagination = {
+                definitionPage: 1,
+                definitionName: null,
+                definitionAccessStatus: null,
+                definitionPerPage: 25,
+                definitionOrder: null,
+
+                workflowPage: 1,
+                workflowName: null,
+                workflowStatus: null,
+                workflowPerPage: 25,
+                workflowOrder: null,
+
+                tab: 'workflows'
+            };
+        }
+
+        $scope.loadtab = function (tab) {
+            console.log(tab);
+            $scope.pagination.tab = tab;
+
+            if($scope.pagination.tab == 'definitions'){
+                getDefinitions();
+            } else if($scope.pagination.tab == 'workflows') {
+                getWorkflows();
+            } else {
+                alert('Tab not defined! ' + $scope.pagination.tab);
+            }
+        };
+        $scope.loadtab($scope.pagination.tab);
+
+
+        $scope.statuses = config.workflow_statuses;
         $scope.totalCount = 0;
         $scope.workflows = [];
-
         $scope.workflowOrderByOptions = ['name_asc','name_desc','created_at_asc','created_at_desc'];
-
-
-        $scope.pagination = {
-            page: 1,
-            name: '',
-            perPage: 25
-        };
         $scope.errorMessage = null;
 
         function getWorkflows() {
-            workflowService.getWorkflowsManagementList($scope.pagination, function(err, data) {
+
+            var params = {
+                page: $scope.pagination.workflowPage,
+                name: $scope.pagination.workflowName,
+                status: $scope.pagination.workflowStatus,
+                perPage: $scope.pagination.workflowPerPage,
+                order: $scope.pagination.workflowOrder
+            };
+
+            workflowService.getWorkflowsManagementList( params, function(err, data) {
+                $location.search( $scope.pagination );
                 if (err) {
                     return alert(err);
                 }
@@ -33,9 +69,9 @@ define(['angularAMD', 'angular-utils-pagination', 'WorkflowService', 'WorkflowDe
                 getWorkflows();
             }, 500);
         };
-        getWorkflows();
+
         $scope.changePage = function(pageNumber) {
-            $scope.pagination.page = pageNumber;
+            $scope.pagination.workflowPage = pageNumber;
             getWorkflows()
         };
         $scope.refreshList = function () {
@@ -58,16 +94,18 @@ define(['angularAMD', 'angular-utils-pagination', 'WorkflowService', 'WorkflowDe
         $scope.accessStatuses = ['private','public','shared'];
         $scope.definitionsTotalCount = 0;
         $scope.definitions = [];
-        $scope.definitionPagination = {
-            page: 1,
-            name: '',
-            perPage: 25,
-            accessStatus: '',
-            order: ''
-        };
 
         function getDefinitions() {
-            workflowDefinitionService.getWorkflowDefinitionsManagementList($scope.definitionPagination, function(err, data) {
+            var params = {
+                page: $scope.pagination.definitionPage,
+                name: $scope.pagination.definitionName,
+                accessStatus: $scope.pagination.definitionAccessStatus,
+                perPage: $scope.pagination.definitionPerPage,
+                order: $scope.pagination.definitionOrder
+            };
+
+            workflowDefinitionService.getWorkflowDefinitionsManagementList(params, function(err, data) {
+                $location.search( $scope.pagination );
                 if (err) {
                     return alert(err);
                 }
@@ -79,10 +117,10 @@ define(['angularAMD', 'angular-utils-pagination', 'WorkflowService', 'WorkflowDe
         $scope.searchDefinitions = function() {
             getDefinitions();
         };
-        getDefinitions();
+
 
         $scope.changeDefinitionsPage = function(pageNumber) {
-            $scope.definitionPagination.page = pageNumber;
+            $scope.pagination.definitionPage = pageNumber;
             getDefinitions()
         };
 

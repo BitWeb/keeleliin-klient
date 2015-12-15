@@ -8,13 +8,13 @@
             <div class="col-sm-4">
                 <div class="form-group">
                     <label class="control-label">Nimi</label>
-                    <input ng-model="name" class="form-control" type="text" ng-change="searchUsers()" placeholder="Kasutaja nimi" />
+                    <input ng-model="pagination.name" class="form-control" type="text" ng-change="searchUsers()" placeholder="Kasutaja nimi" />
                 </div>
             </div>
             <div class="col-sm-4">
                 <div class="form-group">
                     <label class="control-label">Roll</label>
-                    <select ng-model="role" class="form-control" ng-change="searchUsers()" name="role">
+                    <select ng-model="pagination.role" class="form-control" ng-change="searchUsers()" name="role">
                         <option value="">- Roll -</option>
                         <option ng-repeat="role in roles" value="{{role}}">{{role | translate}}</option>
                     </select>
@@ -38,7 +38,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr dir-paginate="user in users | filter: searchFilter | itemsPerPage: perPage" total-items="count" current-page="pagination.current" boundary-links="true">
+                    <tr dir-paginate="user in users | filter: searchFilter | itemsPerPage: pagination.perPage" total-items="count" current-page="pagination.page" boundary-links="true">
                         <td>{{user.id}}</td>
                         <td class="project-title">
                             <a ui-sref="user-edit({userId: user.id})">{{user.name}}</a>

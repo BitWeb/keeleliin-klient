@@ -1,24 +1,27 @@
 define(['angularAMD', 'angular-utils-pagination'], function(angularAMD) {
-    angularAMD.controller('UserListController', ['$scope', 'UserService', 'config', '$timeout', function($scope, userService, config, $timeout) {
+    angularAMD.controller('UserListController', ['$scope', 'UserService', 'config', '$timeout','$location', function($scope, userService, config, $timeout, $location) {
         var timer;
+
+        $scope.pagination = $location.search();
+        if(!$scope.pagination.page){
+            $scope.pagination = {
+                page: 1,
+                name: null,
+                role: null,
+                perPage: 25
+            };
+        }
 
         $scope.roles = config.user.roles;
         $scope.count = 0;
-        $scope.perPage = 25;
         $scope.users = [];
-        $scope.pagination = {
-            current: 1
-        };
         $scope.name = '';
-        $scope.role = '';
+
         $scope.errorMessage = null;
         $scope.searchUsers = function() {
             $timeout.cancel(timer);
             timer = $timeout(function() {
-                $scope.pagination = {
-                    current: 1
-                };
-                getUsers($scope.pagination.current);
+                getUsers();
             }, 500);
         };
 
@@ -34,19 +37,15 @@ define(['angularAMD', 'angular-utils-pagination'], function(angularAMD) {
 
         getUsers();
         $scope.changePage = function(page) {
-            getUsers(page)
+            $scoe.pagination.page = page;
+            getUsers()
         };
 
-        function getUsers(page, inputPagination) {
-            var pagination = inputPagination || {
-                page: page,
-                name: $scope.name,
-                role: $scope.role,
-                perPage: $scope.perPage
-            };
-            userService.getUsersList(pagination, function(err, data) {
-                if (err) {
+        function getUsers() {
 
+            userService.getUsersList( $scope.pagination, function(err, data) {
+                $location.search( $scope.pagination );
+                if (err) {
                     return alert(err);
                 }
                 $scope.users = data.rows;
