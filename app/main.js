@@ -82,6 +82,7 @@ require.config({
 
         'StatisticsIndexController' : 'controller/statistics/IndexController',
         'ResourceTreeMapper'        : 'service/mapper/resourceTreeMapper',
+        'WorkflowServiceMapper'     : 'service/mapper/workflowServiceMapper',
         'ErrorInterceptor'          : 'service/ErrorInterceptor',
 
         'UserService'               : 'service/UserService',

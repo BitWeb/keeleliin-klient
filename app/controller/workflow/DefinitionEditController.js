@@ -3,6 +3,7 @@ define([
     'angularAMD',
     'WorkflowDefinitionService',
     'WorkflowService',
+    'WorkflowServiceMapper',
     'ServiceService',
     'ui-sortable',
     'filetree',
@@ -11,14 +12,14 @@ define([
     'ServiceInfoModalController'
 ], function (angularAMD) {
     angularAMD.controller('WorkflowDefinitionEditController',
-        [ '$scope', '$state', '$stateParams', 'WorkflowDefinitionService', 'ServiceService', '$log', 'WorkflowService','$modal',
-            function ($scope, $state, $stateParams, workflowDefinitionService, serviceService, $log, workflowService, $modal) {
+        [ '$scope', '$state', '$stateParams', 'WorkflowDefinitionService', 'ServiceService', '$log', 'WorkflowService','$modal','WorkflowServiceMapper',
+            function ($scope, $state, $stateParams, workflowDefinitionService, serviceService, $log, workflowService, $modal, workflowServiceMapper) {
 
                 $scope.workflowId = $stateParams.workflowId;
                 $scope.avaliableServices = [];
                 $scope.selectedServices = [];
 
-                var servicesList = [];
+
 
                 serviceService.getDefineServices(function (err, services) {
                     if(err){
@@ -26,7 +27,7 @@ define([
                         return alert('Err');
                     }
 
-                    servicesList = workflowDefinitionService.getMappedServices( services );
+                    workflowServiceMapper.setServicesList(services);
 
                     workflowDefinitionService.getWorkflowsDefinition($stateParams.workflowId, function (err, workflow) {
                         if(err){
@@ -41,12 +42,8 @@ define([
                     });
                 });
 
-                $scope.getServiceById = function (id) {
-                    return workflowDefinitionService.getServiceFromList(id, servicesList);
-                };
-
                 $scope.hasEditableSettings = function( id ){
-                    var service = $scope.getServiceById(id);
+                    var service = workflowServiceMapper.getService(id);
 
                     if(!service){
                         return false;
@@ -79,7 +76,7 @@ define([
                 };
 
                 $scope.updateAvailableServices = function() {
-                    $scope.avaliableServices = workflowDefinitionService.getAvailableFollowingServices( $scope.selectedServices, servicesList );
+                    $scope.avaliableServices = workflowServiceMapper.getAvailableFollowingServices( $scope.selectedServices );
                 };
 
                 $scope.droppedServices = [];
@@ -120,20 +117,20 @@ define([
                                 return $scope.selectedServices[index];
                             },
                             service: function(){
-                                return $scope.getServiceById($scope.selectedServices[index].serviceId);
+                                return workflowServiceMapper.getService($scope.selectedServices[index].serviceId);
                             },
                             serviceVersions: function () {
-                                return workflowDefinitionService.getSelectedServiceVersions( index, $scope.selectedServices, servicesList );
+                                return workflowServiceMapper.getSelectedServiceVersions( index, $scope.selectedServices );
                             },
                             willBeCorrectFlowFlow: function () {
                                 return function (serviceId) {
-                                    return workflowDefinitionService.willBeCorrectFlowFlow( index, serviceId, $scope.selectedServices, servicesList );
+                                    return workflowServiceMapper.willBeCorrectFlowFlow( index, serviceId, $scope.selectedServices );
                                 }
                             }
                         }
                     }).result.then(function (updatedSelectedService) {
 
-                            if(!workflowDefinitionService.willBeCorrectFlowFlow( index, updatedSelectedService.serviceId, $scope.selectedServices, servicesList )){
+                            if(!workflowServiceMapper.willBeCorrectFlowFlow( index, updatedSelectedService.serviceId, $scope.selectedServices )){
                                 removeFromIndex(index + 1);
                             }
 
@@ -151,7 +148,6 @@ define([
                             alert('Err');
                             return $log.debug(err)
                         }
-                        $log.debug( data);
                     });
                     $scope.updateSelectedServicesView();
                 };
@@ -190,10 +186,6 @@ define([
 
                 $scope.runWorkflow = function () {
                     workflowService.runWorkflow($scope.workflow.id, function (err, response) {
-                        if(err){
-                            $log.debug(err);
-                            return alert('Err');
-                        }
                         $state.go('workflow-view', {workflowId: $scope.workflow.id});
                     });
                 };
@@ -203,12 +195,12 @@ define([
                     var mapping = [];
                     for(var i = 0; i < $scope.selectedServices.length; i++){
                         var selectedService = $scope.selectedServices[i];
-                        var service = $scope.getServiceById(selectedService.serviceId);
+                        var service = workflowServiceMapper.getService(selectedService.serviceId);
                         var mappingObject = {
                             index: i,
                             orderNum: selectedService.orderNum,
-                            serviceId: service.id,
-                            name: service.name,
+                            serviceId: service ? service.id : null,
+                            name: service ? service.name : '',
                             canDelete: $scope.workflow.workflowDefinition.editStatus != 'locked',
                             canEditSettings: service && $scope.workflow.workflowDefinition.editStatus != 'locked'
                         };

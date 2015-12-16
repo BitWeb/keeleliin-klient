@@ -102,7 +102,6 @@ define(['angularAMD'], function (angularAMD) {
                 );
             };
 
-            //Ainult aktiivsed teenused
             this.getServicesSelectList = function (callback) {
                 self.getServicesList(function (err, data) {
                     if(err){
