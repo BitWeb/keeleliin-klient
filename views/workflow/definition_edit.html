@@ -13,18 +13,14 @@
                 <div class="ibox-content">
                     <div>
                         <strong>Kirjeldus</strong>
-                        <p ng-if="workflow.description">
-                            {{workflow.description}}
-                        </p>
+                        <p ng-if="workflow.description" class="nl2br">{{workflow.description}}</p>
                         <p ng-if="!workflow.description">
                             <i>Puudub</i>
                         </p>
                     </div>
                     <div>
                         <strong>Eesmärk</strong>
-                        <p ng-if="workflow.purpose">
-                            {{workflow.purpose}}
-                        </p>
+                        <p ng-if="workflow.purpose" class="nl2br">{{workflow.purpose}}</p>
                         <p ng-if="!workflow.purpose">
                             <i>Puudub</i>
                         </p>

@@ -13,18 +13,14 @@
                 <div class="ibox-content">
                     <div>
                         <strong>Kirjeldus</strong>
-                        <p ng-if="definition.description">
-                            {{definition.description}}
-                        </p>
+                        <p ng-if="definition.description" class="nl2br">{{definition.description}}</p>
                         <p ng-if="!definition.description">
                             <i>Puudub</i>
                         </p>
                     </div>
                     <div>
                         <strong>Eesmärk</strong>
-                        <p ng-if="definition.purpose">
-                            {{definition.purpose}}
-                        </p>
+                        <p ng-if="definition.purpose" class="nl2br">{{definition.purpose}}</p>
                         <p ng-if="!definition.purpose">
                             <i>Puudub</i>
                         </p>

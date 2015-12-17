@@ -48,3 +48,9 @@
 .cursor-pointer {
   cursor: pointer;
 }
+
+.nl2br {
+  white-space: pre-line;
+  display: block;
+}
+
