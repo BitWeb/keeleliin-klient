@@ -5,47 +5,43 @@
 </div>
 <div class="modal-body">
     <div class="row">
-        <div ng-show="resourceForm.$invalid && resourceForm.submitted" class="alert alert-danger" role="alert">Vormi valideerimisel tekkisid vead!</div>
+        <div ng-show="association && association.canDelete == false" class="alert alert-danger" role="alert">Kasutajal ei ole lubatud antud resurssi kustutada!</div>
 
-        <form name="resourceForm" role="form" novalidate>
-
+        <div>
             <div class="form-group">
                 <label class="control-label">Nimi: </label>
                 <span>
-                    {{resource.name}}
+                    {{association.resource.name}}
                 </span>
             </div>
             <div class="form-group">
                 <label class="control-label">PID:</label>
                 <span>
-                    {{resource.pid}}
+                    {{association.resource.pid}}
                 </span>
             </div>
             <div class="form-group">
                 <label class="control-label">Loodud: </label>
                 <span>
-                    {{resource.createdAt | date : 'dd.MM.yyyy H:mm'}}
+                    {{association.resource.createdAt | date : 'dd.MM.yyyy H:mm'}}
                 </span>
             </div>
             <div class="form-group">
                 <label class="control-label">Suurus: </label>
-                <span kl-filesize="{{resource.fileSize}}"></span>
+                <span kl-filesize="{{association.resource.fileSize}}"></span>
             </div>
-            <div ng-if="resource.description" class="form-group">
+            <div ng-if="association.resource.description" class="form-group">
                 <label class="control-label">Kirjeldus: </label>
-                <span ng-if="resource.description">
-                    {{resource.description}}
-                </span>
+                <span class="nl2br" ng-if="association.resource.description">{{resource.description}}</span>
                 <span ng-if="!resource.description">
                     <i>Puudub</i>
                 </span>
             </div>
-
-        </form>
+        </div>
     </div>
 </div>
 <div class="modal-footer">
     <a ng-click="download()" href="" class="btn btn-sm btn-link pull-left"><i class="fa fa-download"></i> Lae alla</a>
     <button type="button" class="btn btn-white btn-sm" ng-click="$dismiss()">Katkesta</button>
-    <button type="button" class="btn btn-primary btn-sm" ng-click="deleteResource(resourceForm)" >Kustuta</button>
+    <button ng-disabled="!association || (association && association.canDelete == false)" type="button" class="btn btn-primary btn-sm" ng-click="deleteResource()" >Kustuta</button>
 </div>

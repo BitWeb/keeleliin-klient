@@ -31,6 +31,15 @@ define(['angularAMD', 'ResourceTreeMapper', 'ResourceInfoController', 'ResourceD
                 );
             };
 
+            this.getResourceAssociationInfo = function (associationId, callback) {
+                $http.get(config.API_URL + '/resource/association/' + associationId).then(
+                    function(data) {
+                        $log.log(data);
+                        callback(null, data.data.data);
+                    }
+                );
+            };
+
             this.updateResourceInfo = function (resource, callback) {
                 $http.put(config.API_URL + '/resource/' + resource.id, resource).then(
                     function(data) {

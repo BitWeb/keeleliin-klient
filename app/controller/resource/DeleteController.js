@@ -5,16 +5,16 @@ define([
     angularAMD.controller('ResourceDeleteController', [ '$scope', '$rootScope', '$state', '$stateParams', '$log', 'ResourceService', 'resourceData',
         function($scope, $rootScope, $state, $stateParams, $log, resourceService, associationData ) {
 
-            resourceService.getResourceInfo( associationData.resourceId, function (err, info) {
+            resourceService.getResourceAssociationInfo( associationData.id, function (err, info) {
                 if(err){
                     alert('Err');
                     return $log.error(err);
                 }
-                $scope.resource = info;
+                $scope.association = info;
             });
 
             $scope.download = function () {
-                resourceService.downloadResourceById( $scope.resource.id );
+                resourceService.downloadResourceById( associationData.resourceId );
             };
 
             $scope.deleteResource = function ( form ) {
