@@ -160,6 +160,9 @@
                                                     <small>Loodud {{definition.createdAt | date : 'dd.MM.yyyy'}}</small>
                                                 </td>
                                                 <td>
+                                                    <div bookmark-definition is-bookmarked="definition.isBookmarked" definition-id="definition.id" class="pull-right" update-cb="updateDefinitionsList" ></div>
+                                                </td>
+                                                <td>
                                                     Kasutatud
                                                     <br/>
                                                     <small>{{definition.usageCount}}

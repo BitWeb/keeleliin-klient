@@ -28,7 +28,7 @@ define([
                 });
             };
 
-            var updateDefinitionsList = function () {
+            $scope.updateDefinitionsList = function () {
                 projectService.getProjectDefinitions($scope.projectId, function (err, definitions) {
                     if(err){
                         return alert('Err');
@@ -58,7 +58,7 @@ define([
                 $scope.setProject(project);
 
                 updateWorkflowsList();
-                updateDefinitionsList();
+                $scope.updateDefinitionsList();
             });
 
             $scope.openDefineWorkflowModal = function () {
@@ -85,7 +85,7 @@ define([
             $scope.deleteWorkflowDefinition = function( definition ){
                 workflowDefinitionService.deleteWorkflowDefinition( definition.id, function (err, success) {
                     if(!err && success){
-                        updateDefinitionsList();
+                        $scope.updateDefinitionsList();
                     }
                 });
             };
