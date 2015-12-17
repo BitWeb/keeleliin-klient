@@ -1,7 +1,7 @@
 define(['appModule'], function (app) {
 
-    app.service('UserService', [ '$http','$state','config','$location','$rootScope','$timeout','$log','$window','$location',
-        function($http, $state, config, $location, $rootScope, $timeout, $log, $window, $location) {
+    app.service('UserService', [ '$http','$state','config','$location','$rootScope','$timeout','$log','$window','$cookieStore',
+        function($http, $state, config, $location, $rootScope, $timeout, $log, $window, $cookieStore) {
             var self = this;
 
             var user = null;
@@ -99,19 +99,24 @@ define(['appModule'], function (app) {
 
             this.setToken = function (token) {
                 self.setupHttpHeader(token);
-                return  window.sessionStorage.setItem('token', token);
+
+                return $cookieStore.put('token', token);
+                //return  window.sessionStorage.setItem('token', token);
             };
 
             this.getToken = function(){
-                return  window.sessionStorage.getItem('token');
+                return $cookieStore.get('token');
+                //return  window.sessionStorage.getItem('token');
             };
 
             this.removeToken = function () {
-                return  window.sessionStorage.removeItem('token');
+                return $cookieStore.remove('token');
+                //return  window.sessionStorage.removeItem('token');
             };
 
             this.getLandingPath = function () {
-                return  window.sessionStorage.getItem('landingPath');
+                return $cookieStore.get('landingPath');
+                //return  window.sessionStorage.getItem('landingPath');
             };
             this.setLandingPath = function (landingPath) {
 
@@ -120,7 +125,9 @@ define(['appModule'], function (app) {
                 }
 
                 $log.debug('setLandingPath: ', landingPath);
-                return  window.sessionStorage.setItem('landingPath', landingPath);
+
+                return $cookieStore.put('landingPath', landingPath);
+                //return  window.sessionStorage.setItem('landingPath', landingPath);
             };
 
             this.setupHttpHeader = function(token) {

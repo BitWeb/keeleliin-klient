@@ -22,6 +22,7 @@ require.config({
         'ui-bootstrap'      : 'lib/bootstrap/ui-bootstrap-tpls-0.12.0.min',
         'ui-sortable'       : 'lib/plugins/ui-sortable/sortable',
         'angular-idle'      : 'lib/plugins/angular-idle/angular-idle',
+        'angular-cookies'    : 'lib/plugins/angular-cookies/angular-cookies',
         'jstree'            : 'lib/plugins/jsTree/jstree',
         'jstree-plugins'    : 'lib/keeleliin/jstree_plugins',
         'ng-jstree'         : 'lib/keeleliin/ngJsTree',
@@ -106,6 +107,7 @@ require.config({
         'angular-utils-pagination' : ['angular'],
         'metisMenu'         : ['angular'],
         'angular-idle'      : ['angular'],
+        'angular-cookies'    : ['angular'],
         'ui-bootstrap'      : ['angular'],
         'ui-sortable'       : ['angular','jquery'],
 
