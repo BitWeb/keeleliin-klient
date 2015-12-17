@@ -45,6 +45,9 @@ define(['angularAMD', 'ResourceTreeMapper', 'ResourceInfoController', 'ResourceD
                     function(data) {
                         $log.log(data);
                         callback(null, data.data.data);
+                    },
+                    function (err) {
+                        callback(err);
                     }
                 );
             };

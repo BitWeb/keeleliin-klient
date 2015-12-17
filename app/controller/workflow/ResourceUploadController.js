@@ -66,13 +66,13 @@ define([
 
                 $scope.loadingFromUrl = true;
                 resourceService.loadFromUrl($scope.download, function (err, resource) {
-                    if(err){
-                        console.log(err);
-                        return;
-                    }
-                    console.log('Uploaded');
                     $scope.loadingFromUrl = false;
                     urlForm.submitted = false;
+                    if(err){
+                        $log.error(err);
+                        return;
+                    }
+
                     $scope.fileAddedEvent();
                     $scope.download.name = '';
                     $scope.download.url = '';
