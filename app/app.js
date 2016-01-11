@@ -25,6 +25,7 @@ define([
 ], function (angularAMD, app, globalConf, etTranslations, stateConfig, $ocLazyLoad ) {
 
     app.config(['$stateProvider', '$urlRouterProvider', '$translateProvider','$httpProvider', '$provide', function ($stateProvider, $urlRouterProvider, $translateProvider, $httpProvider, $provide ) {
+
         $translateProvider.translations('et', etTranslations);
         $translateProvider.preferredLanguage('et');
         stateConfig.setStates( $stateProvider, $urlRouterProvider, $ocLazyLoad);
