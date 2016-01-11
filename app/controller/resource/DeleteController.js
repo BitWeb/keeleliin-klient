@@ -17,14 +17,7 @@ define([
                 resourceService.downloadResourceById( associationData.resourceId );
             };
 
-            $scope.deleteResource = function ( form ) {
-
-                form.submitted = true;
-                if(!form.$valid){
-                    console.log('Form invalid');
-                    return;
-                }
-
+            $scope.deleteResource = function () {
                 resourceService.deleteResourceAssociation(associationData.id, function (err, data) {
                     if(err){
                         alert('Err');
