@@ -1,6 +1,6 @@
 
 /* TOOGLE SWICH */
-@import url("http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&lang=en");
+@import url("//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&lang=en");
 /*
  *
  *   INSPINIA - Responsive Admin Theme
@@ -7604,7 +7604,7 @@ body.skin-3 {
   cursor: pointer;
   font-size: 16px;
   color: #C4C4C1;
-  background: rgba(255, 255, 255, 0.85);
+  /*background: rgba(255, 255, 255, 0.85);*/
   padding: 0 5px;
 }
 .project-tree .jstree-clicked .action-buttons {
